@@ -11,6 +11,10 @@ namespace XeMayShop.Areas.Admin.Controllers
         // GET: Admin/AdminHome
         public ActionResult Index()
         {
+            if (Session["Admin"] == null)
+            {
+                return RedirectToAction("Index", "AdminLogin");
+            }
             return View();
         }
 

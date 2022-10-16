@@ -28,16 +28,23 @@
     <div class="container-scroller">
         <!-- partial:partials/_sidebar.html -->
 
-
-
-
-
-
-        @RenderBody()
-
-
-
-
+        @Html.Partial("_AdminNavLeft")
+        @*partial *@
+        <div class="container-fluid page-body-wrapper">
+            @*partial:partials/_navbar.html *@
+            @Html.Partial("_AdminHeader")
+            @*partial *@
+            <div class="main-panel">
+                @*content-wrapper Start *@
+                @RenderBody()
+                @*content-wrapper ends
+                partial:partials/_footer.html *@
+                @Html.Partial("_AdminFooter")
+                @*partial *@
+            </div>
+            @*main-panel ends *@
+        </div>
+        @*page-body-wrapper ends *@
 
 
     </div>

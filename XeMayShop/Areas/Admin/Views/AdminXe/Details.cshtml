@@ -1,0 +1,75 @@
+﻿@model XeMayShop.Models.Xe
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Xe</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenXe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenXe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoTaXe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoTaXe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThongTinBaoHanh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThongTinBaoHanh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DonGiaXe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DonGiaXe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoLuongHienCo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoLuongHienCo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DongXe.TenDongXe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DongXe.TenDongXe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoaiXe.TenLoaiXe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiXe.TenLoaiXe)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaXe }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

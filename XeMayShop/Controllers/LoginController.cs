@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using XeMayShop.Models;
 
 namespace XeMayShop.Controllers
 {
     public class LoginController : Controller
     {
+        QuanLyXeMayEntities data = new QuanLyXeMayEntities();
         // GET: Login
         public ActionResult Index()
         {
@@ -17,7 +19,8 @@ namespace XeMayShop.Controllers
         [HttpPost]
         public ActionResult Login(KhachHang user)
         {
-            KhachHang check = data.KhachHangs.Where(s => s.UserName == user.UserName && s.Password == user.Password).FirstOrDefault();
+            var check = data.sp_CheckLoginKhachHang(user.TenDangNhap, user.MatKhau);
+            /*KhachHang check = data.KhachHangs.Where(s => s.TenDangNhap == user.TenDangNhap && s.MatKhau == user.MatKhau).FirstOrDefault();*/
             if (check == null)
             {
                 ViewBag.ErrorInfo = "Sai thông tin tài khoản";
@@ -45,12 +48,21 @@ namespace XeMayShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                data.KhachHangs.Add(khachHang);
-                data.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    data.sp_DangKyKhachHang(khachHang.TenKhachHang, khachHang.DiaChi, khachHang.DienThoai, khachHang.TenDangNhap, khachHang.MatKhau);
+                    data.KhachHangs.Add(khachHang);
+                    data.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    
+                }
+                
             }
 
-            return View(khachHang);
+            return RedirectToAction("Index", "Login");
         }
 
         public ActionResult Logout()

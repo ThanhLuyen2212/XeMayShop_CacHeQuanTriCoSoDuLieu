@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using XeMayShop.Models;
 
 namespace XeMayShop.Areas.Admin.Controllers
 {
     public class AdminLoginController : Controller
     {
+
+        QuanLyXeMayEntities data = new QuanLyXeMayEntities();   
+
         // GET: Admin/AdminLogin
         public ActionResult Index()
         {
@@ -15,9 +19,10 @@ namespace XeMayShop.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoginAdmin(WebBanHang.Models.Admin admin)
-        {
-            WebBanHang.Models.Admin check = data.Admins.Where(s => s.UserName == admin.UserName && s.Password == admin.Password).FirstOrDefault();
+        public ActionResult LoginAdmin(XeMayShop.Models.Admin admin)
+        {            
+            var check = data.sp_CheckLogin(admin.TenDangNhap, admin.MatKhau);
+                        
             if (check == null)
             {
                 ViewBag.ErrorInfo = "Sai thông tin tài khoản";
@@ -25,11 +30,11 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
             else
             {
-                data.Configuration.ValidateOnSaveEnabled = false;
-                Session["Username"] = admin.UserName;
-                Session["Password"] = admin.Password;
-                Session["TenAdmin"] = check.TenAdmin;
-                Session["Admin"] = check;
+                XeMayShop.Models.Admin temp = data.Admins.Where(s => s.TenDangNhap == admin.TenDangNhap && s.MatKhau == admin.MatKhau).FirstOrDefault();
+                data.Configuration.ValidateOnSaveEnabled = false;   
+              
+                Session["Admin"] = temp;
+
                 return RedirectToAction("Index", "AdminHome", new { Areas = "Admin" });
             }
         }
