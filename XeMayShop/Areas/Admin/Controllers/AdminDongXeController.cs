@@ -22,11 +22,7 @@ namespace XeMayShop.Areas.Admin.Controllers
                 return RedirectToAction("Index", "AdminLogin");
             }
             else
-            {
-
-
                 return View(db.DongXes.ToList());
-            }
         }
 
         // GET: Admin/AdminDongXe/Details/5
@@ -55,7 +51,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaDongXe,TenDongXe")] DongXe dongXe)
+        public ActionResult Create([Bind(Include = "MaDongXe,TenDongXe,SoLuongHienCo")] DongXe dongXe)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +83,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaDongXe,TenDongXe")] DongXe dongXe)
+        public ActionResult Edit([Bind(Include = "MaDongXe,TenDongXe,SoLuongHienCo")] DongXe dongXe)
         {
             if (ModelState.IsValid)
             {

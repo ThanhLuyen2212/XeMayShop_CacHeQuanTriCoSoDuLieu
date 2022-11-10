@@ -5,47 +5,66 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Chi tiết phiếu xuất </h4>
 
-<div>
-    <h4>PhieuXuat</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayXuat)
-        </dt>
+            <form class="forms-sample">
+                <div class="form-group row">
+                    <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã phiếu xuat</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.MaPhieuXuat)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Nhân viên</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.NhanVien.TenNhanVien)
+                    </div>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgayXuat)
-        </dd>
+                <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Khách hàng</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.KhachHang.TenKhachHang)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Ngày đặt xe</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.NgayDatXe)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Ngày xuất</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.NgayXuat)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Tổng số xe xuất</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.TongSoXeXuat)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Thành tiền xuất</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.ThanhTienXuat)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Tình trạng</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.TinhTrang)
+                    </div>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThanhTienXuat)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThanhTienXuat)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.KhachHang.TenKhachHang)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.KhachHang.TenKhachHang)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NhanVien.TenNhanVien)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NhanVien.TenNhanVien)
-        </dd>
-
-    </dl>
+                <a href="~/Admin/AdminPhieuNhap/Index">
+                    <button type="button" class="btn btn-outline-secondary btn-lg btn-block" style="width:300px; margin-top:40px">Trở về</button>
+                </a>
+            </form>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaPhieuXuat }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

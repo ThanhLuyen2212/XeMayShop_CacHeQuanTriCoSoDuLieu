@@ -53,6 +53,12 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -130,8 +136,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminChiNhanhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminChiTietPhieuNhapController.cs" />
-    <Compile Include="Areas\Admin\Controllers\AdminChiTietPhieuXuatController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminDongXeController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminHomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminKhachHangController.cs" />
@@ -139,31 +145,29 @@
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminNhaCungCapController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminNhanVienController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminPhieuBaoHanhController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminPhieuNhapController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminPhieuXuatController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminsController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminXeController.cs" />
+    <Compile Include="Controllers\ChiTietXeController.cs" />
+    <Compile Include="Controllers\DatXeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="Controllers\ThongBaoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChiNhanh.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ChiTietPhieuNhap.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChiTietPhieuXuat.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DongXe.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ft_TimKiemKhachHangTheoMaKhachHang_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ft_TimKiemThongTinXe_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\KhachHang.cs">
@@ -193,21 +197,22 @@
     <Compile Include="Models\NhanVien.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PhieuBaoHanh.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhieuDatXe.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PhieuNhap.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PhieuXuat.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_TimKiemKhachHang_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_TimKiemKhachHang_Result1.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Xe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\XeDat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -992,6 +997,7 @@
     <Content Include="Assets\img\banner\banner-2.jpg" />
     <Content Include="Assets\img\banner\banner-2.png" />
     <Content Include="Assets\img\banner\banner-3.jpg" />
+    <Content Include="Assets\img\banner\banner_chinh1.png" />
     <Content Include="Assets\img\blog\blog-1.jpg" />
     <Content Include="Assets\img\blog\blog-10.jpg" />
     <Content Include="Assets\img\blog\blog-2.jpg" />
@@ -1083,10 +1089,21 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\delivery.png" />
+    <Content Include="Images\desktop-computer.png" />
+    <Content Include="Images\gio.png" />
+    <Content Include="Images\lgio.png" />
+    <Content Include="Images\login.png" />
+    <Content Include="Images\nen.jpg" />
+    <Content Include="Images\sach.jpg" />
+    <Content Include="Images\sach1.png" />
+    <Content Include="Images\sach2.jpg" />
+    <Content Include="Images\user.png" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -1236,6 +1253,57 @@
     <Content Include="Areas\Admin\Assets\vendors\mdi\fonts\materialdesignicons-webfont.ttf" />
     <Content Include="Areas\Admin\Assets\vendors\mdi\fonts\materialdesignicons-webfont.woff" />
     <Content Include="Areas\Admin\Assets\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="Areas\Admin\Views\AdminLogin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminKhachHang\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminKhachHang\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminKhachHang\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminKhachHang\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminKhachHang\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminXe\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminXe\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminXe\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminXe\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminXe\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminNhaCungCap\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminNhaCungCap\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminNhaCungCap\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminNhaCungCap\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminNhaCungCap\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminNhanVien\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminNhanVien\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminNhanVien\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminNhanVien\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminNhanVien\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuNhap\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuNhap\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuNhap\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuNhap\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuNhap\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiTietPhieuNhap\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiTietPhieuNhap\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiTietPhieuNhap\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiTietPhieuNhap\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiTietPhieuNhap\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admins\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Admins\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Admins\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Admins\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Admins\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLoaiXe\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLoaiXe\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLoaiXe\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLoaiXe\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLoaiXe\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDongXe\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDongXe\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDongXe\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDongXe\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDongXe\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuXuat\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuXuat\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuXuat\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuXuat\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuXuat\Index.cshtml" />
     <Content Include="Assets\fonts\ElegantIcons.eot" />
     <Content Include="Assets\fonts\ElegantIcons.ttf" />
     <Content Include="Assets\fonts\ElegantIcons.woff" />
@@ -1263,47 +1331,11 @@
     <Content Include="Assets\sass\_shop-cart.scss" />
     <Content Include="Assets\sass\_shop.scss" />
     <Content Include="Assets\sass\_variable.scss" />
-    <Content Include="Areas\Admin\Views\AdminLogin\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminKhachHang\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminKhachHang\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminKhachHang\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminKhachHang\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminKhachHang\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminLoaiXe\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminLoaiXe\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminLoaiXe\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminLoaiXe\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminLoaiXe\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminDongXe\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminDongXe\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminDongXe\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminDongXe\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminDongXe\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminXe\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminXe\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminXe\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminXe\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminXe\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminNhaCungCap\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminNhaCungCap\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminNhaCungCap\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminNhaCungCap\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminNhaCungCap\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminNhanVien\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminNhanVien\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminNhanVien\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminNhanVien\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminNhanVien\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPhieuNhap\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPhieuNhap\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPhieuNhap\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPhieuNhap\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPhieuNhap\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPhieuXuat\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPhieuXuat\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPhieuXuat\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPhieuXuat\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminPhieuXuat\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiNhanhs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiNhanhs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiNhanhs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiNhanhs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiNhanhs\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -1311,21 +1343,11 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuNhap\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuNhap\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuNhap\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuNhap\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuNhap\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuXuat\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuXuat\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuXuat\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuXuat\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuXuat\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Admins\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Admins\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Admins\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Admins\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Admins\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuBaoHanh\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuBaoHanh\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuBaoHanh\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuBaoHanh\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPhieuBaoHanh\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1355,6 +1377,13 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Register.cshtml" />
+    <Content Include="Views\ChiTietXe\Index.cshtml" />
+    <Content Include="Views\ThongBao\DatHangThanhCong.cshtml" />
+    <Content Include="Views\GioHang\Show.cshtml" />
+    <Content Include="Views\DatXe\Index.cshtml" />
+    <Content Include="Views\DatXe\DatXe.cshtml" />
+    <Content Include="Views\Shop\Index.cshtml" />
+    <Content Include="Views\ThongBao\TimKiemDonDatHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

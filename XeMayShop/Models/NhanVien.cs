@@ -27,7 +27,9 @@ namespace XeMayShop.Models
         public string GioiTinh { get; set; }
         public string DiaChi { get; set; }
         public string DienThoai { get; set; }
+        public Nullable<int> MaChiNhanh { get; set; }
     
+        public virtual ChiNhanh ChiNhanh { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhieuNhap> PhieuNhaps { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

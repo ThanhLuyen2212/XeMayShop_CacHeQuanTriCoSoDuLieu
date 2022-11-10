@@ -43,6 +43,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // GET: Admin/AdminNhanVien/Create
         public ActionResult Create()
         {
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             return View();
         }
 
@@ -51,12 +52,20 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaNhanVien,TenNhanVien,NamSinh,GioiTinh,DiaChi,DienThoai")] NhanVien nhanVien)
+        public ActionResult Create(NhanVien nhanVien)
         {
             if (ModelState.IsValid)
             {
-                db.NhanViens.Add(nhanVien);
-                db.SaveChanges();
+                if (nhanVien.MaChiNhanh == null || nhanVien.TenNhanVien == "" || nhanVien.DienThoai == "")
+                {
+                    ViewBag.ErrorInfo = "Sai thông tin tài khoản";
+                    return View("Index");
+
+                }
+                /*   db.NhanViens.Add(nhanVien);
+                   db.SaveChanges();*/
+                db.sp_ThemNhanVien(nhanVien.TenNhanVien, nhanVien.NamSinh, nhanVien.GioiTinh, nhanVien.DiaChi, nhanVien.DienThoai, nhanVien.MaChiNhanh);
+                ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
                 return RedirectToAction("Index");
             }
 
@@ -75,6 +84,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             return View(nhanVien);
         }
 
@@ -83,7 +93,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaNhanVien,TenNhanVien,NamSinh,GioiTinh,DiaChi,DienThoai")] NhanVien nhanVien)
+        public ActionResult Edit( NhanVien nhanVien)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +101,7 @@ namespace XeMayShop.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             return View(nhanVien);
         }
 

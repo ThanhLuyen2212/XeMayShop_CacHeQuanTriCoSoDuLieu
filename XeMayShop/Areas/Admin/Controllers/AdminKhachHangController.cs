@@ -16,7 +16,7 @@ namespace XeMayShop.Areas.Admin.Controllers
 
         // GET: Admin/AdminKhachHang        
 
-        public ActionResult Index(string thongtintimkiem)
+        public ActionResult Index(string TenKH, string SDT)
         {
             if (Session["Admin"] == null)
             {
@@ -24,19 +24,13 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
             else
             {
-                if(thongtintimkiem == null)
-                {
-                    return View(db.LayKhachHang().ToList());
-                }    
-                else if (thongtintimkiem.Equals(""))
-                {
-                    return View(db.LayKhachHang().ToList());
-                }
+                if((TenKH == null || TenKH == "") && (SDT == "" || SDT == null))
+                {                    
+                    return View(db.KhachHangs.ToList());
+                }                   
                 else
-                {
-                    bool check = int.TryParse(thongtintimkiem, out _);
-                    if(check) return View(db.sp_TimKiemKhachHang(thongtintimkiem, int.Parse(thongtintimkiem)).ToList());
-                    return View(db.sp_TimKiemKhachHang(thongtintimkiem, null).ToList());
+                {                    
+                     return View(db.sp_TimKiemKhachHang(SDT,TenKH).ToList());                    
                 }
                 /*return View(db.sp_XuatTatCaKhachHang().ToList());*/                
             }

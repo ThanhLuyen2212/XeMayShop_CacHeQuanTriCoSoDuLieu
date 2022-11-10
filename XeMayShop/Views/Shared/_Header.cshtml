@@ -1,86 +1,42 @@
-﻿
-@using XeMayShop.Models;
+﻿@using XeMayShop.Models;
 @{
     KhachHang khachhang = Session["KhachHang"] as KhachHang;
 }
 <header class="header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xl-3 col-lg-2">
+            <div class="col-xl-2 col-lg-2">
                 <div class="header__logo">
                     <a href="~/Home/Index">
-                        <img src="~/Images/desktop-computer.png" width="40px" style="display:inline-block; padding-right:10px;margin-left:30px" />
-                        <h4 style="font-style:initial ;display:inline-block">Online shop</h4>
+                        <img src="~/Images/delivery.png" width="40px" style="display:inline-block; padding-right:10px;margin-left:30px" />
+                        @*<img src="~/Images/desktop-computer.png"  />*@
+                        <h4 style="font-style:initial ;display:inline-block">Shop xe máy</h4>
                     </a>
                 </div>
             </div>
-            <div class="col-xl-6 col-lg-7">
+            <div class="col-xl-8 col-lg-6">
                 <nav class="header__menu" style="margin-left:200px">
-                    <ul>
+                    <ul style="text-align:center">
                         <li><a href="~/Home/index">Trang chủ</a></li>
                         <li><a href="~/Shop/Index">Các sản phẩm</a></li>
-                        <li><a href="~/GioHang/show">Giỏ hàng</a></li>
-                        <li>
-                            <a href="#">Các đơn hàng</a>
-                            <ul class="dropdown" style="width:max-content">
-                                <li><a href="~/ThongBao/CacDonHangDangCho">Đơn hàng đang chờ</a></li>
-                                <li><a href="~/ThongBao/TatCaCacDonHang">Tất cả các đơn hàng</a></li>
-                                <li><a href="~/ThongBao/CacMatHangDaMua">Các mặt hàng đã đặt</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="~/GioHang/show">Tìm kiếm đơn đặt hàng</a></li>
+                        @*<li><a href="~/GioHang/show">Kiểm tra tình trạng bảo hành</a></li>*@
+
+                        @*<li>
+                        <a href="#">Các đơn hàng</a>
+                        <ul class="dropdown" style="width:max-content">
+                            <li><a href="~/ThongBao/CacDonHangDangCho">Đơn hàng đang chờ</a></li>
+                            <li><a href="~/ThongBao/TatCaCacDonHang">Tất cả các đơn hàng</a></li>
+                            <li><a href="~/ThongBao/CacMatHangDaMua">Các mặt hàng đã đặt</a></li>
+                            <li><a href="~/ThongBao/CacMatHangDaMua">Các mặt hàng đã đặt</a></li>
+                        </ul>
+                    </li>*@
 
                     </ul>
                 </nav>
             </div>
-            <div class="col-lg-3">
-                <div class="header__right" style="margin-right:50px">
-
-                    @if (Session["SoLuongHangTrongGioHang"] != null)
-                    {
-                        <ul class="header__right__widget" style="margin-right:40px">
-                            <li>
-                                <a href="~/GioHang/show">
-                                    <span class="icon_bag_alt"></span>
-                                    <div class="tip">@Session["SoLuongHangTrongGioHang"]</div>
-                                </a>
-                            </li>
-                        </ul>
-                    }
-                    @if (Session["KhachHang"] == null)
-                    {
-                        <div class="header__right__auth">
-                            <a href="~/Login/Index">Login</a>
-                            <a href="~/Login/Register">Register</a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="header__right__auth">
-
-                            <div class="dropdown">
-                                <p style="float:right; margin-top:5px; margin-left:10px">@khachhang.TenKH</p>
-                                <button class="dropbtn" />
-
-                                <div class="dropdown-content" style="width:max-content">
-                                    <ul style="list-style:none">
-                                        <li>
-                                            <a href="~/Login/Logout">
-                                                Logout
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="~/ThongTinCaNhan/Index">
-                                                Thông tin cá nhân
-                                            </a>
-                                        </li>
-                                    </ul>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    }
-
+            <div class="col-xl-2 col-lg-2">
+                <div class="header__logo">                    
                 </div>
             </div>
         </div>

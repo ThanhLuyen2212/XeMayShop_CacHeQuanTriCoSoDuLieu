@@ -1,6 +1,12 @@
 ﻿@using XeMayShop.Models;
 @{
-     XeMayShop.Models.Admin admin = (XeMayShop.Models.Admin)Session["Admin"];
+    if ((XeMayShop.Models.Admin)Session["Admin"] == null)    
+    {        
+        <meta http-equiv='refresh' content='0; URL=~/Admin/AdminLogin/Index'>
+    }   
+        XeMayShop.Models.Admin admin = (XeMayShop.Models.Admin)Session["Admin"];   
+
+
 }
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
@@ -31,7 +37,7 @@
                 <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
                 <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
 
-                    <a href="~/Admin/AdminsManager/Edit/@admin.MaAdmin" class="dropdown-item preview-item">
+                    <a href="~/Admin/Admins/Edit/@admin.MaAdmin" class="dropdown-item preview-item">
                         <div class="preview-thumbnail">
                             <div class="preview-icon bg-dark rounded-circle">
                                 <i class="mdi mdi-onepassword  text-info"></i>
@@ -42,7 +48,7 @@
                         </div>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="~/Admin/AdminsManager/Details/@admin.MaAdmin" class="dropdown-item preview-item">
+                    <a href="~/Admin/Admins/Details/@admin.MaAdmin" class="dropdown-item preview-item">
                         <div class="preview-thumbnail">
                             <div class="preview-icon bg-dark rounded-circle">
                                 <i class="mdi mdi-calendar-today text-success"></i>
@@ -69,13 +75,21 @@
             </a>
         </li>
 
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="~/Admin/AdminChiNhanhs/Index">
+                <span class="menu-icon">
+                    <i class="mdi mdi-contacts"></i>
+                </span>
+                <span class="menu-title">Chi nhánh</span>
+            </a>
+        </li>
 
         <li class="nav-item menu-items">
             <a class="nav-link" href="~/Admin/AdminKhachHang/Index">
                 <span class="menu-icon">
                     <i class="mdi mdi-playlist-play"></i>
                 </span>
-                <span class="menu-title">Quản lý khách hàng</span>
+                <span class="menu-title">Khách hàng</span>
             </a>
         </li>
         <li class="nav-item menu-items">
@@ -83,7 +97,7 @@
                 <span class="menu-icon">
                     <i class="mdi mdi-playlist-play"></i>
                 </span>
-                <span class="menu-title">Quản lý loại xe</span>
+                <span class="menu-title">Loại xe</span>
             </a>
         </li>
         <li class="nav-item menu-items">
@@ -91,7 +105,7 @@
                 <span class="menu-icon">
                     <i class="mdi mdi-contacts"></i>
                 </span>
-                <span class="menu-title">Quản lý dòng xe</span>
+                <span class="menu-title">Dòng xe</span>
             </a>
         </li>
 
@@ -109,7 +123,7 @@
                 <span class="menu-icon">
                     <i class="mdi mdi-chart-bar"></i>
                 </span>
-                <span class="menu-title">Quản lý xe</span>
+                <span class="menu-title">Xe</span>
             </a>
         </li>
 
@@ -120,7 +134,7 @@
                     <i class="mdi mdi-table-large"></i>
 
                 </span>
-                <span class="menu-title">Quản lý nhân viên</span>
+                <span class="menu-title">Nhân viên</span>
             </a>
         </li>
 
@@ -129,7 +143,7 @@
                 <span class="menu-icon">
                     <i class="mdi mdi-security"></i>
                 </span>
-                <span class="menu-title">Quản lý phiếu nhập</span>
+                <span class="menu-title">Phiếu nhập</span>
             </a>
         </li>
 
@@ -148,16 +162,7 @@
                 <span class="menu-icon">
                     <i class="mdi mdi-contacts"></i>
                 </span>
-                <span class="menu-title">Quản lý phiếu xuất</span>
-            </a>
-        </li>
-
-        <li class="nav-item menu-items">
-            <a class="nav-link" href="~/Admin/AdminChiTietPhieuXuat/Index">
-                <span class="menu-icon">
-                    <i class="mdi mdi-contacts"></i>
-                </span>
-                <span class="menu-title">Chi tiết phiếu xuất</span>
+                <span class="menu-title">Phiếu xuất</span>
             </a>
         </li>
 

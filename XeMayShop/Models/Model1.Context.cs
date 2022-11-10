@@ -28,16 +28,198 @@ namespace XeMayShop.Models
         }
     
         public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<ChiNhanh> ChiNhanhs { get; set; }
         public virtual DbSet<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; set; }
-        public virtual DbSet<ChiTietPhieuXuat> ChiTietPhieuXuats { get; set; }
         public virtual DbSet<DongXe> DongXes { get; set; }
         public virtual DbSet<KhachHang> KhachHangs { get; set; }
         public virtual DbSet<LoaiXe> LoaiXes { get; set; }
         public virtual DbSet<NhaCungCap> NhaCungCaps { get; set; }
         public virtual DbSet<NhanVien> NhanViens { get; set; }
+        public virtual DbSet<PhieuBaoHanh> PhieuBaoHanhs { get; set; }
+        public virtual DbSet<PhieuDatXe> PhieuDatXes { get; set; }
         public virtual DbSet<PhieuNhap> PhieuNhaps { get; set; }
         public virtual DbSet<PhieuXuat> PhieuXuats { get; set; }
         public virtual DbSet<Xe> Xes { get; set; }
+    
+        public virtual int sp_TaoChiNhanh(string tenChiNhanh, string diaChi)
+        {
+            var tenChiNhanhParameter = tenChiNhanh != null ?
+                new ObjectParameter("TenChiNhanh", tenChiNhanh) :
+                new ObjectParameter("TenChiNhanh", typeof(string));
+    
+            var diaChiParameter = diaChi != null ?
+                new ObjectParameter("DiaChi", diaChi) :
+                new ObjectParameter("DiaChi", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TaoChiNhanh", tenChiNhanhParameter, diaChiParameter);
+        }
+    
+        public virtual int sp_TaoChiTietPhieuNhap(Nullable<int> maXe, Nullable<int> maPhieuNhap, Nullable<int> soLuongNhap, Nullable<double> donGiaNhap)
+        {
+            var maXeParameter = maXe.HasValue ?
+                new ObjectParameter("MaXe", maXe) :
+                new ObjectParameter("MaXe", typeof(int));
+    
+            var maPhieuNhapParameter = maPhieuNhap.HasValue ?
+                new ObjectParameter("MaPhieuNhap", maPhieuNhap) :
+                new ObjectParameter("MaPhieuNhap", typeof(int));
+    
+            var soLuongNhapParameter = soLuongNhap.HasValue ?
+                new ObjectParameter("SoLuongNhap", soLuongNhap) :
+                new ObjectParameter("SoLuongNhap", typeof(int));
+    
+            var donGiaNhapParameter = donGiaNhap.HasValue ?
+                new ObjectParameter("DonGiaNhap", donGiaNhap) :
+                new ObjectParameter("DonGiaNhap", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TaoChiTietPhieuNhap", maXeParameter, maPhieuNhapParameter, soLuongNhapParameter, donGiaNhapParameter);
+        }
+    
+        public virtual int sp_TaoNhaCungCap(string tenNhaCungCap, string diaChi, string dienThoai, string email)
+        {
+            var tenNhaCungCapParameter = tenNhaCungCap != null ?
+                new ObjectParameter("TenNhaCungCap", tenNhaCungCap) :
+                new ObjectParameter("TenNhaCungCap", typeof(string));
+    
+            var diaChiParameter = diaChi != null ?
+                new ObjectParameter("DiaChi", diaChi) :
+                new ObjectParameter("DiaChi", typeof(string));
+    
+            var dienThoaiParameter = dienThoai != null ?
+                new ObjectParameter("DienThoai", dienThoai) :
+                new ObjectParameter("DienThoai", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TaoNhaCungCap", tenNhaCungCapParameter, diaChiParameter, dienThoaiParameter, emailParameter);
+        }
+    
+        public virtual int sp_TaoPhieuNhapMoi(Nullable<int> maNhanVien, Nullable<int> maNhaCungCap, Nullable<int> maChiNhanh)
+        {
+            var maNhanVienParameter = maNhanVien.HasValue ?
+                new ObjectParameter("MaNhanVien", maNhanVien) :
+                new ObjectParameter("MaNhanVien", typeof(int));
+    
+            var maNhaCungCapParameter = maNhaCungCap.HasValue ?
+                new ObjectParameter("MaNhaCungCap", maNhaCungCap) :
+                new ObjectParameter("MaNhaCungCap", typeof(int));
+    
+            var maChiNhanhParameter = maChiNhanh.HasValue ?
+                new ObjectParameter("MaChiNhanh", maChiNhanh) :
+                new ObjectParameter("MaChiNhanh", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TaoPhieuNhapMoi", maNhanVienParameter, maNhaCungCapParameter, maChiNhanhParameter);
+        }
+    
+        public virtual int sp_ThemNhanVien(string tenNhanVien, string namSinh, string gioiTinh, string diaChi, string dienThoai, Nullable<int> maChiNhanh)
+        {
+            var tenNhanVienParameter = tenNhanVien != null ?
+                new ObjectParameter("TenNhanVien", tenNhanVien) :
+                new ObjectParameter("TenNhanVien", typeof(string));
+    
+            var namSinhParameter = namSinh != null ?
+                new ObjectParameter("NamSinh", namSinh) :
+                new ObjectParameter("NamSinh", typeof(string));
+    
+            var gioiTinhParameter = gioiTinh != null ?
+                new ObjectParameter("GioiTinh", gioiTinh) :
+                new ObjectParameter("GioiTinh", typeof(string));
+    
+            var diaChiParameter = diaChi != null ?
+                new ObjectParameter("DiaChi", diaChi) :
+                new ObjectParameter("DiaChi", typeof(string));
+    
+            var dienThoaiParameter = dienThoai != null ?
+                new ObjectParameter("DienThoai", dienThoai) :
+                new ObjectParameter("DienThoai", typeof(string));
+    
+            var maChiNhanhParameter = maChiNhanh.HasValue ?
+                new ObjectParameter("MaChiNhanh", maChiNhanh) :
+                new ObjectParameter("MaChiNhanh", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ThemNhanVien", tenNhanVienParameter, namSinhParameter, gioiTinhParameter, diaChiParameter, dienThoaiParameter, maChiNhanhParameter);
+        }
+    
+        public virtual ObjectResult<KhachHang> sp_TimKiemKhachHang(string dienthoai, string tenKH)
+        {
+            var dienthoaiParameter = dienthoai != null ?
+                new ObjectParameter("dienthoai", dienthoai) :
+                new ObjectParameter("dienthoai", typeof(string));
+    
+            var tenKHParameter = tenKH != null ?
+                new ObjectParameter("TenKH", tenKH) :
+                new ObjectParameter("TenKH", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_TimKiemKhachHang", dienthoaiParameter, tenKHParameter);
+        }
+    
+        public virtual ObjectResult<KhachHang> sp_TimKiemKhachHang(string dienthoai, string tenKH, MergeOption mergeOption)
+        {
+            var dienthoaiParameter = dienthoai != null ?
+                new ObjectParameter("dienthoai", dienthoai) :
+                new ObjectParameter("dienthoai", typeof(string));
+    
+            var tenKHParameter = tenKH != null ?
+                new ObjectParameter("TenKH", tenKH) :
+                new ObjectParameter("TenKH", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_TimKiemKhachHang", mergeOption, dienthoaiParameter, tenKHParameter);
+        }
+    
+        public virtual ObjectResult<KhachHang> sp_XuatTatCaKhachHang()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_XuatTatCaKhachHang");
+        }
+    
+        public virtual ObjectResult<KhachHang> sp_XuatTatCaKhachHang(MergeOption mergeOption)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_XuatTatCaKhachHang", mergeOption);
+        }
+    
+        public virtual int sp_TaoPhieuDatXe(Nullable<int> maXe, string tenNguoiDat, string sDT)
+        {
+            var maXeParameter = maXe.HasValue ?
+                new ObjectParameter("MaXe", maXe) :
+                new ObjectParameter("MaXe", typeof(int));
+    
+            var tenNguoiDatParameter = tenNguoiDat != null ?
+                new ObjectParameter("TenNguoiDat", tenNguoiDat) :
+                new ObjectParameter("TenNguoiDat", typeof(string));
+    
+            var sDTParameter = sDT != null ?
+                new ObjectParameter("SDT", sDT) :
+                new ObjectParameter("SDT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TaoPhieuDatXe", maXeParameter, tenNguoiDatParameter, sDTParameter);
+        }
+    
+        public virtual ObjectResult<Xe> sp_TimKiemXe(string value, Nullable<int> ma)
+        {
+            var valueParameter = value != null ?
+                new ObjectParameter("value", value) :
+                new ObjectParameter("value", typeof(string));
+    
+            var maParameter = ma.HasValue ?
+                new ObjectParameter("ma", ma) :
+                new ObjectParameter("ma", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Xe>("sp_TimKiemXe", valueParameter, maParameter);
+        }
+    
+        public virtual ObjectResult<Xe> sp_TimKiemXe(string value, Nullable<int> ma, MergeOption mergeOption)
+        {
+            var valueParameter = value != null ?
+                new ObjectParameter("value", value) :
+                new ObjectParameter("value", typeof(string));
+    
+            var maParameter = ma.HasValue ?
+                new ObjectParameter("ma", ma) :
+                new ObjectParameter("ma", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Xe>("sp_TimKiemXe", mergeOption, valueParameter, maParameter);
+        }
     
         public virtual ObjectResult<Admin> sp_CheckLogin(string tenDangNhap, string matKhau)
         {
@@ -65,196 +247,55 @@ namespace XeMayShop.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Admin>("sp_CheckLogin", mergeOption, tenDangNhapParameter, matKhauParameter);
         }
     
-        public virtual ObjectResult<KhachHang> sp_CheckLoginKhachHang(string tenDangNhap, string matKhau)
+        public virtual int sp_TaoPhieuXuat(Nullable<int> maNhanVien, Nullable<int> maKhachHanh, Nullable<int> maChiNhanh, Nullable<int> maXe, Nullable<int> thanhTienXuat)
         {
-            var tenDangNhapParameter = tenDangNhap != null ?
-                new ObjectParameter("TenDangNhap", tenDangNhap) :
-                new ObjectParameter("TenDangNhap", typeof(string));
+            var maNhanVienParameter = maNhanVien.HasValue ?
+                new ObjectParameter("MaNhanVien", maNhanVien) :
+                new ObjectParameter("MaNhanVien", typeof(int));
     
-            var matKhauParameter = matKhau != null ?
-                new ObjectParameter("MatKhau", matKhau) :
-                new ObjectParameter("MatKhau", typeof(string));
+            var maKhachHanhParameter = maKhachHanh.HasValue ?
+                new ObjectParameter("MaKhachHanh", maKhachHanh) :
+                new ObjectParameter("MaKhachHanh", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_CheckLoginKhachHang", tenDangNhapParameter, matKhauParameter);
+            var maChiNhanhParameter = maChiNhanh.HasValue ?
+                new ObjectParameter("MaChiNhanh", maChiNhanh) :
+                new ObjectParameter("MaChiNhanh", typeof(int));
+    
+            var maXeParameter = maXe.HasValue ?
+                new ObjectParameter("MaXe", maXe) :
+                new ObjectParameter("MaXe", typeof(int));
+    
+            var thanhTienXuatParameter = thanhTienXuat.HasValue ?
+                new ObjectParameter("ThanhTienXuat", thanhTienXuat) :
+                new ObjectParameter("ThanhTienXuat", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TaoPhieuXuat", maNhanVienParameter, maKhachHanhParameter, maChiNhanhParameter, maXeParameter, thanhTienXuatParameter);
         }
     
-        public virtual ObjectResult<KhachHang> sp_CheckLoginKhachHang(string tenDangNhap, string matKhau, MergeOption mergeOption)
+        public virtual int sp_CapNhatThongTinChiNhanh(Nullable<int> maChiNhanh, string tenChiNhanh, string diaChi)
         {
-            var tenDangNhapParameter = tenDangNhap != null ?
-                new ObjectParameter("TenDangNhap", tenDangNhap) :
-                new ObjectParameter("TenDangNhap", typeof(string));
+            var maChiNhanhParameter = maChiNhanh.HasValue ?
+                new ObjectParameter("MaChiNhanh", maChiNhanh) :
+                new ObjectParameter("MaChiNhanh", typeof(int));
     
-            var matKhauParameter = matKhau != null ?
-                new ObjectParameter("MatKhau", matKhau) :
-                new ObjectParameter("MatKhau", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_CheckLoginKhachHang", mergeOption, tenDangNhapParameter, matKhauParameter);
-        }
-    
-        public virtual int sp_DangKyKhachHang(string tenKhachHang, string diaChi, string dienThoai, string tenDangNhap, string matKhau)
-        {
-            var tenKhachHangParameter = tenKhachHang != null ?
-                new ObjectParameter("TenKhachHang", tenKhachHang) :
-                new ObjectParameter("TenKhachHang", typeof(string));
+            var tenChiNhanhParameter = tenChiNhanh != null ?
+                new ObjectParameter("TenChiNhanh", tenChiNhanh) :
+                new ObjectParameter("TenChiNhanh", typeof(string));
     
             var diaChiParameter = diaChi != null ?
                 new ObjectParameter("DiaChi", diaChi) :
                 new ObjectParameter("DiaChi", typeof(string));
     
-            var dienThoaiParameter = dienThoai != null ?
-                new ObjectParameter("DienThoai", dienThoai) :
-                new ObjectParameter("DienThoai", typeof(string));
-    
-            var tenDangNhapParameter = tenDangNhap != null ?
-                new ObjectParameter("TenDangNhap", tenDangNhap) :
-                new ObjectParameter("TenDangNhap", typeof(string));
-    
-            var matKhauParameter = matKhau != null ?
-                new ObjectParameter("MatKhau", matKhau) :
-                new ObjectParameter("MatKhau", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DangKyKhachHang", tenKhachHangParameter, diaChiParameter, dienThoaiParameter, tenDangNhapParameter, matKhauParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CapNhatThongTinChiNhanh", maChiNhanhParameter, tenChiNhanhParameter, diaChiParameter);
         }
     
-        [DbFunction("QuanLyXeMayEntities", "LayKhachHang")]
-        public virtual IQueryable<KhachHang> LayKhachHang()
+        public virtual int sp_XoaChiNhanh(Nullable<int> maChiNhanh)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<KhachHang>("[QuanLyXeMayEntities].[LayKhachHang]()");
-        }
+            var maChiNhanhParameter = maChiNhanh.HasValue ?
+                new ObjectParameter("MaChiNhanh", maChiNhanh) :
+                new ObjectParameter("MaChiNhanh", typeof(int));
     
-        public virtual ObjectResult<KhachHang> sp_TimKiemKhachHangTheoMaKhachHang(Nullable<int> makhachhang)
-        {
-            var makhachhangParameter = makhachhang.HasValue ?
-                new ObjectParameter("makhachhang", makhachhang) :
-                new ObjectParameter("makhachhang", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_TimKiemKhachHangTheoMaKhachHang", makhachhangParameter);
-        }
-    
-        public virtual ObjectResult<KhachHang> sp_TimKiemKhachHangTheoMaKhachHang(Nullable<int> makhachhang, MergeOption mergeOption)
-        {
-            var makhachhangParameter = makhachhang.HasValue ?
-                new ObjectParameter("makhachhang", makhachhang) :
-                new ObjectParameter("makhachhang", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_TimKiemKhachHangTheoMaKhachHang", mergeOption, makhachhangParameter);
-        }
-    
-        [DbFunction("QuanLyXeMayEntities", "ft_TimKiemKhachHangTheoMaKhachHang")]
-        public virtual IQueryable<ft_TimKiemKhachHangTheoMaKhachHang_Result> ft_TimKiemKhachHangTheoMaKhachHang(Nullable<int> makhachhang)
-        {
-            var makhachhangParameter = makhachhang.HasValue ?
-                new ObjectParameter("makhachhang", makhachhang) :
-                new ObjectParameter("makhachhang", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ft_TimKiemKhachHangTheoMaKhachHang_Result>("[QuanLyXeMayEntities].[ft_TimKiemKhachHangTheoMaKhachHang](@makhachhang)", makhachhangParameter);
-        }
-    
-        [DbFunction("QuanLyXeMayEntities", "ft_TimKiemThongTinXe")]
-        public virtual IQueryable<ft_TimKiemThongTinXe_Result> ft_TimKiemThongTinXe(Nullable<int> intValue, string stringValue)
-        {
-            var intValueParameter = intValue.HasValue ?
-                new ObjectParameter("IntValue", intValue) :
-                new ObjectParameter("IntValue", typeof(int));
-    
-            var stringValueParameter = stringValue != null ?
-                new ObjectParameter("StringValue", stringValue) :
-                new ObjectParameter("StringValue", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<ft_TimKiemThongTinXe_Result>("[QuanLyXeMayEntities].[ft_TimKiemThongTinXe](@IntValue, @StringValue)", intValueParameter, stringValueParameter);
-        }
-    
-        public virtual int sp_CapNhatThongTinKhachHang(Nullable<int> maKhachHang, string tenKhachHang, string diaChi, string dienThoai, string tenDangNhap, string matKhau)
-        {
-            var maKhachHangParameter = maKhachHang.HasValue ?
-                new ObjectParameter("MaKhachHang", maKhachHang) :
-                new ObjectParameter("MaKhachHang", typeof(int));
-    
-            var tenKhachHangParameter = tenKhachHang != null ?
-                new ObjectParameter("TenKhachHang", tenKhachHang) :
-                new ObjectParameter("TenKhachHang", typeof(string));
-    
-            var diaChiParameter = diaChi != null ?
-                new ObjectParameter("DiaChi", diaChi) :
-                new ObjectParameter("DiaChi", typeof(string));
-    
-            var dienThoaiParameter = dienThoai != null ?
-                new ObjectParameter("DienThoai", dienThoai) :
-                new ObjectParameter("DienThoai", typeof(string));
-    
-            var tenDangNhapParameter = tenDangNhap != null ?
-                new ObjectParameter("TenDangNhap", tenDangNhap) :
-                new ObjectParameter("TenDangNhap", typeof(string));
-    
-            var matKhauParameter = matKhau != null ?
-                new ObjectParameter("MatKhau", matKhau) :
-                new ObjectParameter("MatKhau", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CapNhatThongTinKhachHang", maKhachHangParameter, tenKhachHangParameter, diaChiParameter, dienThoaiParameter, tenDangNhapParameter, matKhauParameter);
-        }
-    
-        public virtual int sp_ThemXe(Nullable<int> maloaixe, Nullable<int> madongxe, string tenxe, string motaxe, string thongtinbaohanh, Nullable<double> dongiaxe)
-        {
-            var maloaixeParameter = maloaixe.HasValue ?
-                new ObjectParameter("maloaixe", maloaixe) :
-                new ObjectParameter("maloaixe", typeof(int));
-    
-            var madongxeParameter = madongxe.HasValue ?
-                new ObjectParameter("madongxe", madongxe) :
-                new ObjectParameter("madongxe", typeof(int));
-    
-            var tenxeParameter = tenxe != null ?
-                new ObjectParameter("tenxe", tenxe) :
-                new ObjectParameter("tenxe", typeof(string));
-    
-            var motaxeParameter = motaxe != null ?
-                new ObjectParameter("motaxe", motaxe) :
-                new ObjectParameter("motaxe", typeof(string));
-    
-            var thongtinbaohanhParameter = thongtinbaohanh != null ?
-                new ObjectParameter("thongtinbaohanh", thongtinbaohanh) :
-                new ObjectParameter("thongtinbaohanh", typeof(string));
-    
-            var dongiaxeParameter = dongiaxe.HasValue ?
-                new ObjectParameter("dongiaxe", dongiaxe) :
-                new ObjectParameter("dongiaxe", typeof(double));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ThemXe", maloaixeParameter, madongxeParameter, tenxeParameter, motaxeParameter, thongtinbaohanhParameter, dongiaxeParameter);
-        }
-    
-        public virtual int sp_XoaXe(Nullable<int> maxe)
-        {
-            var maxeParameter = maxe.HasValue ?
-                new ObjectParameter("maxe", maxe) :
-                new ObjectParameter("maxe", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_XoaXe", maxeParameter);
-        }
-    
-        public virtual ObjectResult<KhachHang> sp_TimKiemKhachHang(string value, Nullable<int> makhachhang)
-        {
-            var valueParameter = value != null ?
-                new ObjectParameter("value", value) :
-                new ObjectParameter("value", typeof(string));
-    
-            var makhachhangParameter = makhachhang.HasValue ?
-                new ObjectParameter("makhachhang", makhachhang) :
-                new ObjectParameter("makhachhang", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_TimKiemKhachHang", valueParameter, makhachhangParameter);
-        }
-    
-        public virtual ObjectResult<KhachHang> sp_TimKiemKhachHang(string value, Nullable<int> makhachhang, MergeOption mergeOption)
-        {
-            var valueParameter = value != null ?
-                new ObjectParameter("value", value) :
-                new ObjectParameter("value", typeof(string));
-    
-            var makhachhangParameter = makhachhang.HasValue ?
-                new ObjectParameter("makhachhang", makhachhang) :
-                new ObjectParameter("makhachhang", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<KhachHang>("sp_TimKiemKhachHang", mergeOption, valueParameter, makhachhangParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_XoaChiNhanh", maChiNhanhParameter);
         }
     }
 }

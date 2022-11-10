@@ -17,18 +17,23 @@ namespace XeMayShop.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PhieuXuat()
         {
-            this.ChiTietPhieuXuats = new HashSet<ChiTietPhieuXuat>();
+            this.PhieuBaoHanhs = new HashSet<PhieuBaoHanh>();
         }
     
         public int MaPhieuXuat { get; set; }
         public Nullable<int> MaNhanVien { get; set; }
         public Nullable<int> MaKhachHang { get; set; }
+        public Nullable<int> MaChiNhanh { get; set; }
+        public Nullable<int> MaXe { get; set; }
         public Nullable<System.DateTime> NgayXuat { get; set; }
-        public Nullable<double> ThanhTienXuat { get; set; }
+        public Nullable<int> ThanhTienXuat { get; set; }
+        public string TinhTrang { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietPhieuXuat> ChiTietPhieuXuats { get; set; }
+        public virtual ChiNhanh ChiNhanh { get; set; }
         public virtual KhachHang KhachHang { get; set; }
         public virtual NhanVien NhanVien { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PhieuBaoHanh> PhieuBaoHanhs { get; set; }
+        public virtual Xe Xe { get; set; }
     }
 }

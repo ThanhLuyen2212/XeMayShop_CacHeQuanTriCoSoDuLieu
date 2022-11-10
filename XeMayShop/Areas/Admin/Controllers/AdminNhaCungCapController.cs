@@ -51,12 +51,20 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaNhaCungCap,TenNhaCungCap,DiaChi,DienThoai,Email")] NhaCungCap nhaCungCap)
+        public ActionResult Create(NhaCungCap nhaCungCap)
         {
             if (ModelState.IsValid)
             {
-                db.NhaCungCaps.Add(nhaCungCap);
-                db.SaveChanges();
+                if(nhaCungCap.TenNhaCungCap == null || nhaCungCap.TenNhaCungCap == "" || nhaCungCap.DienThoai == null || nhaCungCap.DienThoai == "")
+                {
+                    ViewBag.ErrorInfo = "Yêu cầu nhập thông tin đầy đủ";
+                    return View("Create");
+                }
+
+                /*db.NhaCungCaps.Add(nhaCungCap);
+                db.SaveChanges();*/
+                db.sp_TaoNhaCungCap(nhaCungCap.TenNhaCungCap, nhaCungCap.DiaChi, nhaCungCap.DienThoai, nhaCungCap.Email);
+
                 return RedirectToAction("Index");
             }
 
@@ -83,7 +91,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaNhaCungCap,TenNhaCungCap,DiaChi,DienThoai,Email")] NhaCungCap nhaCungCap)
+        public ActionResult Edit(NhaCungCap nhaCungCap)
         {
             if (ModelState.IsValid)
             {

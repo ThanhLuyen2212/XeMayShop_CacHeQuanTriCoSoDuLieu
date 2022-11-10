@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -15,16 +16,22 @@ namespace XeMayShop.Areas.Admin.Controllers
         private QuanLyXeMayEntities db = new QuanLyXeMayEntities();
 
         // GET: Admin/AdminXe
-        public ActionResult Index()
+        public ActionResult Index(string TenXe, int? MaXe)
         {
             if (Session["Admin"] == null)
             {
                 return RedirectToAction("Index", "AdminLogin");
             }
             else
-            {
-                var xes = db.Xes.Include(x => x.DongXe).Include(x => x.LoaiXe);
-                return View(xes.ToList());
+            {               
+                if ((TenXe == null || TenXe == "" )&& (MaXe == null ))
+                {
+                    return View(db.Xes.ToList());
+                }               
+                else
+                {   
+                    return View(db.sp_TimKiemXe(TenXe,MaXe).ToList());             
+                }                
             }
         }
 
@@ -54,7 +61,8 @@ namespace XeMayShop.Areas.Admin.Controllers
         // POST: Admin/AdminXe/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MaXe,MaLoaiXe,MaDongXe,TenXe,MoTaXe,ThongTinBaoHanh,DonGiaXe,SoLuongHienCo")] Xe xe)
         {
@@ -68,7 +76,29 @@ namespace XeMayShop.Areas.Admin.Controllers
             ViewBag.MaDongXe = new SelectList(db.DongXes, "MaDongXe", "TenDongXe", xe.MaDongXe);
             ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe", xe.MaLoaiXe);
             return View(xe);
+        }*/
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Xe xe)
+        {
+            if (xe.UploadImage != null)
+            {
+                using (var binaryReader = new BinaryReader(xe.UploadImage.InputStream))
+                    xe.HinhAnh = binaryReader.ReadBytes(xe.UploadImage.ContentLength);
+            }
+            if (ModelState.IsValid)
+            {
+                /*db.sp_ThemXe(xe.MaLoaiXe, xe.MaDongXe, xe.TenXe, xe.MoTaXe, xe.ThongTinBaoHanh, xe.DonGiaXe,xe.NamSanXuat,xe.HinhAnh);*/
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.MaDongXe = new SelectList(db.DongXes, "MaDongXe", "TenDongXe", xe.MaDongXe);
+            ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe", xe.MaLoaiXe);
+            return View(xe);
         }
+
 
         // GET: Admin/AdminXe/Edit/5
         public ActionResult Edit(int? id)
@@ -92,10 +122,16 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaXe,MaLoaiXe,MaDongXe,TenXe,MoTaXe,ThongTinBaoHanh,DonGiaXe,SoLuongHienCo")] Xe xe)
+        public ActionResult Edit(Xe xe)
         {
             if (ModelState.IsValid)
             {
+                if (xe.UploadImage != null)
+                {
+                    using (var binaryReader = new BinaryReader(xe.UploadImage.InputStream))
+                        xe.HinhAnh = binaryReader.ReadBytes(xe.UploadImage.ContentLength);
+                }
+
                 db.Entry(xe).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -121,13 +157,22 @@ namespace XeMayShop.Areas.Admin.Controllers
         }
 
         // POST: Admin/AdminXe/Delete/5
-        [HttpPost, ActionName("Delete")]
+        /*[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Xe xe = db.Xes.Find(id);
             db.Xes.Remove(xe);
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }*/
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Xe xe = db.Xes.Find(id);
+          /*  db.sp_XoaXe(id);*/
             return RedirectToAction("Index");
         }
 

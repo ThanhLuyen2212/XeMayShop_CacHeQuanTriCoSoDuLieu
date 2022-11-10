@@ -17,6 +17,7 @@ namespace XeMayShop.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LoaiXe()
         {
+            this.DongXes = new HashSet<DongXe>();
             this.Xes = new HashSet<Xe>();
         }
     
@@ -24,6 +25,8 @@ namespace XeMayShop.Models
         public string TenLoaiXe { get; set; }
         public Nullable<int> SoLuongHienCo { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DongXe> DongXes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Xe> Xes { get; set; }
     }

@@ -21,11 +21,14 @@ namespace XeMayShop.Models
         }
     
         public int MaPhieuNhap { get; set; }
-        public Nullable<System.DateTime> NgayNhap { get; set; }
         public Nullable<int> MaNhanVien { get; set; }
         public Nullable<int> MaNhaCungCap { get; set; }
+        public Nullable<int> MaChiNhanh { get; set; }
+        public Nullable<System.DateTime> NgayNhap { get; set; }
+        public Nullable<int> TongSoXeNhap { get; set; }
         public Nullable<double> ThanhTienNhap { get; set; }
     
+        public virtual ChiNhanh ChiNhanh { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; set; }
         public virtual NhaCungCap NhaCungCap { get; set; }

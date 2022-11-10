@@ -23,8 +23,6 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
             else
             {
-
-
                 var phieuXuats = db.PhieuXuats.Include(p => p.KhachHang).Include(p => p.NhanVien);
                 return View(phieuXuats.ToList());
             }
@@ -58,12 +56,20 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaPhieuXuat,MaNhanVien,MaKhachHang,NgayXuat,ThanhTienXuat")] PhieuXuat phieuXuat)
+        public ActionResult Create(PhieuXuat phieuXuat)
         {
             if (ModelState.IsValid)
             {
-                db.PhieuXuats.Add(phieuXuat);
-                db.SaveChanges();
+                /*db.PhieuXuats.Add(phieuXuat);
+                db.SaveChanges();*/
+
+                if (phieuXuat.MaNhanVien == null || phieuXuat.MaChiNhanh == null || phieuXuat.MaKhachHang == null || phieuXuat.ThanhTienXuat == null)
+                {
+                    ViewBag.ErrorInfo = "Yêu cầu xem lại thông tin";
+                    return View("Create");
+                }
+               
+                db.sp_TaoPhieuXuat(phieuXuat.MaNhanVien, phieuXuat.MaKhachHang, phieuXuat.MaXe, phieuXuat.MaChiNhanh,phieuXuat.ThanhTienXuat);
                 return RedirectToAction("Index");
             }
 
@@ -94,7 +100,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaPhieuXuat,MaNhanVien,MaKhachHang,NgayXuat,ThanhTienXuat")] PhieuXuat phieuXuat)
+        public ActionResult Edit(PhieuXuat phieuXuat)
         {
             if (ModelState.IsValid)
             {

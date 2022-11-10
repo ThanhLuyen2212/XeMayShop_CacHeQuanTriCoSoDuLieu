@@ -51,7 +51,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaLoaiXe,TenLoaiXe")] LoaiXe loaiXe)
+        public ActionResult Create([Bind(Include = "MaLoaiXe,TenLoaiXe,SoLuongHienCo")] LoaiXe loaiXe)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaLoaiXe,TenLoaiXe")] LoaiXe loaiXe)
+        public ActionResult Edit([Bind(Include = "MaLoaiXe,TenLoaiXe,SoLuongHienCo")] LoaiXe loaiXe)
         {
             if (ModelState.IsValid)
             {

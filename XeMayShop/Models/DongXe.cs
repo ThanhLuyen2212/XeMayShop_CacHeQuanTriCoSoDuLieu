@@ -21,9 +21,11 @@ namespace XeMayShop.Models
         }
     
         public int MaDongXe { get; set; }
+        public Nullable<int> MaLoaiXe { get; set; }
         public string TenDongXe { get; set; }
         public Nullable<int> SoLuongHienCo { get; set; }
     
+        public virtual LoaiXe LoaiXe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Xe> Xes { get; set; }
     }

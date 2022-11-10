@@ -23,8 +23,6 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
             else
             {
-
-
                 var phieuNhaps = db.PhieuNhaps.Include(p => p.NhaCungCap).Include(p => p.NhanVien);
                 return View(phieuNhaps.ToList());
             }
@@ -49,6 +47,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.MaNhaCungCap = new SelectList(db.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap");
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien");
             return View();
         }
@@ -58,15 +57,16 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaPhieuNhap,NgayNhap,MaNhanVien,MaNhaCungCap,ThanhTienNhap")] PhieuNhap phieuNhap)
+        public ActionResult Create( PhieuNhap phieuNhap)
         {
             if (ModelState.IsValid)
             {
-                db.PhieuNhaps.Add(phieuNhap);
-                db.SaveChanges();
+                db.sp_TaoPhieuNhapMoi(phieuNhap.MaNhanVien, phieuNhap.MaNhaCungCap, phieuNhap.MaChiNhanh);
+               /* db.PhieuNhaps.Add(phieuNhap);
+                db.SaveChanges();*/
                 return RedirectToAction("Index");
             }
-
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             ViewBag.MaNhaCungCap = new SelectList(db.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap", phieuNhap.MaNhaCungCap);
             ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien", phieuNhap.MaNhanVien);
             return View(phieuNhap);
@@ -84,6 +84,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             ViewBag.MaNhaCungCap = new SelectList(db.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap", phieuNhap.MaNhaCungCap);
             ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien", phieuNhap.MaNhanVien);
             return View(phieuNhap);
@@ -94,7 +95,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaPhieuNhap,NgayNhap,MaNhanVien,MaNhaCungCap,ThanhTienNhap")] PhieuNhap phieuNhap)
+        public ActionResult Edit(PhieuNhap phieuNhap)
         {
             if (ModelState.IsValid)
             {
@@ -102,6 +103,7 @@ namespace XeMayShop.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             ViewBag.MaNhaCungCap = new SelectList(db.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap", phieuNhap.MaNhaCungCap);
             ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien", phieuNhap.MaNhanVien);
             return View(phieuNhap);

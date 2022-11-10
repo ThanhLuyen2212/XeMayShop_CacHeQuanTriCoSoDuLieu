@@ -15,35 +15,53 @@ namespace XeMayShop.Areas.Admin.Controllers
         private QuanLyXeMayEntities db = new QuanLyXeMayEntities();
 
         // GET: Admin/AdminChiTietPhieuNhap
-        public ActionResult Index()
+        public ActionResult Index(string MaPhieuNhap)
         {
             if (Session["Admin"] == null)
             {
                 return RedirectToAction("Index", "AdminLogin");
             }
-            else
+            if(MaPhieuNhap == "" || MaPhieuNhap == null)
             {
-
-
                 var chiTietPhieuNhaps = db.ChiTietPhieuNhaps.Include(c => c.PhieuNhap).Include(c => c.Xe);
                 return View(chiTietPhieuNhaps.ToList());
+            }
+            else
+            {
+                int id = int.Parse(MaPhieuNhap);
+                var chiTietPhieuNhaps = db.ChiTietPhieuNhaps.Include(c => c.PhieuNhap).Include(c => c.Xe).Where(x => x.MaPhieuNhap == id).ToList();
+                return View(chiTietPhieuNhaps);
             }
         }
 
         // GET: Admin/AdminChiTietPhieuNhap/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id, int xe)
         {
-            if (id == null)
+            if (id == null || xe == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ChiTietPhieuNhap chiTietPhieuNhap = db.ChiTietPhieuNhaps.Find(id);
+            ChiTietPhieuNhap chiTietPhieuNhap = db.ChiTietPhieuNhaps.Where(x => x.MaPhieuNhap == id && x.MaXe == xe).FirstOrDefault();
             if (chiTietPhieuNhap == null)
             {
                 return HttpNotFound();
             }
             return View(chiTietPhieuNhap);
         }
+
+        /*public ActionResult Details(int? id)
+        {
+            if (id == null || xe == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ChiTietPhieuNhap chiTietPhieuNhap = db.ChiTietPhieuNhaps.Where(x => x.MaPhieuNhap == id);
+            if (chiTietPhieuNhap == null)
+            {
+                return HttpNotFound();
+            }
+            return View(chiTietPhieuNhap);
+        }*/
 
         // GET: Admin/AdminChiTietPhieuNhap/Create
         public ActionResult Create()
@@ -58,7 +76,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaXe,MaPhieuNhap,SoLuongNhap,DonGiaNhap")] ChiTietPhieuNhap chiTietPhieuNhap)
+        public ActionResult Create( ChiTietPhieuNhap chiTietPhieuNhap)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +91,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminChiTietPhieuNhap/Edit/5
-        public ActionResult Edit(int? id)
+        /*public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -88,13 +106,30 @@ namespace XeMayShop.Areas.Admin.Controllers
             ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe", chiTietPhieuNhap.MaXe);
             return View(chiTietPhieuNhap);
         }
+*/
+        public ActionResult Edit(int? id,int? xe)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ChiTietPhieuNhap chiTietPhieuNhap = db.ChiTietPhieuNhaps.Where(x => x.MaPhieuNhap == id && x.MaXe == xe).FirstOrDefault();
+            if (chiTietPhieuNhap == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.MaPhieuNhap = new SelectList(db.PhieuNhaps, "MaPhieuNhap", "MaPhieuNhap", chiTietPhieuNhap.MaPhieuNhap);
+            ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe", chiTietPhieuNhap.MaXe);
+            return View(chiTietPhieuNhap);
+        }
+
 
         // POST: Admin/AdminChiTietPhieuNhap/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaXe,MaPhieuNhap,SoLuongNhap,DonGiaNhap")] ChiTietPhieuNhap chiTietPhieuNhap)
+        public ActionResult Edit(ChiTietPhieuNhap chiTietPhieuNhap)
         {
             if (ModelState.IsValid)
             {
@@ -108,13 +143,13 @@ namespace XeMayShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminChiTietPhieuNhap/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, int? xe)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ChiTietPhieuNhap chiTietPhieuNhap = db.ChiTietPhieuNhaps.Find(id);
+            ChiTietPhieuNhap chiTietPhieuNhap = db.ChiTietPhieuNhaps.Where(x => x.MaPhieuNhap == id && x.MaXe == xe).FirstOrDefault();
             if (chiTietPhieuNhap == null)
             {
                 return HttpNotFound();
@@ -125,9 +160,9 @@ namespace XeMayShop.Areas.Admin.Controllers
         // POST: Admin/AdminChiTietPhieuNhap/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, int xe)
         {
-            ChiTietPhieuNhap chiTietPhieuNhap = db.ChiTietPhieuNhaps.Find(id);
+            ChiTietPhieuNhap chiTietPhieuNhap = db.ChiTietPhieuNhaps.Where(x => x.MaPhieuNhap == id && x.MaXe == xe).FirstOrDefault();
             db.ChiTietPhieuNhaps.Remove(chiTietPhieuNhap);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -1,4 +1,4 @@
-﻿@model XeMayShop.Models.ChiTietPhieuXuat
+﻿@model XeMayShop.Models.PhieuBaoHanh
 
 @{
     ViewBag.Title = "Delete";
@@ -9,39 +9,47 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>ChiTietPhieuXuat</h4>
+    <h4>PhieuBaoHanh</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.SoLuongXuat)
+            @Html.DisplayNameFor(model => model.NgayBatDau)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SoLuongXuat)
+            @Html.DisplayFor(model => model.NgayBatDau)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DonGiaXuat)
+            @Html.DisplayNameFor(model => model.ThoiGianBaoHanh)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DonGiaXuat)
+            @Html.DisplayFor(model => model.ThoiGianBaoHanh)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PhieuXuat.MaPhieuXuat)
+            @Html.DisplayNameFor(model => model.SoKhung)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PhieuXuat.MaPhieuXuat)
+            @Html.DisplayFor(model => model.SoKhung)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Xe.TenXe)
+            @Html.DisplayNameFor(model => model.SoSuon)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Xe.TenXe)
+            @Html.DisplayFor(model => model.SoSuon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhieuXuat.TinhTrang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhieuXuat.TinhTrang)
         </dd>
 
     </dl>

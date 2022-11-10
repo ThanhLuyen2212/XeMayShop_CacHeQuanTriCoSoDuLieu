@@ -10,14 +10,17 @@
 namespace XeMayShop.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_TimKiemKhachHang_Result1
+    public partial class PhieuDatXe
     {
-        public int MaKhachHang { get; set; }
-        public string TenKhachHang { get; set; }
-        public string DiaChi { get; set; }
-        public string DienThoai { get; set; }
-        public string TenDangNhap { get; set; }
-        public string MatKhau { get; set; }
+        public int MaPhieuDatXe { get; set; }
+        public Nullable<int> MaXe { get; set; }
+        public string TenNguoiDat { get; set; }
+        public string SDT { get; set; }
+        public string TinhTrang { get; set; }
+        public Nullable<System.DateTime> NgayDat { get; set; }
+    
+        public virtual Xe Xe { get; set; }
     }
 }
