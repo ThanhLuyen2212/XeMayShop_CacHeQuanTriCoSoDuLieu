@@ -39,7 +39,7 @@ namespace XeMayShop.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            string tenKH = form["TenKH"];
+            string tenKH = form["TenKH"];            
             string SDT = form["SDT"];
 
             if (tenKH == "" || SDT == "")
@@ -47,7 +47,7 @@ namespace XeMayShop.Controllers
                 ViewBag.ErrorInfo = "Vui lòng nhập hết thông tin";               
                 return View("DatXe");
             }
-            data.sp_TaoPhieuDatXe(xe.MaXe,tenKH,SDT);
+            data.sp_TaoPhieuDatXe(xe.MaXe,xe.MauXe,tenKH,SDT);
 
 
             return RedirectToAction("DatHangThanhCong", "ThongBao");

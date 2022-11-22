@@ -54,21 +54,35 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(NhanVien nhanVien)
         {
-            if (ModelState.IsValid)
+            /* if (ModelState.IsValid)
+             {
+                 if (nhanVien.MaChiNhanh == null || nhanVien.TenNhanVien == "" || nhanVien.DienThoai == "")
+                 {
+                     ViewBag.ErrorInfo = "Sai thông tin tài khoản";
+                     return View("Index");
+
+                 }
+                 *//*   db.NhanViens.Add(nhanVien);
+                    db.SaveChanges();*//*
+                 db.sp_ThemNhanVien(nhanVien.TenNhanVien, nhanVien.NamSinh, nhanVien.GioiTinh, nhanVien.DiaChi, nhanVien.DienThoai, nhanVien.MaChiNhanh);
+                 ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
+                 return RedirectToAction("Index");
+             }
+
+             return View(nhanVien);*/
+            try
             {
-                if (nhanVien.MaChiNhanh == null || nhanVien.TenNhanVien == "" || nhanVien.DienThoai == "")
+                if (ModelState.IsValid)
                 {
-                    ViewBag.ErrorInfo = "Sai thông tin tài khoản";
-                    return View("Index");
-
+                    db.sp_ThemNhanVien(nhanVien.TenNhanVien, nhanVien.NamSinh, nhanVien.GioiTinh, nhanVien.DiaChi, nhanVien.DienThoai, nhanVien.MaChiNhanh);
+                    return RedirectToAction("Index");
                 }
-                /*   db.NhanViens.Add(nhanVien);
-                   db.SaveChanges();*/
-                db.sp_ThemNhanVien(nhanVien.TenNhanVien, nhanVien.NamSinh, nhanVien.GioiTinh, nhanVien.DiaChi, nhanVien.DienThoai, nhanVien.MaChiNhanh);
-                ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
-                return RedirectToAction("Index");
             }
-
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             return View(nhanVien);
         }
 
@@ -95,11 +109,23 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit( NhanVien nhanVien)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Entry(nhanVien).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
+            return View(nhanVien);*/
+
+            try
+            {
+                db.sp_ChinhSuaThongTinNhanVien(nhanVien.MaNhanVien,nhanVien.TenNhanVien,nhanVien.NamSinh,nhanVien.GioiTinh,nhanVien.DiaChi,nhanVien.DienThoai,nhanVien.MaChiNhanh);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
             }
             ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             return View(nhanVien);
@@ -118,6 +144,7 @@ namespace XeMayShop.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             return View(nhanVien);
+
         }
 
         // POST: Admin/AdminNhanVien/Delete/5
@@ -125,10 +152,21 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            NhanVien nhanVien = db.NhanViens.Find(id);
+            /*NhanVien nhanVien = db.NhanViens.Find(id);
             db.NhanViens.Remove(nhanVien);
             db.SaveChanges();
+            return RedirectToAction("Index");*/
+            try
+            {
+                db.sp_XoaNhanVien(id);
             return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
+            NhanVien nhanVien = db.NhanViens.Find(id);
+            return View(nhanVien);
         }
 
         protected override void Dispose(bool disposing)

@@ -31,9 +31,21 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Ngày đặt xe</label>
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Khách hàng</label>
                     <div class="col-sm-9">
-                        @Html.DisplayFor(model => model.NgayDatXe)
+                        @Html.DisplayFor(model => model.ChiNhanh.TenChiNhanh)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Mã xe</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.MaXe)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Màu xe</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.MauXe)
                     </div>
                 </div>
                 <div class="form-group row">
@@ -43,21 +55,15 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Tổng số xe xuất</label>
-                    <div class="col-sm-9">
-                        @Html.DisplayFor(model => model.TongSoXeXuat)
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Thành tiền xuất</label>
                     <div class="col-sm-9">
                         @Html.DisplayFor(model => model.ThanhTienXuat)
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Tình trạng</label>
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Ghi chú</label>
                     <div class="col-sm-9">
-                        @Html.DisplayFor(model => model.TinhTrang)
+                        @Html.DisplayFor(model => model.GhiChu)
                     </div>
                 </div>
 
@@ -68,3 +74,4 @@
         </div>
     </div>
 </div>
+

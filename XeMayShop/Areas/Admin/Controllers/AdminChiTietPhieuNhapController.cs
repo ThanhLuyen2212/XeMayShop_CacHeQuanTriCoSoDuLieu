@@ -78,12 +78,21 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create( ChiTietPhieuNhap chiTietPhieuNhap)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.ChiTietPhieuNhaps.Add(chiTietPhieuNhap);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    /*db.ChiTietPhieuNhaps.Add(chiTietPhieuNhap);
+                    db.SaveChanges();*/
+                    
+                    db.sp_ThemChiTietPhieuNhap(chiTietPhieuNhap.MaXe,chiTietPhieuNhap.MaPhieuNhap,chiTietPhieuNhap.SoLuongNhap,chiTietPhieuNhap.DonGiaNhap);
+                    return RedirectToAction("Index");
+                }
             }
+            catch  (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }            
 
             ViewBag.MaPhieuNhap = new SelectList(db.PhieuNhaps, "MaPhieuNhap", "MaPhieuNhap", chiTietPhieuNhap.MaPhieuNhap);
             ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe", chiTietPhieuNhap.MaXe);
@@ -131,11 +140,17 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ChiTietPhieuNhap chiTietPhieuNhap)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(chiTietPhieuNhap).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.sp_CapNhatThongTinChiTietPhieuNhap(chiTietPhieuNhap.MaXe, chiTietPhieuNhap.MaPhieuNhap, chiTietPhieuNhap.SoLuongNhap, chiTietPhieuNhap.DonGiaNhap);                    
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
             }
             ViewBag.MaPhieuNhap = new SelectList(db.PhieuNhaps, "MaPhieuNhap", "MaPhieuNhap", chiTietPhieuNhap.MaPhieuNhap);
             ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe", chiTietPhieuNhap.MaXe);
@@ -162,10 +177,21 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, int xe)
         {
-            ChiTietPhieuNhap chiTietPhieuNhap = db.ChiTietPhieuNhaps.Where(x => x.MaPhieuNhap == id && x.MaXe == xe).FirstOrDefault();
+            /*ChiTietPhieuNhap chiTietPhieuNhap = db.ChiTietPhieuNhaps.Where(x => x.MaPhieuNhap == id && x.MaXe == xe).FirstOrDefault();
             db.ChiTietPhieuNhaps.Remove(chiTietPhieuNhap);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");*/
+            try
+            {
+                db.sp_XoaThongTinChiTietPhieuNhap(id, xe);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
+            ChiTietPhieuNhap phieunhap = db.ChiTietPhieuNhaps.Find(id);
+            return View(phieunhap);
         }
 
         protected override void Dispose(bool disposing)

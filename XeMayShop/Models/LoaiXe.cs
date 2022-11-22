@@ -18,7 +18,6 @@ namespace XeMayShop.Models
         public LoaiXe()
         {
             this.DongXes = new HashSet<DongXe>();
-            this.Xes = new HashSet<Xe>();
         }
     
         public int MaLoaiXe { get; set; }
@@ -27,7 +26,5 @@ namespace XeMayShop.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DongXe> DongXes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Xe> Xes { get; set; }
     }
 }

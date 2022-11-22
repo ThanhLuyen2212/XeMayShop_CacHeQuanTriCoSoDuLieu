@@ -12,15 +12,13 @@ namespace XeMayShop.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ChiTietPhieuNhap
+    public partial class ChiTietPhieuBaoHanh
     {
-        public int MaXe { get; set; }
-        public string MauXe { get; set; }
-        public int MaPhieuNhap { get; set; }
-        public Nullable<int> SoLuongNhap { get; set; }
-        public Nullable<double> DonGiaNhap { get; set; }
+        public int MaChiTietPhieuBaoHanh { get; set; }
+        public Nullable<int> MaPhieuBaoHanh { get; set; }
+        public Nullable<System.DateTime> NgayBaoHanh { get; set; }
+        public string GhiChu { get; set; }
     
-        public virtual PhieuNhap PhieuNhap { get; set; }
-        public virtual Xe Xe { get; set; }
+        public virtual PhieuBaoHanh PhieuBaoHanh { get; set; }
     }
 }

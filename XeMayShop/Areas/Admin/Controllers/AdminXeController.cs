@@ -54,7 +54,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.MaDongXe = new SelectList(db.DongXes, "MaDongXe", "TenDongXe");
-            ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe");
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             return View();
         }
 
@@ -90,12 +90,13 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                /*db.sp_ThemXe(xe.MaLoaiXe, xe.MaDongXe, xe.TenXe, xe.MoTaXe, xe.ThongTinBaoHanh, xe.DonGiaXe,xe.NamSanXuat,xe.HinhAnh);*/
+                db.sp_ThemXe(xe.MaDongXe,xe.TenXe,xe.MauXe,xe.MaChiNhanh,xe.SoLuongHienCo,int.Parse(xe.TrongLuong.ToString()),xe.ThongTinBaoHanh,xe.GiaXe,xe.NamSanXuat,xe.HinhAnh);
                 return RedirectToAction("Index");
             }
 
             ViewBag.MaDongXe = new SelectList(db.DongXes, "MaDongXe", "TenDongXe", xe.MaDongXe);
-            ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe", xe.MaLoaiXe);
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh", xe.MaChiNhanh);
+
             return View(xe);
         }
 
@@ -113,7 +114,7 @@ namespace XeMayShop.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.MaDongXe = new SelectList(db.DongXes, "MaDongXe", "TenDongXe", xe.MaDongXe);
-            ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe", xe.MaLoaiXe);
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh", xe.MaChiNhanh);
             return View(xe);
         }
 
@@ -137,7 +138,7 @@ namespace XeMayShop.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.MaDongXe = new SelectList(db.DongXes, "MaDongXe", "TenDongXe", xe.MaDongXe);
-            ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe", xe.MaLoaiXe);
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh", xe.MaChiNhanh);
             return View(xe);
         }
 
@@ -172,7 +173,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Xe xe = db.Xes.Find(id);
-          /*  db.sp_XoaXe(id);*/
+            db.sp_XoaXe(id);
             return RedirectToAction("Index");
         }
 

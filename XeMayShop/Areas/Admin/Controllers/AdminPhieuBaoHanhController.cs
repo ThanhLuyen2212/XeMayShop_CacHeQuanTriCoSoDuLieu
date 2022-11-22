@@ -17,6 +17,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // GET: Admin/AdminPhieuBaoHanh
         public ActionResult Index()
         {
+
             var phieuBaoHanhs = db.PhieuBaoHanhs.Include(p => p.PhieuXuat);
             return View(phieuBaoHanhs.ToList());
         }
@@ -39,7 +40,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // GET: Admin/AdminPhieuBaoHanh/Create
         public ActionResult Create()
         {
-            ViewBag.MaPhieuXuat = new SelectList(db.PhieuXuats, "MaPhieuXuat", "TinhTrang");
+            ViewBag.MaPhieuXuat = new SelectList(db.PhieuXuats, "MaPhieuXuat", "MaPhieuXuat");
             return View();
         }
 
@@ -48,9 +49,9 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaPhieuBaoHanh,MaPhieuXuat,NgayBatDau,ThoiGianBaoHanh,SoKhung,SoSuon")] PhieuBaoHanh phieuBaoHanh)
+        public ActionResult Create( PhieuBaoHanh phieuBaoHanh)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.PhieuBaoHanhs.Add(phieuBaoHanh);
                 db.SaveChanges();
@@ -58,6 +59,19 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
 
             ViewBag.MaPhieuXuat = new SelectList(db.PhieuXuats, "MaPhieuXuat", "TinhTrang", phieuBaoHanh.MaPhieuXuat);
+            return View(phieuBaoHanh);*/
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.sp_TaoPhieuBaoHanh(phieuBaoHanh.MaPhieuXuat, phieuBaoHanh.NgayBatDau, phieuBaoHanh.ThoiGianBaoHanh, phieuBaoHanh.SoKhung, phieuBaoHanh.SoSuon);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
             return View(phieuBaoHanh);
         }
 
@@ -82,15 +96,25 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaPhieuBaoHanh,MaPhieuXuat,NgayBatDau,ThoiGianBaoHanh,SoKhung,SoSuon")] PhieuBaoHanh phieuBaoHanh)
+        public ActionResult Edit( PhieuBaoHanh phieuBaoHanh)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Entry(phieuBaoHanh).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.MaPhieuXuat = new SelectList(db.PhieuXuats, "MaPhieuXuat", "TinhTrang", phieuBaoHanh.MaPhieuXuat);
+            return View(phieuBaoHanh);*/
+            try
+            {
+                db.sp_CapNhatThongTinPhieuBaoHanh(phieuBaoHanh.MaPhieuBaoHanh,phieuBaoHanh.MaPhieuXuat,phieuBaoHanh.NgayBatDau,phieuBaoHanh.ThoiGianBaoHanh,phieuBaoHanh.SoKhung,phieuBaoHanh.SoSuon);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
             return View(phieuBaoHanh);
         }
 
@@ -114,10 +138,22 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PhieuBaoHanh phieuBaoHanh = db.PhieuBaoHanhs.Find(id);
+            /*PhieuBaoHanh phieuBaoHanh = db.PhieuBaoHanhs.Find(id);
             db.PhieuBaoHanhs.Remove(phieuBaoHanh);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");*/
+
+            try
+            {
+                db.sp_XoaPhieuBaoHanh(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
+            PhieuBaoHanh phieuBaoHanh = db.PhieuBaoHanhs.Find(id);
+            return View(phieuBaoHanh);
         }
 
         protected override void Dispose(bool disposing)

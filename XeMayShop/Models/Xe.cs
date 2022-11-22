@@ -13,7 +13,6 @@ namespace XeMayShop.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Web;
-
     public partial class Xe
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,12 +25,11 @@ namespace XeMayShop.Models
     
         public int MaXe { get; set; }
         public string MauXe { get; set; }
-        public Nullable<int> MaLoaiXe { get; set; }
         public Nullable<int> MaDongXe { get; set; }
         public Nullable<int> MaChiNhanh { get; set; }
         public string TenXe { get; set; }
-        public Nullable<double> GiaXe { get; set; }
-        public Nullable<double> TrongLuong { get; set; }
+        public Nullable<int> GiaXe { get; set; }
+        public Nullable<int> TrongLuong { get; set; }
         public Nullable<int> NamSanXuat { get; set; }
         public string ThongTinBaoHanh { get; set; }
         public Nullable<int> SoLuongHienCo { get; set; }
@@ -41,7 +39,6 @@ namespace XeMayShop.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; set; }
         public virtual DongXe DongXe { get; set; }
-        public virtual LoaiXe LoaiXe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhieuDatXe> PhieuDatXes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

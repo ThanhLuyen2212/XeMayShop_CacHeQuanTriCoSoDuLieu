@@ -61,6 +61,10 @@
                             @Html.ValidationMessageFor(model => model.MaChiNhanh, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    @if (ViewBag.ErrorInfo != null)
+                    {
+                        <p class="text-danger">@ViewBag.ErrorInfo</p>
+                    }
                     <button style="width:100px; type="submit" value="Save" class="btn btn-primary mr-2">Save</button>
                     <a href="~/Admin/AdminNhanVien/Index">
                         <button type="button" class="btn btn-outline-secondary btn-lg btn-block" style="width:300px; margin-top:40px">Trở về</button>

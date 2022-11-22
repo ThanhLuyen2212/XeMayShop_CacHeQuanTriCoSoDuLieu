@@ -1,0 +1,43 @@
+﻿@model XeMayShop.Models.ChiTietPhieuBaoHanh
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ChiTietPhieuBaoHanh</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayBaoHanh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayBaoHanh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GhiChu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GhiChu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhieuBaoHanh.SoKhung)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhieuBaoHanh.SoKhung)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaChiTietPhieuBaoHanh }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

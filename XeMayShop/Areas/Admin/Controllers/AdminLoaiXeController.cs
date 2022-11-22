@@ -51,15 +51,29 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaLoaiXe,TenLoaiXe,SoLuongHienCo")] LoaiXe loaiXe)
+        public ActionResult Create(LoaiXe loaiXe)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.LoaiXes.Add(loaiXe);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            return View(loaiXe);*/
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.sp_ThemLoaiXeMoi(loaiXe.TenLoaiXe);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.Message;
+            }
             return View(loaiXe);
         }
 
@@ -83,15 +97,28 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaLoaiXe,TenLoaiXe,SoLuongHienCo")] LoaiXe loaiXe)
+        public ActionResult Edit( LoaiXe loaiXe)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Entry(loaiXe).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            return View(loaiXe);*/
+
+            try
+            {
+                db.sp_CapNhatThongTinLoaiXe(loaiXe.MaLoaiXe, loaiXe.TenLoaiXe);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.Message;
+            }
             return View(loaiXe);
+
+
         }
 
         // GET: Admin/AdminLoaiXe/Delete/5
@@ -114,10 +141,22 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LoaiXe loaiXe = db.LoaiXes.Find(id);
+            /*LoaiXe loaiXe = db.LoaiXes.Find(id);
             db.LoaiXes.Remove(loaiXe);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");*/
+
+            try
+            {
+                db.sp_XoaLoaiXe(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.Message;
+            }
+            LoaiXe loaiXe = db.LoaiXes.Find(id);
+            return View(loaiXe);
         }
 
         protected override void Dispose(bool disposing)

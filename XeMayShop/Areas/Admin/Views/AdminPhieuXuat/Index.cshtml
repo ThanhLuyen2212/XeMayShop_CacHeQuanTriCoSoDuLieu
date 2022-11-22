@@ -28,19 +28,23 @@
                                 Khách hàng
                             </th>
                             <th style="color:white">
-                                Ngày đặt xe
+                                Chi nhánh
                             </th>
+                            <th style="color:white">
+                                Mã xe
+                            </th>
+                            <th style="color:white">
+                                Màu xe
+                            </th>
+                           
                             <th style="color:white">
                                 Ngày xuất
-                            </th>
-                            <th style="color:white">
-                                Tổng số xe xuất
-                            </th>
+                            </th>                          
                             <th style="color:white">
                                 Thành tiền xuất
                             </th>
                             <th style="color:white">
-                                Tình trạng
+                                Ghi chú
                             </th>
                             <th></th>
                         </tr>
@@ -60,19 +64,22 @@
                                     @Html.DisplayFor(modelItem => item.KhachHang.TenKhachHang)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.NgayDatXe)
+                                    @Html.DisplayFor(modelItem => item.ChiNhanh.TenChiNhanh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaXe)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MauXe)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.NgayXuat)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.TongSoXeXuat)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.ThanhTienXuat)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                                    @Html.DisplayFor(modelItem => item.GhiChu)
                                 </td>
                                 <td>
                                     <a href="~/Admin/AdminPhieuXuat/Details/@item.MaPhieuXuat">

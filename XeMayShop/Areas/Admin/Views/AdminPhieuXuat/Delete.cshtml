@@ -33,9 +33,21 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Ngày đặt xe</label>
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Chi nhánh</label>
                         <div class="col-sm-9">
-                            @Html.DisplayFor(model => model.NgayDatXe)
+                            @Html.DisplayFor(model => model.ChiNhanh.TenChiNhanh)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Mã xe</label>
+                        <div class="col-sm-9">
+                            @Html.DisplayFor(model => model.MaXe)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Màu xe</label>
+                        <div class="col-sm-9">
+                            @Html.DisplayFor(model => model.MauXe)
                         </div>
                     </div>
                     <div class="form-group row">
@@ -44,12 +56,8 @@
                             @Html.DisplayFor(model => model.NgayXuat)
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Tổng số xe xuất</label>
-                        <div class="col-sm-9">
-                            @Html.DisplayFor(model => model.TongSoXeXuat)
-                        </div>
-                    </div>
+
+
                     <div class="form-group row">
                         <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Thành tiền xuất</label>
                         <div class="col-sm-9">
@@ -57,15 +65,21 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Tình trạng</label>
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Ghi chú</label>
                         <div class="col-sm-9">
-                            @Html.DisplayFor(model => model.TinhTrang)
+                            @Html.DisplayFor(model => model.GhiChu)
                         </div>
                     </div>
+                    @if (ViewBag.ErrorInfo != null)
+                    {
+                        <p class="text-danger">@ViewBag.ErrorInfo</p>
+                    }
                 </form>
             </div>
         </div>
     </div>
+   
+
 
     @using (Html.BeginForm())
     {

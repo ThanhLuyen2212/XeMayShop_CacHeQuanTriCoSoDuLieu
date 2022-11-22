@@ -47,7 +47,9 @@ namespace XeMayShop.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.MaKhachHang = new SelectList(db.KhachHangs, "MaKhachHang", "TenKhachHang");
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien");
+            ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe");
             return View();
         }
 
@@ -61,20 +63,18 @@ namespace XeMayShop.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 /*db.PhieuXuats.Add(phieuXuat);
-                db.SaveChanges();*/
+                db.SaveChanges();
+                return RedirectToAction("Index");*/
 
-                if (phieuXuat.MaNhanVien == null || phieuXuat.MaChiNhanh == null || phieuXuat.MaKhachHang == null || phieuXuat.ThanhTienXuat == null)
-                {
-                    ViewBag.ErrorInfo = "Yêu cầu xem lại thông tin";
-                    return View("Create");
-                }
-               
-                db.sp_TaoPhieuXuat(phieuXuat.MaNhanVien, phieuXuat.MaKhachHang, phieuXuat.MaXe, phieuXuat.MaChiNhanh,phieuXuat.ThanhTienXuat);
+
+                db.sp_TaoPhieuXuat(phieuXuat.MaNhanVien, phieuXuat.MaKhachHang, phieuXuat.MaChiNhanh, phieuXuat.MaXe, phieuXuat.MauXe, phieuXuat.ThanhTienXuat,phieuXuat.GhiChu);
                 return RedirectToAction("Index");
             }
 
             ViewBag.MaKhachHang = new SelectList(db.KhachHangs, "MaKhachHang", "TenKhachHang", phieuXuat.MaKhachHang);
             ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien", phieuXuat.MaNhanVien);
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh",phieuXuat.MaChiNhanh);
+            ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe",phieuXuat.MaXe);
             return View(phieuXuat);
         }
 
@@ -91,7 +91,9 @@ namespace XeMayShop.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.MaKhachHang = new SelectList(db.KhachHangs, "MaKhachHang", "TenKhachHang", phieuXuat.MaKhachHang);
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh", phieuXuat.MaChiNhanh);
             ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien", phieuXuat.MaNhanVien);
+            ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe", phieuXuat.MaXe);
             return View(phieuXuat);
         }
 
@@ -102,13 +104,27 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PhieuXuat phieuXuat)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Entry(phieuXuat).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.MaKhachHang = new SelectList(db.KhachHangs, "MaKhachHang", "TenKhachHang", phieuXuat.MaKhachHang);
+            ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien", phieuXuat.MaNhanVien);
+            return View(phieuXuat);*/
+            try
+            {
+                db.sp_CapNhatThongTinPhieuXuat(phieuXuat.MaPhieuXuat, phieuXuat.MaNhanVien, phieuXuat.MaKhachHang, phieuXuat.MaChiNhanh, phieuXuat.MaXe, phieuXuat.MauXe, phieuXuat.NgayXuat, phieuXuat.ThanhTienXuat, phieuXuat.GhiChu);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
+            ViewBag.MaKhachHang = new SelectList(db.KhachHangs, "MaKhachHang", "TenKhachHang", phieuXuat.MaKhachHang);
+            ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh", phieuXuat.MaChiNhanh);
+            ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe", phieuXuat.MaXe);
             ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien", phieuXuat.MaNhanVien);
             return View(phieuXuat);
         }
@@ -133,10 +149,21 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            /* PhieuXuat phieuXuat = db.PhieuXuats.Find(id);
+             db.PhieuXuats.Remove(phieuXuat);
+             db.SaveChanges();
+             return RedirectToAction("Index");*/
+            try
+            {
+                db.sp_XoaThongTinPhieuXuat(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
             PhieuXuat phieuXuat = db.PhieuXuats.Find(id);
-            db.PhieuXuats.Remove(phieuXuat);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            return View(phieuXuat);
         }
 
         protected override void Dispose(bool disposing)

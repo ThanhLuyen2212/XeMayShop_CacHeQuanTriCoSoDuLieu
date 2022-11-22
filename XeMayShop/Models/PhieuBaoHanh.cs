@@ -14,6 +14,12 @@ namespace XeMayShop.Models
     
     public partial class PhieuBaoHanh
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PhieuBaoHanh()
+        {
+            this.ChiTietPhieuBaoHanhs = new HashSet<ChiTietPhieuBaoHanh>();
+        }
+    
         public int MaPhieuBaoHanh { get; set; }
         public Nullable<int> MaPhieuXuat { get; set; }
         public Nullable<System.DateTime> NgayBatDau { get; set; }
@@ -21,6 +27,8 @@ namespace XeMayShop.Models
         public string SoKhung { get; set; }
         public string SoSuon { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietPhieuBaoHanh> ChiTietPhieuBaoHanhs { get; set; }
         public virtual PhieuXuat PhieuXuat { get; set; }
     }
 }

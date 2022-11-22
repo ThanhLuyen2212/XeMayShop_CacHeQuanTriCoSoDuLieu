@@ -10,112 +10,112 @@ using XeMayShop.Models;
 
 namespace XeMayShop.Areas.Admin.Controllers
 {
-    public class AdminsController : Controller
+    public class AdminChiTietPhieuBaoHanhsController : Controller
     {
         private QuanLyXeMayEntities db = new QuanLyXeMayEntities();
 
-        // GET: Admin/Admins
+        // GET: Admin/AdminChiTietPhieuBaoHanhs
         public ActionResult Index()
         {
-            if (Session["Admin"] == null)
-            {
-                return RedirectToAction("Index", "AdminLogin");
-            }
-            else
-                return View(db.Admins.ToList());
+            var chiTietPhieuBaoHanhs = db.ChiTietPhieuBaoHanhs.Include(c => c.PhieuBaoHanh);
+            return View(chiTietPhieuBaoHanhs.ToList());
         }
 
-        // GET: Admin/Admins/Details/5
+        // GET: Admin/AdminChiTietPhieuBaoHanhs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            XeMayShop.Models.Admin admin = db.Admins.Find(id);
-            if (admin == null)
+            ChiTietPhieuBaoHanh chiTietPhieuBaoHanh = db.ChiTietPhieuBaoHanhs.Find(id);
+            if (chiTietPhieuBaoHanh == null)
             {
                 return HttpNotFound();
             }
-            return View(admin);
+            return View(chiTietPhieuBaoHanh);
         }
 
-        // GET: Admin/Admins/Create
+        // GET: Admin/AdminChiTietPhieuBaoHanhs/Create
         public ActionResult Create()
         {
+            ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "SoKhung");
             return View();
         }
 
-        // POST: Admin/Admins/Create
+        // POST: Admin/AdminChiTietPhieuBaoHanhs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( XeMayShop.Models.Admin admin)
+        public ActionResult Create([Bind(Include = "MaChiTietPhieuBaoHanh,MaPhieuBaoHanh,NgayBaoHanh,GhiChu")] ChiTietPhieuBaoHanh chiTietPhieuBaoHanh)
         {
             if (ModelState.IsValid)
             {
-                db.Admins.Add(admin);
+                db.ChiTietPhieuBaoHanhs.Add(chiTietPhieuBaoHanh);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(admin);
+            ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "SoKhung", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
+            return View(chiTietPhieuBaoHanh);
         }
 
-        // GET: Admin/Admins/Edit/5
+        // GET: Admin/AdminChiTietPhieuBaoHanhs/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            XeMayShop.Models.Admin admin = db.Admins.Find(id);
-            if (admin == null)
+            ChiTietPhieuBaoHanh chiTietPhieuBaoHanh = db.ChiTietPhieuBaoHanhs.Find(id);
+            if (chiTietPhieuBaoHanh == null)
             {
                 return HttpNotFound();
             }
-            return View(admin);
+            ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "SoKhung", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
+            return View(chiTietPhieuBaoHanh);
         }
 
-        // POST: Admin/Admins/Edit/5
+        // POST: Admin/AdminChiTietPhieuBaoHanhs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaAdmin,TenAdmin,TenDangNhap,MatKhau")] XeMayShop.Models.Admin admin)
+        public ActionResult Edit([Bind(Include = "MaChiTietPhieuBaoHanh,MaPhieuBaoHanh,NgayBaoHanh,GhiChu")] ChiTietPhieuBaoHanh chiTietPhieuBaoHanh)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(admin).State = EntityState.Modified;
+                db.Entry(chiTietPhieuBaoHanh).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(admin);
+            ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "SoKhung", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
+            return View(chiTietPhieuBaoHanh);
         }
 
-        // GET: Admin/Admins/Delete/5
+        // GET: Admin/AdminChiTietPhieuBaoHanhs/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            XeMayShop.Models.Admin admin = db.Admins.Find(id);
-            if (admin == null)
+            ChiTietPhieuBaoHanh chiTietPhieuBaoHanh = db.ChiTietPhieuBaoHanhs.Find(id);
+            if (chiTietPhieuBaoHanh == null)
             {
                 return HttpNotFound();
             }
-            return View(admin);
+            return View(chiTietPhieuBaoHanh);
         }
 
-        // POST: Admin/Admins/Delete/5
+        // POST: Admin/AdminChiTietPhieuBaoHanhs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            XeMayShop.Models.Admin admin = db.Admins.Find(id);
-            db.Admins.Remove(admin);
+            ChiTietPhieuBaoHanh chiTietPhieuBaoHanh = db.ChiTietPhieuBaoHanhs.Find(id);
+            db.ChiTietPhieuBaoHanhs.Remove(chiTietPhieuBaoHanh);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

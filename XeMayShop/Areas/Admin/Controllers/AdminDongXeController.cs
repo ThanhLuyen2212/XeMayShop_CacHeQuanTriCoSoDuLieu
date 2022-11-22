@@ -43,6 +43,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // GET: Admin/AdminDongXe/Create
         public ActionResult Create()
         {
+            ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe");
             return View();
         }
 
@@ -51,16 +52,31 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaDongXe,TenDongXe,SoLuongHienCo")] DongXe dongXe)
+        public ActionResult Create(DongXe dongXe)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.DongXes.Add(dongXe);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(dongXe);
+            return View(dongXe);*/
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.sp_ThemDongXeMoi(dongXe.MaLoaiXe, dongXe.TenDongXe);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.Message;
+            }
+            ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe");
+            return View();
+
         }
 
         // GET: Admin/AdminDongXe/Edit/5
@@ -75,7 +91,10 @@ namespace XeMayShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe");
             return View(dongXe);
+
+
         }
 
         // POST: Admin/AdminDongXe/Edit/5
@@ -83,14 +102,28 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaDongXe,TenDongXe,SoLuongHienCo")] DongXe dongXe)
+        public ActionResult Edit(DongXe dongXe)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Entry(dongXe).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            return View(dongXe);*/
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.sp_CapNhatThongTinDongXe(dongXe.MaDongXe, dongXe.MaLoaiXe, dongXe.TenDongXe);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.Message;
+            }
+            ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe");
             return View(dongXe);
         }
 
@@ -114,10 +147,22 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            DongXe dongXe = db.DongXes.Find(id);
+            try
+            {
+                db.sp_XoaDongXe(id);
+                return RedirectToAction("Index");
+                
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.Message;
+            }
+            return View(db.DongXes.Find(id));
+
+            /*DongXe dongXe = db.DongXes.Find(id);
             db.DongXes.Remove(dongXe);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");*/
         }
 
         protected override void Dispose(bool disposing)

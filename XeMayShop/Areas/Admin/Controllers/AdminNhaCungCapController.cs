@@ -53,7 +53,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(NhaCungCap nhaCungCap)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 if(nhaCungCap.TenNhaCungCap == null || nhaCungCap.TenNhaCungCap == "" || nhaCungCap.DienThoai == null || nhaCungCap.DienThoai == "")
                 {
@@ -61,13 +61,26 @@ namespace XeMayShop.Areas.Admin.Controllers
                     return View("Create");
                 }
 
-                /*db.NhaCungCaps.Add(nhaCungCap);
-                db.SaveChanges();*/
+                *//*db.NhaCungCaps.Add(nhaCungCap);
+                db.SaveChanges();*//*
                 db.sp_TaoNhaCungCap(nhaCungCap.TenNhaCungCap, nhaCungCap.DiaChi, nhaCungCap.DienThoai, nhaCungCap.Email);
 
                 return RedirectToAction("Index");
             }
 
+            return View(nhaCungCap);*/
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.sp_TaoNhaCungCap(nhaCungCap.TenNhaCungCap, nhaCungCap.DiaChi, nhaCungCap.DienThoai, nhaCungCap.Email);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
             return View(nhaCungCap);
         }
 
@@ -92,12 +105,20 @@ namespace XeMayShop.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(NhaCungCap nhaCungCap)
-        {
-            if (ModelState.IsValid)
+        {            
+            
+            try
             {
-                db.Entry(nhaCungCap).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.sp_ChinhSuaThongTinNhaCungCap(nhaCungCap.MaNhaCungCap, nhaCungCap.TenNhaCungCap, nhaCungCap.DiaChi, nhaCungCap.DienThoai, nhaCungCap.Email);
+                    return RedirectToAction("Index");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
             }
             return View(nhaCungCap);
         }
@@ -122,10 +143,21 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            NhaCungCap nhaCungCap = db.NhaCungCaps.Find(id);
-            db.NhaCungCaps.Remove(nhaCungCap);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            /* NhaCungCap nhaCungCap = db.NhaCungCaps.Find(id);
+             db.NhaCungCaps.Remove(nhaCungCap);
+             db.SaveChanges();
+             return RedirectToAction("Index");*/
+            try
+            {
+                db.sp_XoaNhaCungCap(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
+            NhaCungCap nhanCunCap = db.NhaCungCaps.Find(id);
+            return View(nhanCunCap);
         }
 
         protected override void Dispose(bool disposing)

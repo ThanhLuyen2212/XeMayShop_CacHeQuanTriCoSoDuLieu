@@ -16,10 +16,11 @@ namespace XeMayShop.Models
     {
         public int MaPhieuDatXe { get; set; }
         public Nullable<int> MaXe { get; set; }
+        public string MauXe { get; set; }
         public string TenNguoiDat { get; set; }
         public string SDT { get; set; }
         public string TinhTrang { get; set; }
-        public Nullable<System.DateTime> NgayDat { get; set; }
+        public System.DateTime NgayDat { get; set; }
     
         public virtual Xe Xe { get; set; }
     }

@@ -65,16 +65,29 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaKhachHang,TenKhachHang,DiaChi,DienThoai,TenDangNhap,MatKhau")] KhachHang khachHang)
+        public ActionResult Create(KhachHang khachHang)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.KhachHangs.Add(khachHang);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(khachHang);
+            return View(khachHang);*/
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.sp_ThemKhachHang(khachHang.TenKhachHang, khachHang.DienThoai);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch(Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+
+            }return View(khachHang);
         }
 
         // GET: Admin/AdminKhachHang/Edit/5
@@ -97,15 +110,26 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaKhachHang,TenKhachHang,DiaChi,DienThoai,TenDangNhap,MatKhau")] KhachHang khachHang)
+        public ActionResult Edit( KhachHang khachHang)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {   
                 db.Entry(khachHang).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            return View(khachHang);*/
+            try
+            {
+                db.sp_CapNhatThongTinKhachHang(khachHang.MaKhachHang, khachHang.TenKhachHang, khachHang.DienThoai);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
             return View(khachHang);
+
         }
 
         // GET: Admin/AdminKhachHang/Delete/5
@@ -128,10 +152,21 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            KhachHang khachHang = db.KhachHangs.Find(id);
+            /*KhachHang khachHang = db.KhachHangs.Find(id);
             db.KhachHangs.Remove(khachHang);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");*/
+            try
+            {
+                db.sp_XoaThongTinKhachHang(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
+            KhachHang khachHang = db.KhachHangs.Find(id);
+            return View(khachHang);
         }
 
         protected override void Dispose(bool disposing)

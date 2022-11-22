@@ -1,0 +1,46 @@
+﻿@model IEnumerable<XeMayShop.Models.ChiTietPhieuBaoHanh>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayBaoHanh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GhiChu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhieuBaoHanh.SoKhung)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayBaoHanh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GhiChu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhieuBaoHanh.SoKhung)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaChiTietPhieuBaoHanh }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaChiTietPhieuBaoHanh }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaChiTietPhieuBaoHanh })
+        </td>
+    </tr>
+}
+
+</table>

@@ -21,19 +21,16 @@ namespace XeMayShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult LoginAdmin(XeMayShop.Models.Admin admin)
         {            
-            var check = data.sp_CheckLogin(admin.TenDangNhap, admin.MatKhau);
-                        
-            if (check == null)
+            List<XeMayShop.Models.Admin> check = data.sp_CheckLogin(admin.TenDangNhap, admin.MatKhau).ToList();
+
+            if (check.Count == 0)
             {
                 ViewBag.ErrorInfo = "Sai thông tin tài khoản";
                 return View("Index");
             }
             else
             {
-                XeMayShop.Models.Admin temp = data.Admins.Where(s => s.TenDangNhap == admin.TenDangNhap && s.MatKhau == admin.MatKhau).FirstOrDefault();
-                data.Configuration.ValidateOnSaveEnabled = false;   
-              
-                Session["Admin"] = temp;
+                Session["Admin"] = check[0];
 
                 return RedirectToAction("Index", "AdminHome", new { Areas = "Admin" });
             }

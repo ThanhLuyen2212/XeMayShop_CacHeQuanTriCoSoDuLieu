@@ -15,13 +15,7 @@
             <div class="card-body">
                 <h4 class="card-title">Tạo một phiếu xuất mới</h4>
                 <form class="forms-sample">
-                    <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã phiếu xuất</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.MaPhieuXuat, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.MaPhieuXuat, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+
                     <div class="form-group row">
                         <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Tên khách hàng</label>
                         <div class="col-md-9">
@@ -37,10 +31,24 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Ngày đặt xe</label>
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã chi nhánh</label>
+                        <div class="col-md-9">
+                            @Html.DropDownList("MaChiNhanh", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaChiNhanh, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã xe</label>
+                        <div class="col-md-9">
+                            @Html.DropDownList("MaXe", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaChiNhanh, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Màu xe</label>
                         <div class="col-sm-9">
-                            @Html.EditorFor(model => model.NgayDatXe, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.NgayDatXe, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.MauXe, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MauXe, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
@@ -48,6 +56,20 @@
                         <div class="col-sm-9">
                             @Html.EditorFor(model => model.NgayXuat, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.NgayXuat, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Thành tiền xuất</label>
+                        <div class="col-sm-9">
+                            @Html.EditorFor(model => model.ThanhTienXuat, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ThanhTienXuat, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Ghi Chú</label>
+                        <div class="col-sm-9">
+                            @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     @if (ViewBag.ErrorInfo != null)
@@ -63,3 +85,5 @@
         </div>
     </div>
 }
+
+

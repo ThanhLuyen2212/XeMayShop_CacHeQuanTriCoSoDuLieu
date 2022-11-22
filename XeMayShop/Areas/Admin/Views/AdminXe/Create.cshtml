@@ -13,13 +13,7 @@
             <div class="card-body">
                 <h4 class="card-title">Tạo một xe mới</h4>
                 <form class="forms-sample">
-                    <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã xe</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.MaXe, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.MaXe, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+
                     <div class="form-group row">
                         <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Tên xe</label>
                         <div class="col-sm-9">
@@ -27,13 +21,7 @@
                             @Html.ValidationMessageFor(model => model.TenXe, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Loài xe</label>
-                        <div class="col-md-9">
-                            @Html.DropDownList("MaLoaiXe", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.MaLoaiXe, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+
                     <div class="form-group row">
                         <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Dòng xe</label>
                         <div class="col-md-9">
@@ -42,10 +30,18 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mô tả xe</label>
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Chi nhánh</label>
+                        <div class="col-md-9">
+                            @Html.DropDownList("MaChiNhanh", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaChiNhanh, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Màu xe</label>
                         <div class="col-sm-9">
-                            @Html.EditorFor(model => model.MoTaXe, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.MoTaXe, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.MauXe, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MauXe, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
@@ -65,8 +61,8 @@
                     <div class="form-group row">
                         <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Đơn giá xe</label>
                         <div class="col-sm-9">
-                            @Html.EditorFor(model => model.DonGiaXe, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.DonGiaXe, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.GiaXe, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.GiaXe, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
@@ -77,13 +73,21 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Trọng lượng</label>
+                        <div class="col-sm-9">
+                            @Html.EditorFor(model => model.TrongLuong, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TrongLuong, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Hình ảnh xe</label>
                         <div class="col-sm-9">
                             <input type="file" name="UploadImage" />
                             @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    
+
 
                     <button style="width:100px; type="submit" value="Create" class="btn btn-primary mr-2">Create</button>
                     <a href="~/Admin/AdminXe/Index">

@@ -10,129 +10,100 @@ using XeMayShop.Models;
 
 namespace XeMayShop.Areas.Admin.Controllers
 {
-    public class AdminChiNhanhsController : Controller
+    public class AdminPhieuDatXesController : Controller
     {
         private QuanLyXeMayEntities db = new QuanLyXeMayEntities();
 
-        // GET: Admin/AdminChiNhanhs
+        // GET: Admin/AdminPhieuDatXes
         public ActionResult Index()
         {
-            if (Session["Admin"] == null)
-            {
-                return RedirectToAction("Index", "AdminLogin");
-            }
-            return View(db.ChiNhanhs.ToList());
+            var phieuDatXes = db.PhieuDatXes.Include(p => p.Xe);
+            return View(phieuDatXes.ToList());
         }
 
-        // GET: Admin/AdminChiNhanhs/Details/5
+        // GET: Admin/AdminPhieuDatXes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ChiNhanh chiNhanh = db.ChiNhanhs.Find(id);
-            if (chiNhanh == null)
+            PhieuDatXe phieuDatXe = db.PhieuDatXes.Find(id);
+            if (phieuDatXe == null)
             {
                 return HttpNotFound();
             }
-            return View(chiNhanh);
+            return View(phieuDatXe);
         }
 
-        // GET: Admin/AdminChiNhanhs/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+     
 
-        // POST: Admin/AdminChiNhanhs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(ChiNhanh chiNhanh)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {                   
-                    db.sp_TaoChiNhanh(chiNhanh.TenChiNhanh, chiNhanh.DiaChi);
-                    return RedirectToAction("Index");
-                }
-            }
-            catch(Exception ex)
-            {
-                ViewBag.ErrorInfo = ex.InnerException.Message;                
-            }
-            return View(chiNhanh);
-        }
-
-        // GET: Admin/AdminChiNhanhs/Edit/5
+        // GET: Admin/AdminPhieuDatXes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ChiNhanh chiNhanh = db.ChiNhanhs.Find(id);
-            if (chiNhanh == null)
+            PhieuDatXe phieuDatXe = db.PhieuDatXes.Find(id);
+            if (phieuDatXe == null)
             {
                 return HttpNotFound();
             }
-            return View(chiNhanh);
+            ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe", phieuDatXe.MaXe);
+            return View(phieuDatXe);
         }
 
-        // POST: Admin/AdminChiNhanhs/Edit/5
+        // POST: Admin/AdminPhieuDatXes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ChiNhanh chiNhanh)
+        public ActionResult Edit(PhieuDatXe phieuDatXe)
         {
-            /*
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
-                db.Entry(chiNhanh).State = EntityState.Modified;
+                db.Entry(phieuDatXe).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(chiNhanh);*/
-
+            ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "MauXe", phieuDatXe.MaXe);
+            return View(phieuDatXe);*/
             try
             {
-                db.sp_CapNhatThongTinChiNhanh(chiNhanh.MaChiNhanh, chiNhanh.TenChiNhanh, chiNhanh.DiaChi);
+                db.sp_CapNhatThongTinPhieuDatXe(phieuDatXe.MaPhieuDatXe,phieuDatXe.MaXe,phieuDatXe.MauXe,phieuDatXe.TenNguoiDat,phieuDatXe.SDT,phieuDatXe.TinhTrang,phieuDatXe.NgayDat);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorInfo = ex.InnerException.Message;
             }
-            return View(chiNhanh);
-
+            ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe", phieuDatXe.MaXe);
+            return View(phieuDatXe);
         }
 
-        // GET: Admin/AdminChiNhanhs/Delete/5
+        // GET: Admin/AdminPhieuDatXes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ChiNhanh chiNhanh = db.ChiNhanhs.Find(id);
-            if (chiNhanh == null)
+            PhieuDatXe phieuDatXe = db.PhieuDatXes.Find(id);
+            if (phieuDatXe == null)
             {
                 return HttpNotFound();
             }
-            return View(chiNhanh);
+            return View(phieuDatXe);
         }
 
-        // POST: Admin/AdminChiNhanhs/Delete/5
+        // POST: Admin/AdminPhieuDatXes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            /*ChiNhanh chiNhanh = db.ChiNhanhs.Find(id);
-            db.ChiNhanhs.Remove(chiNhanh);
+            /*PhieuDatXe phieuDatXe = db.PhieuDatXes.Find(id);
+            db.PhieuDatXes.Remove(phieuDatXe);
             db.SaveChanges();
             return RedirectToAction("Index");*/
             try
@@ -140,14 +111,12 @@ namespace XeMayShop.Areas.Admin.Controllers
                 db.sp_XoaChiNhanh(id);
                 return RedirectToAction("Index");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.ErrorInfo = ex.InnerException.Message;
             }
-            ChiNhanh chiNhanh = db.ChiNhanhs.Find(id);
-            return View(chiNhanh);
-            
-
+            PhieuDatXe phieuDatXe = db.PhieuDatXes.Find(id);
+            return View(phieuDatXe);
         }
 
         protected override void Dispose(bool disposing)

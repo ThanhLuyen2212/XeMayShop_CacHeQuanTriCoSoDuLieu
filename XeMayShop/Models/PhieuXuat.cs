@@ -25,9 +25,10 @@ namespace XeMayShop.Models
         public Nullable<int> MaKhachHang { get; set; }
         public Nullable<int> MaChiNhanh { get; set; }
         public Nullable<int> MaXe { get; set; }
+        public string MauXe { get; set; }
         public Nullable<System.DateTime> NgayXuat { get; set; }
         public Nullable<int> ThanhTienXuat { get; set; }
-        public string TinhTrang { get; set; }
+        public string GhiChu { get; set; }
     
         public virtual ChiNhanh ChiNhanh { get; set; }
         public virtual KhachHang KhachHang { get; set; }

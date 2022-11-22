@@ -59,13 +59,21 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create( PhieuNhap phieuNhap)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.sp_TaoPhieuNhapMoi(phieuNhap.MaNhanVien, phieuNhap.MaNhaCungCap, phieuNhap.MaChiNhanh);
-               /* db.PhieuNhaps.Add(phieuNhap);
-                db.SaveChanges();*/
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.sp_ThemPhieuNhap(phieuNhap.MaNhanVien, phieuNhap.MaNhaCungCap, phieuNhap.MaChiNhanh);
+                    return RedirectToAction("Index");
+                }
             }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
+            return View(phieuNhap);
+               
+              
             ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             ViewBag.MaNhaCungCap = new SelectList(db.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap", phieuNhap.MaNhaCungCap);
             ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien", phieuNhap.MaNhanVien);
@@ -97,16 +105,32 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PhieuNhap phieuNhap)
         {
-            if (ModelState.IsValid)
+           /* if (ModelState.IsValid)
             {
                 db.Entry(phieuNhap).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }*/
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.sp_ChinhSuaThongTinPhieuNhap(phieuNhap.MaPhieuNhap, phieuNhap.MaNhanVien, phieuNhap.MaNhaCungCap, phieuNhap.MaChiNhanh);
+                    return RedirectToAction("Index");
+                }
             }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.Message;
+            }
+            return View(phieuNhap);
+
             ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh");
             ViewBag.MaNhaCungCap = new SelectList(db.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap", phieuNhap.MaNhaCungCap);
             ViewBag.MaNhanVien = new SelectList(db.NhanViens, "MaNhanVien", "TenNhanVien", phieuNhap.MaNhanVien);
             return View(phieuNhap);
+           
         }
 
         // GET: Admin/AdminPhieuNhap/Delete/5
@@ -129,10 +153,20 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            try
+            {
+                db.sp_XoaThongTinPhieuNhap(id);
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
             PhieuNhap phieuNhap = db.PhieuNhaps.Find(id);
-            db.PhieuNhaps.Remove(phieuNhap);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            /* db.PhieuNhaps.Remove(phieuNhap);*/
+            /*db.SaveChanges();*/
+            /*return RedirectToAction("Index");*/
+            return View(phieuNhap);
         }
 
         protected override void Dispose(bool disposing)
