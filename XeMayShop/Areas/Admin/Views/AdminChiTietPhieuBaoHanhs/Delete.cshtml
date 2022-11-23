@@ -5,45 +5,59 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>ChiTietPhieuBaoHanh</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayBaoHanh)
-        </dt>
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Bạn có thực sự muốn xóa thông tin chi tiết phiếu bảo hành này không !!!</h2>
+                <h4 class="card-title">Thông tin chi tiết phiếu bảo hành</h4>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgayBaoHanh)
-        </dd>
+                <form class="forms-sample">
+                    <div class="form-group row">
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã phiếu bảo hành</label>
+                        <div class="col-sm-9">
+                            @Html.DisplayFor(model => model.MaPhieuBaoHanh)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã phiếu bảo hành</label>
+                        <div class="col-sm-9">
+                            @Html.DisplayFor(model => model.MaPhieuBaoHanh)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Ngày bảo hành</label>
+                        <div class="col-sm-9">
+                            @Html.DisplayFor(model => model.NgayBaoHanh)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Ghi chú</label>
+                        <div class="col-sm-9">
+                            @Html.DisplayFor(model => model.GhiChu)
+                        </div>
+                    </div>
+                    
+                    @if (ViewBag.ErrorInfo != null)
+                    {
+                        <p class="text-danger">@ViewBag.ErrorInfo</p>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.GhiChu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GhiChu)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhieuBaoHanh.SoKhung)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhieuBaoHanh.SoKhung)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <button style="width:180px; type="submit" value="Delete" class="btn btn-primary mr-2">Delete</button>
         </div>
     }
+
+    <a href="~/Admin/AdminChiTietPhieuBaoHanhs/Index">
+        <button type="button" class="btn btn-outline-secondary btn-lg btn-block" style="width:300px; margin-top:40px">Trở về</button>
+    </a>
 </div>

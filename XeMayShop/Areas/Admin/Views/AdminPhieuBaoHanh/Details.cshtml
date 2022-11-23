@@ -5,55 +5,57 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>PhieuBaoHanh</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayBatDau)
-        </dt>
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Chi tiết phiếu bảo hành </h4>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgayBatDau)
-        </dd>
+            <form class="forms-sample">
+                <div class="form-group row">
+                    <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã phiếu bảo hành</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.MaPhieuBaoHanh)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Tên dòng xe</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.MaPhieuXuat)
+                    </div>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThoiGianBaoHanh)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThoiGianBaoHanh)
-        </dd>
+                <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Số lượng hiện có</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.NgayBatDau)
+                    </div>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SoKhung)
-        </dt>
+                <div class="form-group row">
+                    <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Loại xe</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.ThoiGianBaoHanh)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Loại xe</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.SoKhung)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Loại xe</label>
+                    <div class="col-sm-9">
+                        @Html.DisplayFor(model => model.SoSuon)
+                    </div>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.SoKhung)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SoSuon)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SoSuon)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhieuXuat.TinhTrang)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhieuXuat.TinhTrang)
-        </dd>
-
-    </dl>
+                <a href="~/Admin/AdminPhieuBaoHanh/Index">
+                    <button type="button" class="btn btn-outline-secondary btn-lg btn-block" style="width:300px; margin-top:40px">Trở về</button>
+                </a>
+            </form>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaPhieuBaoHanh }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

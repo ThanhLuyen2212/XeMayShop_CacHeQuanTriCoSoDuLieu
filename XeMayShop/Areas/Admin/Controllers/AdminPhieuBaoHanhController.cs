@@ -72,6 +72,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             {
                 ViewBag.ErrorInfo = ex.InnerException.Message;
             }
+            ViewBag.MaPhieuXuat = new SelectList(db.PhieuXuats, "MaPhieuXuat", "MaPhieuXuat", phieuBaoHanh.MaPhieuXuat);
             return View(phieuBaoHanh);
         }
 
@@ -87,7 +88,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MaPhieuXuat = new SelectList(db.PhieuXuats, "MaPhieuXuat", "TinhTrang", phieuBaoHanh.MaPhieuXuat);
+            ViewBag.MaPhieuXuat = new SelectList(db.PhieuXuats, "MaPhieuXuat", "MaPhieuXuat", phieuBaoHanh.MaPhieuXuat);
             return View(phieuBaoHanh);
         }
 
@@ -115,6 +116,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             {
                 ViewBag.ErrorInfo = ex.InnerException.Message;
             }
+            ViewBag.MaPhieuXuat = new SelectList(db.PhieuXuats, "MaPhieuXuat", "MaPhieuXuat", phieuBaoHanh.MaPhieuXuat);
             return View(phieuBaoHanh);
         }
 

@@ -5,54 +5,85 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayBatDau)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThoiGianBaoHanh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SoKhung)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SoSuon)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhieuXuat.Xe.TenXe)
-        </th>
-        <th></th>
-    </tr>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Danh sách phiếu bảo hành</h2>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayBatDau)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThoiGianBaoHanh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SoKhung)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SoSuon)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhieuXuat.Xe.TenXe)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaPhieuBaoHanh }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaPhieuBaoHanh }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaPhieuBaoHanh })
-        </td>
-    </tr>
-}
+            <a href="~/Admin/AdminPhieuBaoHanh/Create">
+                <button type="button" class="btn btn-primary btn-fw">Tạo phiếu bảo hành mới</button>
+            </a>
 
-</table>
+
+            <div class="table-responsive">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="color:white">
+                                Mã phiếu bảo hành
+                            </th>
+                            <th style="color:white">
+                                Mã phiếu xuất
+                            </th>
+                            <th style="color:white">
+                                Ngày bắt đầu
+                            </th>
+                            <th style="color:white">
+                                Thời gian bào hành
+                            </th>
+                            <th style="color:white">
+                                Số khung
+                            </th>
+                            <th style="color:white">
+                                Số sườn
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaPhieuBaoHanh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaPhieuXuat)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayBatDau)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ThoiGianBaoHanh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SoKhung)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SoSuon)
+                                </td>
+
+                                <td>
+                                    <a href="~/Admin/AdminPhieuBaoHanh/Details/@item.MaPhieuBaoHanh">
+                                        <button style="min-width:50px" type="button" class="btn btn-outline-success btn-fw">Details</button>
+                                    </a>
+                                    <a href="~/Admin/AdminPhieuBaoHanh/Edit/@item.MaPhieuBaoHanh">
+                                        <button style="min-width:50px" type="button" class="btn btn-outline-warning btn-fw">Edit</button>
+                                    </a>
+                                    <a href="~/Admin/AdminPhieuBaoHanh/Delete/@item.MaPhieuBaoHanh">
+                                        <button style="min-width:50px" type="button" class="btn btn-outline-danger btn-fw">Delete</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

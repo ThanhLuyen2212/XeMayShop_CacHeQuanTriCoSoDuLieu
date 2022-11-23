@@ -39,7 +39,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         // GET: Admin/AdminChiTietPhieuBaoHanhs/Create
         public ActionResult Create()
         {
-            ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "SoKhung");
+            ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "MaPhieuBaoHanh");
             return View();
         }
 
@@ -48,9 +48,9 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaChiTietPhieuBaoHanh,MaPhieuBaoHanh,NgayBaoHanh,GhiChu")] ChiTietPhieuBaoHanh chiTietPhieuBaoHanh)
+        public ActionResult Create(ChiTietPhieuBaoHanh chiTietPhieuBaoHanh)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.ChiTietPhieuBaoHanhs.Add(chiTietPhieuBaoHanh);
                 db.SaveChanges();
@@ -58,6 +58,20 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
 
             ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "SoKhung", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
+            return View(chiTietPhieuBaoHanh);*/
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.sp_TaoChiTietPhieuBaoHanh(chiTietPhieuBaoHanh.MaPhieuBaoHanh, chiTietPhieuBaoHanh.NgayBaoHanh, chiTietPhieuBaoHanh.GhiChu);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
+            ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "MaPhieuBaoHanh", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
             return View(chiTietPhieuBaoHanh);
         }
 
@@ -73,7 +87,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "SoKhung", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
+            ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "MaPhieuBaoHanh", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
             return View(chiTietPhieuBaoHanh);
         }
 
@@ -82,15 +96,25 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaChiTietPhieuBaoHanh,MaPhieuBaoHanh,NgayBaoHanh,GhiChu")] ChiTietPhieuBaoHanh chiTietPhieuBaoHanh)
+        public ActionResult Edit( ChiTietPhieuBaoHanh chiTietPhieuBaoHanh)
         {
-            if (ModelState.IsValid)
+            /* if (ModelState.IsValid)
+             {
+                 db.Entry(chiTietPhieuBaoHanh).State = EntityState.Modified;
+                 db.SaveChanges();
+                 return RedirectToAction("Index");
+             }
+             ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "SoKhung", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
+             return View(chiTietPhieuBaoHanh);*/
+            try
             {
-                db.Entry(chiTietPhieuBaoHanh).State = EntityState.Modified;
-                db.SaveChanges();
+                db.sp_CapNhatThongTinChiTietPhieuBaoHanh(chiTietPhieuBaoHanh.MaChiTietPhieuBaoHanh,chiTietPhieuBaoHanh.MaPhieuBaoHanh,chiTietPhieuBaoHanh.NgayBaoHanh,chiTietPhieuBaoHanh.GhiChu);
                 return RedirectToAction("Index");
             }
-            ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "SoKhung", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
             return View(chiTietPhieuBaoHanh);
         }
 
@@ -114,10 +138,22 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            /* ChiTietPhieuBaoHanh chiTietPhieuBaoHanh = db.ChiTietPhieuBaoHanhs.Find(id);
+             db.ChiTietPhieuBaoHanhs.Remove(chiTietPhieuBaoHanh);
+             db.SaveChanges();
+             return RedirectToAction("Index");*/
+
+            try
+            {
+                db.sp_XoaChiTietPhieuBaoHanh(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
             ChiTietPhieuBaoHanh chiTietPhieuBaoHanh = db.ChiTietPhieuBaoHanhs.Find(id);
-            db.ChiTietPhieuBaoHanhs.Remove(chiTietPhieuBaoHanh);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            return View(chiTietPhieuBaoHanh);
         }
 
         protected override void Dispose(bool disposing)

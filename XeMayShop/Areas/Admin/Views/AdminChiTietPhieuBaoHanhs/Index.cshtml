@@ -5,42 +5,73 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayBaoHanh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GhiChu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhieuBaoHanh.SoKhung)
-        </th>
-        <th></th>
-    </tr>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Danh sách chi tiết phiếu bảo hành</h2>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayBaoHanh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GhiChu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhieuBaoHanh.SoKhung)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaChiTietPhieuBaoHanh }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaChiTietPhieuBaoHanh }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaChiTietPhieuBaoHanh })
-        </td>
-    </tr>
-}
+            <a href="~/Admin/AdminChitietPhieuBaoHanhs/Create">
+                <button type="button" class="btn btn-primary btn-fw">Tạo chi tiết phiếu bảo hành mới</button>
+            </a>
 
-</table>
+
+            <div class="table-responsive">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="color:white">
+                                Mã chi tiết phiếu bảo hành
+                            </th>
+                            <th style="color:white">
+                                Mã phiếu bảo hành
+                            </th>
+                            <th style="color:white">
+                                Ngày bảo hành
+                            </th>
+                            <th style="color:white">
+                                Ghi chú
+                            </th>                           
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaChiTietPhieuBaoHanh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaPhieuBaoHanh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NgayBaoHanh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GhiChu)
+                                </td>
+                               
+                                <td>
+                                    <a href="~/Admin/AdminChiTietPhieuBaoHanhs/Details/@item.MaChiTietPhieuBaoHanh">
+                                        <button style="min-width:50px" type="button" class="btn btn-outline-success btn-fw">Details</button>
+                                    </a>
+                                    <a href="~/Admin/AdminChiTietPhieuBaoHanhs/Edit/@item.MaChiTietPhieuBaoHanh">
+                                        <button style="min-width:50px" type="button" class="btn btn-outline-warning btn-fw">Edit</button>
+                                    </a>
+                                    <a href="~/Admin/AdminChiTietPhieuBaoHanhs/Delete/@item.MaChiTietPhieuBaoHanh">
+                                        <button style="min-width:50px" type="button" class="btn btn-outline-danger btn-fw">Delete</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
