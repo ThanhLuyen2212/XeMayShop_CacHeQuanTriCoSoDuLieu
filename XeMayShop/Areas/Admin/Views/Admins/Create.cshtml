@@ -14,13 +14,7 @@
             <div class="card-body">
                 <h4 class="card-title">Tạo một xe mới</h4>
                 <form class="forms-sample">
-                    <div class="form-group row">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Mã Admin</label>
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.MaAdmin, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.MaAdmin, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+
                     <div class="form-group row">
                         <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Tên Admin</label>
                         <div class="col-sm-9">
@@ -41,7 +35,11 @@
                             @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
                         </div>
-                    </div>                    
+                    </div>
+                    @if (ViewBag.ErrorInfo != null)
+                    {
+                        <p class="text-danger">@ViewBag.ErrorInfo</p>
+                    }
                     <button style="width:100px; type="submit" value="Create" class="btn btn-primary mr-2">Create</button>
                     <a href="~/Admin/Admins/Index">
                         <button type="button" class="btn btn-outline-secondary btn-lg btn-block" style="width:300px; margin-top:40px">Trở về</button>

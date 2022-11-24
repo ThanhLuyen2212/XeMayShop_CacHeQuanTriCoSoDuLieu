@@ -23,17 +23,13 @@ namespace XeMayShop.Areas.Admin.Controllers
                 return RedirectToAction("Index", "AdminLogin");
             }
             else
-            {
-                if((TenKH == null || TenKH == "") && (SDT == "" || SDT == null))
-                {                    
-                    return View(db.KhachHangs.ToList());
-                }                   
-                else
-                {                    
-                     return View(db.sp_TimKiemKhachHang(SDT,TenKH).ToList());                    
-                }
-                /*return View(db.sp_XuatTatCaKhachHang().ToList());*/                
+            {                
+                if(TenKH == null && SDT == null)
+                    return View(db.KhachHangs.ToList());                      
             }
+            if (TenKH == "") TenKH = null;
+            if (SDT == "") SDT = null;
+            return View(db.sp_TimKiemKhachHang(SDT, TenKH).ToList());
         }
 
         // GET: Admin/AdminKhachHang/Details/5

@@ -53,13 +53,26 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create( XeMayShop.Models.Admin admin)
         {
-            if (ModelState.IsValid)
-            {
-                db.Admins.Add(admin);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            /* if (ModelState.IsValid)
+             {
+                 db.Admins.Add(admin);
+                 db.SaveChanges();
+                 return RedirectToAction("Index");
+             }
 
+             return View(admin);*/
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.sp_TaoAdminMoi(admin.TenAdmin, admin.TenDangNhap, admin.MatKhau);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
             return View(admin);
         }
 
@@ -83,13 +96,24 @@ namespace XeMayShop.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaAdmin,TenAdmin,TenDangNhap,MatKhau")] XeMayShop.Models.Admin admin)
+        public ActionResult Edit( XeMayShop.Models.Admin admin)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Entry(admin).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+            return View(admin);*/
+
+            try
+            {
+                db.sp_CapNhatThongTinAdmin(admin.MaAdmin, admin.TenAdmin, admin.TenDangNhap, admin.MatKhau);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
             }
             return View(admin);
         }
@@ -114,10 +138,21 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            XeMayShop.Models.Admin admin = db.Admins.Find(id);
+            /*XeMayShop.Models.Admin admin = db.Admins.Find(id);
             db.Admins.Remove(admin);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");*/
+            try
+            {
+                db.sp_XoaThongTinAdmin(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }
+            XeMayShop.Models.Admin admin = db.Admins.Find(id);
+            return View(admin);
         }
 
         protected override void Dispose(bool disposing)
