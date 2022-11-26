@@ -889,5 +889,25 @@ namespace XeMayShop.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_XoaPhieuDatXeKhachHang", maPhieuDatXeParameter);
         }
+    
+        public virtual ObjectResult<Xe> sp_8ChiecXeMoiNhat()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Xe>("sp_8ChiecXeMoiNhat");
+        }
+    
+        public virtual ObjectResult<Xe> sp_8ChiecXeMoiNhat(MergeOption mergeOption)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Xe>("sp_8ChiecXeMoiNhat", mergeOption);
+        }
+    
+        public virtual ObjectResult<Xe> sp_8SanPhamBanChayTrongMotThang()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Xe>("sp_8SanPhamBanChayTrongMotThang");
+        }
+    
+        public virtual ObjectResult<Xe> sp_8SanPhamBanChayTrongMotThang(MergeOption mergeOption)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Xe>("sp_8SanPhamBanChayTrongMotThang", mergeOption);
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             {
                 return RedirectToAction("Index", "AdminLogin");
             }
+
             return View();
         }
 

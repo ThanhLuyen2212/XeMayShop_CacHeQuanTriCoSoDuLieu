@@ -15,8 +15,13 @@ namespace XeMayShop.Controllers
             ViewBag.banner = data.Xes.Take(3).ToList();
 
             /*những sản phẩm mới nhất*/
-            ViewBag.newProduct = data.Xes.Take(8).OrderByDescending(x => x.NamSanXuat).ToList();
+            /*ViewBag.newProduct = data.Xes.Take(8).OrderByDescending(x => x.NamSanXuat).ToList();*/
+            List<Xe> xes = data.sp_8ChiecXeMoiNhat().ToList();
+            ViewBag.newProduct = xes;
 
+            List<Xe> xes1 = data.sp_8SanPhamBanChayTrongMotThang().ToList();
+            ViewBag.SanPhamBanChayNhat = xes1;
+            
 
 /*            // lấy danh sách xe tay côn
             ViewBag.xetaycon = data.Xes.Take(8).Where(x => x.LoaiXe.MaLoaiXe == 1);
@@ -27,21 +32,5 @@ namespace XeMayShop.Controllers
 
             return View();
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-
     }
 }

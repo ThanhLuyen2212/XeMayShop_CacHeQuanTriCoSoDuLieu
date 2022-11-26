@@ -346,6 +346,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_8ChiecXeMoiNhat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_8SanPhamBanChayTrongMotThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_CapNhatThongTinAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MaAdmin" Type="int" Mode="In" />
           <Parameter Name="TenAdmin" Type="nvarchar" Mode="In" />
@@ -1265,8 +1267,10 @@
           <Parameter Name="SoDienThoai" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_XoaPhieuDatXeKhachHang">
-            <Parameter Name="MaPhieuDatXe" Mode="In" Type="Int32" />
+          <Parameter Name="MaPhieuDatXe" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_8ChiecXeMoiNhat" EntitySet="Xes" ReturnType="Collection(QuanLyXeMayModel.Xe)" />
+          <FunctionImport Name="sp_8SanPhamBanChayTrongMotThang" EntitySet="Xes" ReturnType="Collection(QuanLyXeMayModel.Xe)" />
         </EntityContainer>
         <EntityType Name="Xe">
           <Key>
@@ -1571,6 +1575,10 @@
           <FunctionImportMapping FunctionImportName="sp_TimKiemPhieuDatXe" FunctionName="QuanLyXeMayModel.Store.sp_TimKiemPhieuDatXe">
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_XoaPhieuDatXeKhachHang" FunctionName="QuanLyXeMayModel.Store.sp_XoaPhieuDatXeKhachHang" />
+          <FunctionImportMapping FunctionImportName="sp_8ChiecXeMoiNhat" FunctionName="QuanLyXeMayModel.Store.sp_8ChiecXeMoiNhat">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_8SanPhamBanChayTrongMotThang" FunctionName="QuanLyXeMayModel.Store.sp_8SanPhamBanChayTrongMotThang">
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
