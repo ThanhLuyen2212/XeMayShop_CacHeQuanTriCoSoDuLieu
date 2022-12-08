@@ -309,14 +309,14 @@ insert into NhanVien (MaNhanVien, TenNhanVien, NamSinh, GioiTinh, DiaChi, DienTh
 -----------------------------------------------------------------------------------------
 -- Tên đăng nhập không được trùng
 go
-alter trigger user_name
+create trigger user_name
 on Admin 
 instead of insert, update
 as
 begin 
-	declare @user_name nvarchar(100) 
-	select @user_name = TenDangNhap from inserted
-	if exists (select * from Admin where TenDangNhap = @user_name)
+	declare @user_name nvarchar(100) ,@id int
+	select @user_name = TenDangNhap, @id = MaAdmin from inserted
+	if exists (select * from Admin where TenDangNhap = @user_name and MaAdmin != @id)
 		raiserror (N'Tên đăng nhập không được trùng',16,1)
 end
 
@@ -402,6 +402,11 @@ begin
 		raiserror (@ErrMSG, 16,1)
 	end catch
 end 
+select * from Admin
+exec sp_TaoAdminMoi 'ThaiTuan','tuan','123'
+
+		insert into Admin(MaAdmin,TenAdmin,TenDangNhap,MatKhau)
+		values(2,'Thai tuan','tuan','123')
 
 -- cập nhật thông tin Admin
 go
@@ -671,7 +676,7 @@ end
 -----------------------------------------------------------------------------------------
 GO
 -- TẠO MỘT NHÂN VIÊN MỚI
-alter PROC sp_ThemNhanVien @TenNhanVien nvarchar(100), @NamSinh nvarchar(5), @GioiTinh nvarchar(10), 
+create PROC sp_ThemNhanVien @TenNhanVien nvarchar(100), @NamSinh nvarchar(5), @GioiTinh nvarchar(10), 
 							@DiaChi nvarchar(100), @DienThoai nvarchar(15), @MaChiNhanh int
 as
 begin 
@@ -1944,7 +1949,7 @@ end
 
 
 go
-ALTER proc sp_TimKiemXe @value nvarchar(20), @ma int
+create proc sp_TimKiemXe @value nvarchar(20), @ma int
 as
 begin
 	if(@value is null and @ma is null )
@@ -2015,6 +2020,29 @@ end
 -------------------------------KẾT THÚC PHẦN TRANG CHỦ-----------------------------------
 -----------------------------------------------------------------------------------------
 
+-----------------------------------------------------------------------------------------
+----------------------------------BACK UP DỮ LIỆU----------------------------------------
+-----------------------------------------------------------------------------------------
+go
+-- full back up 
+BACKUP DATABASE QuanLyXeMay
+TO DISK = 'D:\Backup\QuanLyXeMay_FullBackUp.bak'
+
+go
+-- diffirent back up 
+BACKUP DATABASE QuanLyXeMay
+TO DISK = 'D:\Backup\QuanLyXeMay_DiffirentBackUp.bak'
+WITH DIFFERENTIAL
+
+go
+--log back up
+BACKUP LOG QuanLyXeMay
+TO DISK= 'D:\Backup\QuanLyXeMay_LogBackUp.bak'
+WITH NO_TRUNCATE
+
+-----------------------------------------------------------------------------------------
+----------------------------------BACK UP DỮ LIỆU----------------------------------------
+-----------------------------------------------------------------------------------------
 
 
 declare @hinhanh varbinary(max)
