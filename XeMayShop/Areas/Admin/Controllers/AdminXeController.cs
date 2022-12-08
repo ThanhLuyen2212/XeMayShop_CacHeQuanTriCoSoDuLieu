@@ -23,16 +23,25 @@ namespace XeMayShop.Areas.Admin.Controllers
                 return RedirectToAction("Index", "AdminLogin");
             }
             else
-            {               
+            {                               
                 if ((TenXe == null || TenXe == "" )&& (MaXe == null ))
                 {
                     return View(db.Xes.ToList());
                 }               
                 else
-                {   
-                    return View(db.sp_TimKiemXe(TenXe,MaXe).ToList());             
+                {
+                    try
+                    {
+                        return View(db.sp_TimKiemXe(TenXe, MaXe).ToList());
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.ErrorInfo = ex.InnerException.Message;
+                    }
+                            
                 }                
             }
+            return View(db.Xes.ToList());
         }
 
         // GET: Admin/AdminXe/Details/5

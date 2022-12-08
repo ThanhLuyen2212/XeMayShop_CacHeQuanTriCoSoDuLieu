@@ -53,8 +53,9 @@
                                     var base64 = Convert.ToBase64String(item.HinhAnh);
                                     var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                                 }
-                                <img src='@imgSrc' width="262px" height="360px" alt="Alternate Text" />
-                                @*<img src="@Url.Content(item.HinhAnh)" width="262px" height="360px" alt="Alternate Text" />*@
+                                <img src='@imgSrc' width="262px" height="262px" alt="Alternate Text" />
+
+                               
                             </div>
                             <div class="product__item__text">
                                 <h6><a href="#">@item.TenXe</a></h6>

@@ -1944,20 +1944,23 @@ end
 
 
 go
-create proc sp_TimKiemXe @value nvarchar(20), @ma int
+ALTER proc sp_TimKiemXe @value nvarchar(20), @ma int
 as
 begin
-	if(@value is null or @ma is null )
+	if(@value is null and @ma is null )
+	begin
 		raiserror (N'Yêu cầu nhập đầy đủ thông tin để tìm kiếm',16,1)
-	if(@ma is not null and @value is null)
+		return
+	end
+	if(@ma is not null and @value = '')
 	begin 
 		select * from Xe where MaXe = @ma
 	end
-	else if(@ma is null and @value is not null)
+	else if(@ma = null and @value is not null)
 	begin
-		select * from Xe where TenXe = '%'+@value+'%'
+		select * from Xe where TenXe = @value
 	end
-	select * from Xe where TenXe = '%'+@value+'%' and MaXe = @ma
+	select * from Xe where TenXe = @value OR MaXe = @ma
 end
 
 -----------------------------------------------------------------------------------------
@@ -1995,8 +1998,7 @@ begin
 			fetch next from xecursor into @maxe, @mauxe
 		end 
 	close xecursor
-	deallocate xecursor
-	
+	deallocate xecursor	
 	select * from Xe where MaXe in (select top(8)MaXe from @XeBanNhieuNhat order by soLuongXe desc)	
 end
 

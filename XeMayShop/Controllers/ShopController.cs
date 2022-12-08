@@ -18,7 +18,6 @@ namespace XeMayShop.Controllers
             ViewBag.XeSo = data.DongXes.Where(x => x.MaLoaiXe == 1).ToList();            
 
 
-
             if (MaXe != null)
             {
                 int a = int.Parse(MaXe.ToString());

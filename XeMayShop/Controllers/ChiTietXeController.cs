@@ -13,7 +13,6 @@ namespace XeMayShop.Controllers
         // GET: ChiTietXe
         public ActionResult Index(int id)
         {
-
             return View(data.Xes.FirstOrDefault(x => x.MaXe == id));
         }
 

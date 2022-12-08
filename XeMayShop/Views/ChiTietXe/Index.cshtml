@@ -10,49 +10,17 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <div class="product__details__pic">
-                    <div class="product__details__pic__left product__thumb nice-scroll">
-                        <a class="pt active" href="#product-1">
 
-                            @{
-                                var base641 = Convert.ToBase64String(Model.HinhAnh);
-                                var imgSrc1 = String.Format("data:image/gif;base64,{0}", base641);
-                            }
-                            <img src='@imgSrc1' />
-                        </a>
-                        <a class="pt" href="#product-2">
-                            @{
-                                var base642 = Convert.ToBase64String(Model.HinhAnh);
-                                var imgSrc2 = String.Format("data:image/gif;base64,{0}", base642);
-                            }
-                            <img src='@imgSrc2' />
 
-                        </a>
-                        <a class="pt" href="#product-3">
-                            @{
-                                var base643 = Convert.ToBase64String(Model.HinhAnh);
-                                var imgSrc3 = String.Format("data:image/gif;base64,{0}", base643);
-                            }
-                            <img src='@imgSrc3' />
-                        </a>
-                        <a class="pt" href="#product-4">
-                            @{
-                                var base644 = Convert.ToBase64String(Model.HinhAnh);
-                                var imgSrc4 = String.Format("data:image/gif;base64,{0}", base644);
-                            }
-                            <img src='@imgSrc4' />
-                            @*<img src="@Url.Content(Model.HinhAnh4)" />*@
-                        </a>
-                    </div>
-                    <div class="product__details__slider__content">
-                        <div class="product__details__pic__slider owl-carousel">
-                            <img data-hash="product-1" class="product__big__img" src="@imgSrc1" alt="">
-                            <img data-hash="product-2" class="product__big__img" src="@imgSrc2" alt="">
-                            <img data-hash="product-3" class="product__big__img" src="@imgSrc3" alt="">
-                            <img data-hash="product-4" class="product__big__img" src="@imgSrc4" alt="">
-                        </div>
-                    </div>
-                </div>
+                @{
+                    var base64 = Convert.ToBase64String(Model.HinhAnh);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                }
+                <img src='@imgSrc' width="300px" height="300px" alt="Alternate Text" />
+
+
+
+
             </div>
             <div class="col-lg-6">
                 <div class="product__details__text">
