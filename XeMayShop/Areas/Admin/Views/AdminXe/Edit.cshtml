@@ -28,12 +28,19 @@
                             @Html.ValidationMessageFor(model => model.TenXe, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                  
+
                     <div class="form-group row">
                         <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Dòng xe</label>
                         <div class="col-sm-9">
                             @Html.DropDownList("MaDongXe", null, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.MaDongXe, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Mã chi nhánh</label>
+                        <div class="col-sm-9">
+                            @Html.DropDownList("MaChiNhanh", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaChiNhanh, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
@@ -69,6 +76,13 @@
                         <div class="col-sm-9">
                             @Html.EditorFor(model => model.SoLuongHienCo, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.SoLuongHienCo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Trọng lượng</label>
+                        <div class="col-sm-9">
+                            @Html.EditorFor(model => model.TrongLuong, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TrongLuong, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group row">
