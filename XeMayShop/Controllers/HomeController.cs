@@ -19,6 +19,7 @@ namespace XeMayShop.Controllers
             List<Xe> xes = data.sp_8ChiecXeMoiNhat().ToList();
             ViewBag.newProduct = xes;
 
+
             List<Xe> xes1 = data.sp_8SanPhamBanChayTrongMotThang().ToList();
             ViewBag.SanPhamBanChayNhat = xes1;
             

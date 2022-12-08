@@ -9,21 +9,21 @@ use QuanLyXeMay
 go
 -- bảng chi nhánh
 CREATE TABLE ChiNhanh(
-	MaChiNhanh int primary key not null,
-	TenChiNhanh nvarchar(100) not null,
-	DiaChi nvarchar(100) not null
+	MaChiNhanh int primary key ,
+	TenChiNhanh nvarchar(100) ,
+	DiaChi nvarchar(100) 
 )
 
 
 -- Bảng nhân viên
 go
 create table NhanVien(	
-	MaNhanVien int primary key not null,	
-	TenNhanVien nvarchar(100) not null,
-	NamSinh nvarchar(5) not null,
-	GioiTinh nvarchar(10) not null,
-	DiaChi nvarchar(100) not null,
-	DienThoai nvarchar(15) not null,
+	MaNhanVien int primary key  ,	
+	TenNhanVien nvarchar(100)  ,
+	NamSinh nvarchar(5)  ,
+	GioiTinh nvarchar(10)  ,
+	DiaChi nvarchar(100)  ,
+	DienThoai nvarchar(15)  ,
 	MaChiNhanh int null,
 
 	constraint fk_NhanVien_ChiNhanh foreign key (MaChiNhanh) references ChiNhanh(MaChiNhanh)
@@ -33,11 +33,11 @@ create table NhanVien(
 GO
 -- Bảng nhà cung cấp
 create table NhaCungCap(
-	MaNhaCungCap int primary key not null,
-	TenNhaCungCap nvarchar(100) not null,
-	DiaChi nvarchar(150) not null,
-	DienThoai nvarchar(13) not null ,
-	Email nvarchar(100) not null
+	MaNhaCungCap int primary key  ,
+	TenNhaCungCap nvarchar(100)  ,
+	DiaChi nvarchar(150)  ,
+	DienThoai nvarchar(13)   ,
+	Email nvarchar(100)  
 )
 
 
@@ -45,11 +45,11 @@ GO
 -- Bảng phiếu nhập
 create table PhieuNhap
 (
-	MaPhieuNhap int primary key not null,	
-	MaNhanVien int not null,
+	MaPhieuNhap int primary key  ,	
+	MaNhanVien int  ,
 	MaNhaCungCap int null,
 	MaChiNhanh int null, 
-	NgayNhap date not null,
+	NgayNhap date  ,
 	TongSoXeNhap int,
 	ThanhTienNhap float, 
 	
@@ -63,26 +63,26 @@ create table PhieuNhap
 go
 -- bảng khách hàng
 CREATE TABLE KhachHang (
-	MaKhachHang int primary key not null,
-	TenKhachHang nvarchar(100) not null,	
-	DienThoai nvarchar(20) not null,	
+	MaKhachHang int primary key  ,
+	TenKhachHang nvarchar(100)  ,	
+	DienThoai nvarchar(20)  ,	
 ) 
 GO 
 
 -- Bảng Đầu Xe (Xe số, xe tay ga, tay côn)
 create table LoaiXe(
-	MaLoaiXe int primary key not null,
-	TenLoaiXe nvarchar(100) not null,
-	SoLuongHienCo int not null,
+	MaLoaiXe int primary key  ,
+	TenLoaiXe nvarchar(100)  ,
+	SoLuongHienCo int  ,
 )
 
 GO
 -- Bảng Dòng Xe (Wave, future)
 create table DongXe(
-	MaDongXe int primary key not null,
-	MaLoaiXe int not null,
-	TenDongXe nvarchar(100) not null,
-	SoLuongHienCo int not null,
+	MaDongXe int primary key  ,
+	MaLoaiXe int  ,
+	TenDongXe nvarchar(100)  ,
+	SoLuongHienCo int  ,
 
 	constraint fk_DongXe_LoaiXe foreign key (MaLoaiXe) references LoaiXe(MaLoaiXe)
 )
@@ -91,20 +91,18 @@ GO
 
 -- Bảng mặt hàng (từng chiếc xe)
 create table Xe(
-	MaXe int primary key not null,
-	MauXe nvarchar(100)  not null, -- kiểm tra sự trùng lặp
-	MaLoaiXe int not null,
-	MaDongXe int not null,
+	MaXe int primary key  ,
+	MauXe nvarchar(100)   , -- kiểm tra sự trùng lặp	
+	MaDongXe int  ,
 	MaChiNhanh int null,
-	TenXe nvarchar(100) not null,
-	GiaXe float not null,
-	TrongLuong float not null,
-	NamSanXuat int not null,
-	ThongTinBaoHanh nvarchar(100) not null,	
-	SoLuongHienCo int not null,		
+	TenXe nvarchar(100)  ,
+	GiaXe int  ,
+	TrongLuong int  ,
+	NamSanXuat int  ,
+	ThongTinBaoHanh nvarchar(100)  ,	
+	SoLuongHienCo int  ,		
 	HinhAnh image null,			
 	
-	constraint fk_Xe_LoaiXe foreign key (MaLoaiXe) references LoaiXe(MaLoaiXe),
 	constraint fk_Xe_Dongxe foreign key (MaDongXe) references DongXe(MaDongXe),
 	constraint fk_Xe_ChiNhanh foreign key (MaChiNhanh) references ChiNhanh(MaChiNhanh)
 )
@@ -112,10 +110,11 @@ create table Xe(
 go
 -- Bảng chi tiết phiếu nhập
 create table ChiTietPhieuNhap(	
-	MaXe int not null,
-	MaPhieuNhap int not null,
-	SoLuongNhap int not null,
-	DonGiaNhap float not null,
+	MaXe int  ,
+	MauXe nvarchar(100),
+	MaPhieuNhap int  ,
+	SoLuongNhap int  ,
+	DonGiaNhap float  ,
 	
 	constraint fk_ChiTietPhieuNhap_Xe foreign key (MaXe) references Xe(MaXe),
 	constraint fk_ChiTietPhieuNhap_PhieuNhap foreign key (MaPhieuNhap) references PhieuNhap(MaPhieuNhap),
@@ -126,50 +125,63 @@ create table ChiTietPhieuNhap(
 go
 -- Bang Admin
 create table Admin(
-	MaAdmin int primary key not null,
-	TenAdmin nvarchar(100) not null,
-	TenDangNhap nvarchar(100) not null,
-	MatKhau nvarchar(100) not null
+	MaAdmin int primary key  ,
+	TenAdmin nvarchar(100)  ,
+	TenDangNhap nvarchar(100)  ,
+	MatKhau nvarchar(100)  
 )
 
 
 go
 -- Bảng phiếu xuất
 create table PhieuXuat(
-	MaPhieuXuat int primary key not null,		
-	MaNhanVien int not null,
-	MaKhachHang int not null,
+	MaPhieuXuat int primary key  ,		
+	MaNhanVien int  ,
+	MaKhachHang int  ,
 	MaChiNhanh int null,
-	MaXe int not null,	
-	NgayXuat date not null,	
-	ThanhTienXuat int not null,
-	TinhTrang nvarchar(30)not null,
+	MaXe int  ,		
+	MauXe nvarchar(100),
+	NgayXuat date  ,	
+	ThanhTienXuat int  ,
+	GhiChu nvarchar(30) ,
 	
 	constraint fk_PhieuXuat_NhanVien foreign key(MaNhanVien) references NhanVien(MaNhanVien),
 	constraint fk_PhieuXuat_KhachHang foreign key(MaKhachHang) references KhachHang(MaKhachHang),
 	constraint fk_PhieuXuat_ChiNhanh foreign key(MaChiNhanh) references ChiNhanh(MaChiNhanh),
-	constraint fk_PhieuXuat_Xe foreign key(MaXe) references Xe(MaXe)
+	constraint fk_PhieuXuat_Xe foreign key(MaXe) references Xe(MaXe),	
 )
 
 GO
 -- Bảng bảo hành 
 create table PhieuBaoHanh(
-	MaPhieuBaoHanh int primary key not null,
-	MaPhieuXuat int unique not null,	
-	NgayBatDau date not null,
-	ThoiGianBaoHanh int not null, -- tinh theo thang
-	SoKhung nvarchar(100)not null,
-	SoSuon nvarchar(100)not null,
+	MaPhieuBaoHanh int primary key  ,
+	MaPhieuXuat int unique  ,	
+	NgayBatDau date  ,
+	ThoiGianBaoHanh int  , -- tinh theo thang
+	SoKhung nvarchar(100) ,
+	SoSuon nvarchar(100) ,
 
 	constraint fk_PhieuBaoHanh_PhieuXuat foreign key(MaPhieuXuat) references PhieuXuat(MaPhieuXuat)
 )
 
 go
+-- Bảng chi tiết phiếu bảo hành
+create table ChiTietPhieuBaoHanh(
+	MaChiTietPhieuBaoHanh int primary key,
+	MaPhieuBaoHanh int,
+	NgayBaoHanh date,
+	GhiChu nvarchar(max),
+
+	constraint fk_ChiTietPhieuBaoHanh_PhieuBaoHanh foreign key(MaPhieuBaoHanh) references PhieuBaoHanh(MaPhieuBaoHanh)
+)
+
+go
 -- Bảng phiếu đặt xe
 create table PhieuDatXe(
-	MaPhieuDatXe int primary key not null,
-	MaXe int not null, 
-	TenNguoiDat nvarchar(100) not null,
+	MaPhieuDatXe int primary key  ,
+	MaXe int, 
+	MauXe nvarchar(100),
+	TenNguoiDat nvarchar(100)  ,
 	SDT nvarchar(100) not null,	
 	TinhTrang nvarchar(300) not null, -- có 3 tình trạng chính là: Chờ xác nhận, xác nhận đang còn xe, xác nhân hết xe.
 	NgayDat date not null,
@@ -238,52 +250,53 @@ insert into DongXe(MaDongXe, MaLoaiXe, TenDongXe, SoLuongHienCo) values (16,3,N'
 insert into DongXe(MaDongXe, MaLoaiXe, TenDongXe, SoLuongHienCo) values (17,3,N'MSX 125cc',1);
 insert into DongXe(MaDongXe, MaLoaiXe, TenDongXe, SoLuongHienCo) values (18,3,N'REBEL 300',1);
 
+
 select * from Xe
-insert into Xe(MaXe,MaLoaiXe,MaDongXe,MaChiNhanh,TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (1,1,1,1,'WAVE RSX 110cc', 'Do',11111,222,2003,N'1 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (2,1,5,2,'SUPER CUB 125cc', 'Do',11111,222,2003,N'1 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong,NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (3,1,4,3,'FUTURE 125cc', 'Do',11111,222,2003,N'1 năm',20)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong,NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (4,1,6,4,'BLADE 110cc', 'Do',11111,222,2003,N'1 năm',20)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (5,1,2,5,'WAVE ALPHA 110cc', 'Do',11111,222,2003,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe,MaChiNhanh,TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (1,1,1,'WAVE RSX 110cc', 'Do',11111,222,2003,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (2,5,2,'SUPER CUB 125cc', 'Do',11111,222,2003,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong,NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (3,4,3,'FUTURE 125cc', 'Do',11111,222,2003,N'1 năm',20)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong,NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (4,6,4,'BLADE 110cc', 'Do',11111,222,2003,N'1 năm',20)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (5,2,5,'WAVE ALPHA 110cc', 'Do',11111,222,2003,N'1 năm',10)
 
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (6,2,9,1,'Air Blade 125cc','Do',11111,222,2005,N'1 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (7,2,9,2,'Air Blade 160cc', 'Do',11111,222,2005,N'1 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (8,2,10,3,'LEAD 125cc', 'Do',11111,222,2005,N'1 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (9,2,7,4,'SH 125cc', 'Do',11111,222,2005,N'1 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (10,2,7,5,'SH 150cc','Do',11111,222,2005,N'1 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (11,2,7,1,'SH 350cc', 'Do',11111,222,2005,N'1 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (12,2,8,2,'SH Mode 125cc','Do',11111,222,2005,N'1 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (13,2,12,3,'VISION 110cc','Do',11111,222,2005,N'1 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (14,2,11,1,N'VISION 110cc cá tính','Do',11111,222,2005,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (6,9,1,'Air Blade 125cc','Do',11111,222,2005,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (7,9,2,'Air Blade 160cc', 'Do',11111,222,2005,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (8,10,3,'LEAD 125cc', 'Do',11111,222,2005,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (9,7,4,'SH 125cc', 'Do',11111,222,2005,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (10,7,5,'SH 150cc','Do',11111,222,2005,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (11,7,1,'SH 350cc', 'Do',11111,222,2005,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (12,8,2,'SH Mode 125cc','Do',11111,222,2005,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (13,12,3,'VISION 110cc','Do',11111,222,2005,N'1 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (14,11,1,N'VISION 110cc cá tính','Do',11111,222,2005,N'1 năm',10)
 
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (15,3,13,4,N'CB150R','Do',11111,222,2001,N'3 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (16,3,14,5,N'CB300R','Do',11111,222,2001,N'3 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (17,3,15,1,N'CBR150R','Do',11111,222,2001,N'3 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (18,3,16,2,N'MONKEY','Do',11111,222,2001,N'3 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (19,3,17,3,N'MSX 125cc', 'Do',11111,222,2001,N'3 năm',10)
-insert into Xe(MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
-values (20,3,18,4,N'REBEL 300','Do',11111,222,2001,N'3 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (15,13,4,N'CB150R','Do',11111,222,2001,N'3 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (16,14,5,N'CB300R','Do',11111,222,2001,N'3 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (17,15,1,N'CBR150R','Do',11111,222,2001,N'3 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (18,16,2,N'MONKEY','Do',11111,222,2001,N'3 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (19,17,3,N'MSX 125cc', 'Do',11111,222,2001,N'3 năm',10)
+insert into Xe(MaXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, NamSanXuat,ThongTinBaoHanh,SoLuongHienCo)
+values (20,18,4,N'REBEL 300','Do',11111,222,2001,N'3 năm',10)
 
 -- thêm thông tin nhân viên
-insert into NhanVien (MaNhanVien, TenNhanVien, NamSinh, GioiTinh, DiaChi, DienThoai,MaChiNhanh) values (9, 'TuanNV', 1992, 'Male', '49 Tennyson Park', '805-340-4921',1);
+insert into NhanVien (MaNhanVien, TenNhanVien, NamSinh, GioiTinh, DiaChi, DienThoai,MaChiNhanh) values (6, 'TuanNV', 1992, 'Male', '49 Tennyson Park', '805-340-4921',1);
 insert into NhanVien (MaNhanVien, TenNhanVien, NamSinh, GioiTinh, DiaChi, DienThoai,MaChiNhanh) values (1, 'Cassondra', 1992, 'Female', '48 Tennyson Park', '804-340-4921',2);
 insert into NhanVien (MaNhanVien, TenNhanVien, NamSinh, GioiTinh, DiaChi, DienThoai,MaChiNhanh) values (2, 'Christye', 2001, 'Female', '0486 Oxford Plaza', '640-740-5324',3);
 insert into NhanVien (MaNhanVien, TenNhanVien, NamSinh, GioiTinh, DiaChi, DienThoai,MaChiNhanh) values (3, 'Ozzie', 2004, 'Male', '5 East Center', '596-576-3451',1);
@@ -296,9 +309,9 @@ insert into NhanVien (MaNhanVien, TenNhanVien, NamSinh, GioiTinh, DiaChi, DienTh
 -----------------------------------------------------------------------------------------
 -- Tên đăng nhập không được trùng
 go
-create trigger user_name
+alter trigger user_name
 on Admin 
-for insert, update
+instead of insert, update
 as
 begin 
 	declare @user_name nvarchar(100) 
@@ -324,16 +337,20 @@ end
 
 -- Giới tính chỉ có thể là nam hoặc nữ 
 go
-create trigger GioiTinh
-on NhanVien
-for insert, update 
-as
-begin 
-	declare @GioiTinh nvarchar(10) 
-	select @GioiTinh = GioiTinh from inserted
-	if(@GioiTinh != 'Nam' or @GioiTinh != N'Nữ')
-		raiserror (N'Giới tính chỉ có thể là nam hoặc nữ',16,1)
-end
+
+--drop trigger GioiTinh
+--on NhanVien
+--instead of insert, update 
+--as
+--begin 
+--	declare @GioiTinh nvarchar(10) 
+--	select @GioiTinh = GioiTinh from inserted
+--	if(@GioiTinh != N'Nam' or @GioiTinh != N'Nữ')
+--	begin
+--		raiserror (N'Giới tính chỉ có thể là nam hoặc nữ',16,1)
+--		rollback tran
+--	end
+--end
 -----------------------------------------------------------------------------------------
 --------------------------KẾT THÚC PHẦN RÀNG BUỘC HỆ THỐNG-------------------------------
 -----------------------------------------------------------------------------------------
@@ -349,13 +366,104 @@ begin
 	 select * from Admin where TenDangNhap = @TenDangNhap and MatKhau = @MatKhau
 end
 
+select * from Admin
+
+
+--Tạo một admin mới
+go
+create proc sp_TaoAdminMoi @TenAdmin nvarchar(100), @TenDangNhap nvarchar(100), @MatKhau nvarchar(100)
+as
+begin 
+	if(@TenAdmin is null or @TenDangNhap is null or @MatKhau is null)
+	begin 
+		raiserror('Yêu cầu nhập thông tin đầy đủ',16,1)
+		return 
+	end
+	if exists (select * from Admin where @TenDangNhap = TenDangNhap )
+	begin 
+		raiserror('Thông tin Admin này đã trùng, yêu cầu kiểm tra lại thông tin',16,1)
+		return 
+	end
+	SET XACT_ABORT ON
+	begin tran
+	begin try 
+		declare @temps int
+			set @temps = 1
+			while exists (select * from Admin where MaAdmin = @temps)
+				set @temps = @temps + 1
+		insert into Admin(MaAdmin,TenAdmin,TenDangNhap,MatKhau)
+		values(@temps,@TenAdmin,@TenDangNhap,@MatKhau)
+		commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end 
+
+-- cập nhật thông tin Admin
+go
+create proc sp_CapNhatThongTinAdmin @MaAdmin int, @TenAdmin nvarchar(100), @TenDangNhap nvarchar(100), @MatKhau nvarchar(100)
+as
+begin
+	if(@MaAdmin is null or @TenAdmin is null or @TenDangNhap is null or @MatKhau is null)
+	begin 
+		raiserror('Yêu cầu nhập thông tin đầy đủ',16,1)
+		return 
+	end
+
+	if exists (select * from Admin where TenDangNhap = @TenDangNhap and MaAdmin != @MaAdmin)
+	begin 
+		raiserror('Thông tin khách hàng này đã trùng, yêu cầu kiểm tra lại thông tin',16,1)
+		return 
+	end
+	begin transaction
+	begin try
+		update Admin set TenAdmin = @TenAdmin, TenDangNhap = @TenDangNhap, MatKhau = @MatKhau where MaAdmin = @MaAdmin
+		commit
+	end try
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch	
+end
+
+
+go
+-- Xóa thông tin Admin
+create proc sp_XoaThongTinAdmin @MaAdmin int
+as
+begin 
+	if not exists( select * from Admin where MaAdmin = @MaAdmin)
+	begin 
+		raiserror('Admin này không tồn tại',16,1)
+		return 
+	end
+	
+	begin transaction 
+	begin try 
+		delete Admin where MaAdmin = @MaAdmin
+		commit
+	end try
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end	
+
 
 -----------------------------------------------------------------------------------------
-----------------------KẾT THÚC ADMIN--------------------------------------
+-------------------------------------KẾT THÚC ADMIN--------------------------------------
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
-------------------------------PHẦN CHI NHÁNH--------------------------------------
+-------------------------------------PHẦN CHI NHÁNH--------------------------------------
 -----------------------------------------------------------------------------------------
 GO
 -- TẠO MỘT CHI NHÁNH MỚI 
@@ -372,7 +480,7 @@ begin
 		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)		 
 		return
 	end 
-
+	SET XACT_ABORT ON
 	begin transaction 
 	begin try
 		declare @temps int
@@ -407,6 +515,7 @@ begin
 		raiserror ('Yeu cau dat ten chi nhanh va dia chi khac',16,1)		
 		return
 	end
+	SET XACT_ABORT ON
 	begin transaction 
 	begin try
 		update ChiNhanh set TenChiNhanh = @TenChiNhanh, DiaChi = @DiaChi where MaChiNhanh = @MaChiNhanh
@@ -420,7 +529,6 @@ begin
 	end catch	
 end
 
-
 -- Xoa chi nhanh 
 go 
 create proc sp_XoaChiNhanh @MaChiNhanh int
@@ -431,14 +539,16 @@ begin
 		raiserror ('Chi nhanh nay khong ton tai',16,1)		
 		return
 	end
+	SET XACT_ABORT ON
 	begin transaction
 	begin try
-		update PhieuNhap set MaChiNhanh = null where MaChiNhanh = @MaChiNhanh
-		update PhieuXuat set MaChiNhanh = null where MaChiNhanh = @MaChiNhanh
-		update Xe set MaChiNhanh = null  where MaChiNhanh = @MaChiNhanh
-		update NhanVien set MaChiNhanh = null  where MaChiNhanh = @MaChiNhanh
+	select * from PhieuXuat
+		delete PhieuNhap  where MaChiNhanh = @MaChiNhanh
+		delete PhieuXuat where MaChiNhanh = @MaChiNhanh
+		delete Xe where MaChiNhanh = @MaChiNhanh
+		delete NhanVien where MaChiNhanh = @MaChiNhanh
 		delete ChiNhanh where MaChiNhanh = @MaChiNhanh
-		commit
+	commit
 	end try
 	begin catch 
 		declare @ErrMsg varchar(max) 
@@ -470,6 +580,7 @@ begin
 		Raiserror(N'Vui lòng xem lại thông tin',16,1)		
 		return
 	end 
+	SET XACT_ABORT ON
 	begin transaction
 	begin try
 		declare @temps int
@@ -494,22 +605,23 @@ go
 create proc sp_ChinhSuaThongTinNhaCungCap @MaNhaCungCap int, @TenNhaCungCap nvarchar(100), @DiaChi nvarchar(100), @DienThoai nvarchar(100), @Email nvarchar(100)
 as
 begin	
+	if(@TenNhaCungCap is null or @DiaChi is null or @DienThoai is null or @Email is null or @MaNhaCungCap is null)
+	begin 		
+		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)		
+		return
+	end 
 	if not exists(select * from NhaCungCap where MaNhaCungCap = @MaNhaCungCap) 
 	begin 
 		raiserror (N'Thông tin nhà cung cấp này không hợp lệ',16,1)		
 		return 
 	end
-	if(@TenNhaCungCap is null or @DiaChi is null or @DienThoai is null or @Email is null)
-	begin 		
-		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)		
-		return
-	end 
-	if exists (select * from NhaCungCap where TenNhaCungCap = @TenNhaCungCap and @DiaChi = DiaChi )
+	
+	if exists (select * from NhaCungCap where TenNhaCungCap = @TenNhaCungCap and @DiaChi = DiaChi and MaNhaCungCap != @MaNhaCungCap )
 	begin 		
 		Raiserror(N'Vui lòng xem lại thông tin',16,1)		
 		return
 	end 
-
+	SET XACT_ABORT ON
 	begin transaction 
 	begin try
 		update NhaCungCap set TenNhaCungCap = @TenNhaCungCap, DiaChi = @DiaChi, DienThoai = @DienThoai, Email = @Email
@@ -535,6 +647,7 @@ begin
 		raiserror (N'Thông tin nhà cung cấp này không hợp lệ',16,1)		
 		return 
 	end
+	SET XACT_ABORT ON
 	begin transaction 
 	begin try
 		update PhieuNhap set MaNhaCungCap = null where MaNhaCungCap = @MaNhaCungCap
@@ -558,7 +671,7 @@ end
 -----------------------------------------------------------------------------------------
 GO
 -- TẠO MỘT NHÂN VIÊN MỚI
-create PROC sp_ThemNhanVien @TenNhanVien nvarchar(100), @NamSinh nvarchar(5), @GioiTinh nvarchar(10), 
+alter PROC sp_ThemNhanVien @TenNhanVien nvarchar(100), @NamSinh nvarchar(5), @GioiTinh nvarchar(10), 
 							@DiaChi nvarchar(100), @DienThoai nvarchar(15), @MaChiNhanh int
 as
 begin 
@@ -567,6 +680,12 @@ begin
 		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)
 		return 
 	end 
+	--if(@GioiTinh not like N'Nam' or @GioiTinh not like N'Nữ')
+	--begin 		
+	--	Raiserror(N'Giới tính chỉ có thể là Nam hoặc Nữ',16,1)
+	--	return 
+	--end 
+	SET XACT_ABORT ON
 	begin transaction
 	begin try
 		declare @temps int
@@ -586,6 +705,7 @@ begin
 end
 
 
+
 -- Chỉnh sửa thông tin nhân viên
 go
 create proc sp_ChinhSuaThongTinNhanVien @MaNhanVien int,  @TenNhanVien nvarchar(100), @NamSinh nvarchar(5), @GioiTinh nvarchar(10), @DiaChi nvarchar(100), @DienThoai nvarchar(15), @MaChiNhanh int
@@ -601,6 +721,7 @@ begin
 		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)
 		return 
 	end	
+	SET XACT_ABORT ON
 	begin transaction 
 	begin try
 		update NhanVien set TenNhanVien = @TenNhanVien, DiaChi = @DiaChi, DienThoai = @DienThoai, 
@@ -627,9 +748,9 @@ begin
 		raiserror (N'Thông tin nhân viên này không hợp lệ',16,1)		
 		return 
 	end
+	SET XACT_ABORT ON
 	begin transaction 
 	begin try
-		update PhieuXuat set MaNhanVien = null where MaNhanVien = @MaNhanVien
 		update PhieuXuat set MaNhanVien = null where MaNhanVien = @MaNhanVien
 		delete NhanVien where MaNhanVien = @MaNhanVien
 	commit
@@ -651,8 +772,8 @@ end
 -----------------------------------------------------------------------------------------
 -- trigger tự đông gia tăng số lương dòng xe 
 go
-alter trigger tg_CapNhanSoLuongDongXe
-on DongXe
+create trigger tg_CapNhanSoLuongDongXe
+on Xe
 for insert, update, delete
 as
 begin 	
@@ -683,14 +804,15 @@ begin
 		raiserror(N'Yêu cầu nhập thông tin đầy đủ',16,1)
 		return
 	end
+	SET XACT_ABORT ON
 	begin transaction
 	begin try
 		declare @temps int
 			set @temps = 1
 			while exists (select * from DongXe where MaDongXe = @temps)
 				set @temps = @temps + 1
-		insert into DongXe(MaDongXe, MaLoaiXe, TenDongXe)
-		values(@temps, @MaLoaiXe,@TenDongXe)
+		insert into DongXe(MaDongXe, MaLoaiXe, TenDongXe,SoLuongHienCo)
+		values(@temps, @MaLoaiXe,@TenDongXe,0)		
 	commit
 	end try
 	begin catch 
@@ -717,6 +839,7 @@ begin
 		raiserror (N'Yêu cầu nhập tên xe khác',16,1)
 		return 
 	end
+	SET XACT_ABORT ON
 	begin transaction 
 	begin try
 		update DongXe set TenDongXe = @TenDongXe, MaLoaiXe = @MaLoaiXe where MaDongXe = @MaDongXe
@@ -751,6 +874,7 @@ begin
 		raiserror(N'Hiện tại không thể xóa dòng xe này vì còn xe phụ thuộc vào nó',16,1)
 		return
 	end
+	SET XACT_ABORT ON
 	begin transaction 
 	begin try
 		delete DongXe where MaDongXe = @MaDongXe
@@ -773,7 +897,7 @@ end
 -- trigger tự đông gia tăng số lương loại xe 
 go
 create trigger tg_CapNhanSoLuongLoaiXe
-on LoaiXe
+on DongXe
 for insert, update, delete
 as
 begin 	
@@ -804,14 +928,15 @@ begin
 		raiserror(N'Yêu cầu nhập thông tin đầy đủ',16,1)
 		return
 	end
+	SET XACT_ABORT ON
 	begin transaction
 	begin try
 		declare @temps int
 			set @temps = 1
 			while exists (select * from LoaiXe where MaLoaiXe = @temps)
 				set @temps = @temps + 1
-		insert into LoaiXe(MaLoaiXe, TenLoaiXe)
-		values(@temps, @TenLoaiXe)
+		insert into LoaiXe(MaLoaiXe, TenLoaiXe,SoLuongHienCo)
+		values(@temps, @TenLoaiXe,0)
 	commit
 	end try
 	begin catch 
@@ -838,6 +963,7 @@ begin
 		raiserror (N'Yêu cầu nhập tên loại xe khác',16,1)
 		return 
 	end
+	SET XACT_ABORT ON
 	begin transaction 
 	begin try
 		update LoaiXe set TenLoaiXe = @TenLoaiXe where MaLoaiXe = @MaLoaiXe
@@ -867,11 +993,12 @@ begin
 		raiserror(N'Thông tin không hợp lệ',16,1)
 		return
 	end
-	if exists( select * from Xe where MaLoaiXe = @MaLoaiXe) 
+	if exists( select * from DongXe where MaLoaiXe = @MaLoaiXe) 
 	begin
-		raiserror(N'Hiện tại không thể xóa loại xe này vì còn xe phụ thuộc vào nó',16,1)
+		raiserror(N'Hiện tại không thể xóa loại xe này vì còn dòng xe phụ thuộc vào nó',16,1)
 		return
 	end
+	SET XACT_ABORT ON
 	begin transaction 
 	begin try
 		delete LoaiXe where MaLoaiXe = @MaLoaiXe
@@ -893,33 +1020,90 @@ end
 -----------------------------------------------------------------------------------------
 GO
 -- TẠO PHIẾU NHẬP MỚI
-create proc sp_TaoPhieuNhapMoi @MaNhanVien int, @MaNhaCungCap int, @MaChiNhanh int
+create proc sp_ThemPhieuNhap @MaNhanVien int, @MaNhaCungCap int, @MaChiNhanh int
 as
 begin 
-	if(@MaNhanVien = null or @MaNhaCungCap = null or @MaChiNhanh = null)
-	begin 		 
-		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)
+	if(@MaNhanVien is null or @MaNhaCungCap is null or @MaChiNhanh is null)
+	begin 
+		raiserror (N'Vui lòng nhập đầy đủ thông tin',16,1)
 		return
-	end 
-	begin transaction
+	end
+	SET XACT_ABORT ON
+	begin transaction 
 	begin try
 		declare @temps int
-		set @temps = 1
-		while exists (select * from PhieuNhap where MaPhieuNhap = @temps)
-			set @temps = @temps + 1
-		insert into PhieuNhap(MaPhieuNhap,MaNhanVien, MaNhaCungCap, MaChiNhanh,NgayNhap,TongSoXeNhap, ThanhTienNhap)
-		values (@temps, @MaNhanVien, @MaNhaCungCap, @MaChiNhanh, GETDATE(),0,0)
+			set @temps = 1
+			while exists (select * from PhieuNhap where MaPhieuNhap = @temps)
+				set @temps = @temps + 1
+		insert into PhieuNhap(MaPhieuNhap, MaNhanVien,MaNhaCungCap, MaChiNhanh, NgayNhap, TongSoXeNhap, ThanhTienNhap)
+		values(@temps,@MaNhanVien, @MaNhaCungCap, @MaChiNhanh, GETDATE(), 0,0)
 		commit
 	end try
 	begin catch
 		declare @ErrMsg varchar(max) 
 		rollback 
-		select @ErrMsg = 'Loi' + ERROR_MESSAGE()
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
 		raiserror (@ErrMSG, 16,1)
 	end catch
 end
 
--- cập nhật thông tin phiếu nhập
+
+-- chỉnh sửa thông tin phiếu nhập
+go
+create proc sp_ChinhSuaThongTinPhieuNhap @MaPhieuNhap int, @MaNhanVien int, @MaNhaCungCap int, @MaChiNhanh int
+as
+begin
+	if(@MaPhieuNhap is null or @MaNhanVien is null or @MaNhaCungCap is null or @MaChiNhanh is null)
+	begin 
+		raiserror (N'Vui lòng nhập đầy đủ thông tin',16,1)
+		return
+	end
+	if not exists (select * from PhieuNhap where MaPhieuNhap = @MaPhieuNhap)
+	begin 
+		raiserror (N'Vui lòng kiểm tra lại thông tin',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin transaction
+	begin try
+		update PhieuNhap 
+			set MaNhanVien = @MaNhanVien, MaNhaCungCap = @MaNhaCungCap, MaChiNhanh = @MaChiNhanh 
+			where MaPhieuNhap = @MaPhieuNhap
+	commit 
+	end try
+	begin catch		
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end
+
+
+--Xóa thông tin phiếu nhập
+go
+create proc sp_XoaThongTinPhieuNhap @MaPhieuNhap int
+as
+begin 
+	if not exists (Select * from PhieuNhap where MaPhieuNhap = @MaPhieuNhap)
+	begin
+		raiserror (N'Vui lòng kiểm tra lại thông tin',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin transaction
+	begin try
+		delete ChiTietPhieuNhap where MaPhieuNhap = @MaPhieuNhap
+		delete PhieuNhap where MaPhieuNhap = @MaPhieuNhap
+	commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end
 
 -----------------------------------------------------------------------------------------
 ---------------------------KẾT THÚC PHẦN PHIẾU NHẬP--------------------------------------
@@ -930,9 +1114,9 @@ end
 -----------------------------------------------------------------------------------------
 -- cập nhât thông tin số lương và tổng tiền cho phiếu nhập
 go
-alter trigger tg_CapNhatSoLuongVaThanhTienChoPhieuNhap 
+create trigger tg_CapNhatSoLuongVaThanhTienChoPhieuNhap 
 on ChiTietPhieuNhap
-for insert, update, delete
+after insert, update, delete
 as
 begin 
 	declare @MaPhieuNhapCu int
@@ -951,33 +1135,98 @@ begin
 	if(@MaPhieuNhapMoi is not null)
 	begin
 		update PhieuNhap set TongSoXeNhap = (select sum(SoLuongNhap) from ChiTietPhieuNhap where MaPhieuNhap = @MaPhieuNhapMoi),
-							ThanhTienNhap = (select sum(SoLuongNhap) from ChiTietPhieuNhap where MaPhieuNhap = @MaPhieuNhapMoi)
+							ThanhTienNhap = (select sum(DonGiaNhap) from ChiTietPhieuNhap where MaPhieuNhap = @MaPhieuNhapMoi)
 			where MaPhieuNhap = @MaPhieuNhapMoi	
 	end
 end 
 
 
-
-GO
 -- tạo chi tiết phiếu nhập mới
-create proc sp_TaoChiTietPhieuNhap @MaXe int, @MaPhieuNhap int, @SoLuongNhap int, @DonGiaNhap float
+go
+create proc sp_ThemChiTietPhieuNhap @MaXe int, @MaPhieuNhap int, @SoLuongNhap int, @DonGiaNhap float
 as 
 begin 
-	if(@MaXe = null or @MaPhieuNhap = null or @MaPhieuNhap = null or @SoLuongNhap = null or @DonGiaNhap = null)
-	begin 
-		rollback 
+	if(@MaXe is null or @MaPhieuNhap is null or @MaPhieuNhap is null or @SoLuongNhap is null or @DonGiaNhap is null)
+	begin 		 
 		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)
+		return
 	end 
-	if exists( select * from ChiTietPhieuNhap where MaXe = @MaXe and MaPhieuNhap = @MaPhieuNhap)
+	if ( select count(*) from ChiTietPhieuNhap where MaXe = @MaXe and MaPhieuNhap = @MaPhieuNhap) >= 2
 	begin 
 		rollback 
 		Raiserror(N'Vui lòng nhập kiểm tra lại thông tin xe và phiếu nhập đã bị trùng',16,1)
 	end
-	insert into ChiTietPhieuNhap(MaPhieuNhap,MaXe,SoLuongNhap, DonGiaNhap)
-	values (@MaPhieuNhap, @MaXe, @SoLuongNhap, @DonGiaNhap)
+	SET XACT_ABORT ON
+	begin transaction 
+	begin try 
+		insert into ChiTietPhieuNhap(MaPhieuNhap,MaXe,SoLuongNhap, DonGiaNhap)
+		values (@MaPhieuNhap, @MaXe, @SoLuongNhap, @DonGiaNhap)
+		commit
+	end try
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+	
 end
 
 
+-- cập nhật thông tin chi tiết phiếu nhập
+go
+create proc sp_CapNhatThongTinChiTietPhieuNhap @MaXe int, @MaPhieuNhap int, @SoLuongNhap int, @DonGiaNhap float
+as
+begin
+	if(@MaXe is null or @MaPhieuNhap is null or @MaPhieuNhap is null or @SoLuongNhap is null or @DonGiaNhap is null)
+	begin 		 
+		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)
+		return
+	end 
+	SET XACT_ABORT ON
+	begin transaction
+	begin try
+		update ChiTietPhieuNhap set MaPhieuNhap = MaPhieuNhap, MaXe = @MaXe, SoLuongNhap = @SoLuongNhap, DonGiaNhap = @DonGiaNhap
+			where MaPhieuNhap = @MaPhieuNhap and MaXe = @MaXe
+		if ( select count(*) from ChiTietPhieuNhap where MaXe = @MaXe and MaPhieuNhap = @MaPhieuNhap) >= 2
+		begin 
+			rollback 
+			Raiserror(N'Vui lòng nhập kiểm tra lại thông tin xe và phiếu nhập đã bị trùng',16,1)
+		end
+		commit
+	end try
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end
+
+
+-- Xóa thông tin chi tiết phiếu nhập
+go
+create proc sp_XoaThongTinChiTietPhieuNhap @MaPhieuNhap int, @MaXe int
+as
+begin 
+if(@MaXe is null or @MaPhieuNhap is null or @MaPhieuNhap is null)
+	begin 		 
+		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)
+		return
+	end 	
+	SET XACT_ABORT ON
+	begin transaction 
+	begin try
+		delete ChiTietPhieuNhap where MaPhieuNhap = @MaPhieuNhap and MaXe = @MaXe
+		commit 
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end
 
 -----------------------------------------------------------------------------------------
 ---------------------------KẾT THÚC PHẦN CHI TIẾT PHIẾU NHẬP-----------------------------
@@ -1000,25 +1249,317 @@ go
 create proc sp_TimKiemKhachHang @dienthoai nvarchar(20), @TenKH nvarchar(200)
 as
 begin
-	if(@dienThoai != null and (@TenKH = null) or (@TenKH = ''))
+	if(@dienThoai is not null and @TenKH is null)
 	begin
 		select * from KhachHang where DienThoai = @dienthoai
+		return;
 	end
 	else
 	begin
-		if(@dienThoai = null and @tenKh != null)
+		if(@dienThoai is null and @tenKh is not null)
 		begin
 			select * from KhachHang where TenKhachHang = @TenKH
+			return;
 		end
-		else
-		begin
-			select * from khachhang where DienThoai = '%'+@dienthoai+'%' and TenKhachHang = '%'+@TenKH+'%'
-		end		
 	end	
+	select * from khachhang where DienThoai = '%'+@dienthoai+'%' or TenKhachHang = '%'+@TenKH+'%'	
 end
+
+exec sp_TimKiemKhachHang null,'Tuan'
+
+go
+-- Thêm khách hàng mới
+create proc sp_ThemKhachHang @TenKhachHang nvarchar(100), @DienThoai nvarchar(100)
+as
+begin 
+	if(@TenKhachHang is null or @DienThoai is null )
+	begin 
+		raiserror('Yêu cầu nhập thông tin đầy đủ',16,1)
+		return 
+	end
+
+	if exists (select * from KhachHang where DienThoai = @DienThoai)
+	begin 
+		raiserror('Thông tin khách hàng này đã trùng, yêu cầu kiểm tra lại thông tin',16,1)
+		return 
+	end
+	SET XACT_ABORT ON
+	begin tran
+	begin try 
+		declare @temps int
+			set @temps = 1
+			while exists (select * from KhachHang where MaKhachHang = @temps)
+				set @temps = @temps + 1
+		insert into KhachHang(MaKhachHang,TenKhachHang,DienThoai)
+		values(@temps,@TenKhachHang,@DienThoai)
+		commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end 
+
+
+-- cập nhật thông tin khách hàng
+go
+CREATE proc sp_CapNhatThongTinKhachHang @MaKhachHang int, @TenKhachHang nvarchar(100), @DienThoai nvarchar(100)
+as
+begin
+	if(@TenKhachHang is null or @DienThoai is null )
+	begin 
+		raiserror('Yêu cầu nhập thông tin đầy đủ',16,1)
+		return 
+	end
+	SET XACT_ABORT ON
+	begin transaction
+	begin try
+		update KhachHang set TenKhachHang = @TenKhachHang, DienThoai = @DienThoai where MaKhachHang = @MaKhachHang
+		if exists (select * from KhachHang where DienThoai = @DienThoai AND MaKhachHang != @MaKhachHang )
+		begin 
+			raiserror('Thông tin khách hàng này đã trùng, yêu cầu kiểm tra lại thông tin',16,1)
+			return 
+		end
+		commit
+	end try
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback  
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch	
+end
+
+
+go
+-- Xóa thông tin khách hàng
+create proc sp_XoaThongTinKhachHang @MaKhachHang int
+as
+begin 
+	if not exists( select * from KhachHang where MaKhachHang = @MaKhachHang)
+	begin 
+		raiserror('Khách hàng này không tồn tại',16,1)
+		return 
+	end
+	if exists (select * from PhieuXuat where MaKhachHang = @MaKhachHang)
+	begin 
+		raiserror('Khách hàng này hiện tại chưa được xóa vì còn thông tin cần xử lý',16,1)
+		return 
+	end
+	SET XACT_ABORT ON
+	begin transaction 
+	begin try 
+		delete KhachHang where MaKhachHang = @MaKhachHang
+		commit
+	end try
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end	
+
 
 -----------------------------------------------------------------------------------------
 ---------------------------KẾT THÚC PHẦN KHÁCH HÀNG--------------------------------------
+-----------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------
+----------------------------------PHIẾU BẢO HÀNH-----------------------------------------
+-----------------------------------------------------------------------------------------
+
+-- Tạo thông tin phiếu bảo hành
+go
+create proc sp_TaoPhieuBaoHanh @MaPhieuXuat int, @NgayBatDau date, @ThoiGianBaoHanh int, @SoKhung nvarchar(100), @SoSuon nvarchar(100)
+as
+begin 
+	if(@MaPhieuXuat is null or @NgayBatDau is null or @ThoiGianBaoHanh is null or @SoKhung is null or @SoSuon is null)
+	begin
+		Raiserror(N'Yêu cầu nhập thông tin đầy đủ',16,1)
+		return
+	end
+	if not exists (select * from PhieuXuat where MaPhieuXuat = @MaPhieuXuat)
+	begin
+		Raiserror(N'Không tìn thầy thông tin phiếu xuất để bảo hành',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin tran 
+	begin try 
+	declare @temps int
+			set @temps = 1
+			while exists (select * from PhieuBaoHanh where MaPhieuBaoHanh = @temps)
+				set @temps = @temps + 1
+		insert into PhieuBaoHanh(MaPhieuBaoHanh, MaPhieuXuat,NgayBatDau,ThoiGianBaoHanh,SoKhung,SoSuon)
+		values (@temps,@MaPhieuXuat,@NgayBatDau,@ThoiGianBaoHanh,@SoKhung,@SoSuon)
+		commit
+	end try
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end
+
+
+-- Cập nhật thông tin phiếu bảo hàng
+go
+create proc sp_CapNhatThongTinPhieuBaoHanh @MaPhieuBaoHanh int, @MaPhieuXuat int, @NgayBatDau date, @ThoiGianBaoHanh int, @SoKhung nvarchar(100), @SoSuon nvarchar(100)
+as
+begin 
+	if(@MaPhieuBaoHanh is null or @MaPhieuXuat is null or @NgayBatDau is null or @ThoiGianBaoHanh is null or @SoKhung is null or @SoSuon is null)
+	begin
+		Raiserror(N'Yêu cầu nhập thông tin đầy đủ',16,1)
+		return
+	end
+	if not exists (select * from PhieuBaoHanh where MaPhieuBaoHanh = @MaPhieuBaoHanh)
+	begin
+		Raiserror(N'Không tìm thấy thông tin phiếu bảo hành này',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin tran 
+	begin try
+		update PhieuBaoHanh set MaPhieuXuat = @MaPhieuXuat, NgayBatDau = @NgayBatDau, ThoiGianBaoHanh = @ThoiGianBaoHanh, SoKhung = @SoKhung, SoSuon = @SoSuon
+		where MaPhieuBaoHanh = @MaPhieuBaoHanh
+	commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end 
+
+
+-- xóa phiếu bảo hành
+go
+create proc sp_XoaPhieuBaoHanh @MaPhieuBaoHanh int
+as
+begin 
+	if not exists (select * from PhieuBaoHanh where MaPhieuBaoHanh = @MaPhieuBaoHanh)
+	begin
+		Raiserror(N'Không tìm thấy thông tin phiếu bảo hành này',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin tran 
+	begin try
+		delete ChiTietPhieuBaoHanh where MaPhieuBaoHanh = @MaPhieuBaoHanh
+		delete PhieuBaoHanh where MaPhieuBaoHanh = @MaPhieuBaoHanh
+		commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end		
+-----------------------------------------------------------------------------------------
+----------------------------KẾT THÚC PHẦN PHIẾU BẢO HÀNH---------------------------------
+-----------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------
+-----------------------------CHI TIẾT PHIẾU BẢO HÀNH-------------------------------------
+-----------------------------------------------------------------------------------------
+--Tạo chi tiết phiếu bảo hành
+go
+create proc sp_TaoChiTietPhieuBaoHanh @MaPhieuBaoHanh int, @NgayBaoHanh date, @GhiChu nvarchar(max)
+as
+begin 
+	if(@MaPhieuBaoHanh is null or @NgayBaoHanh is null or @GhiChu is null)
+	begin
+		Raiserror(N'Yêu cầu nhập thông tin đầy đủ',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin tran 
+	begin try 
+	declare @temps int
+			set @temps = 1
+			while exists (select * from ChiTietPhieuBaoHanh where MaChiTietPhieuBaoHanh = @temps)
+				set @temps = @temps + 1	
+		insert into ChiTietPhieuBaoHanh(MaChiTietPhieuBaoHanh, MaPhieuBaoHanh,NgayBaoHanh, GhiChu)
+		values (@temps,@MaPhieuBaoHanh,@NgayBaoHanh,@GhiChu)
+		commit
+	end try 
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch 
+end 
+
+go
+-- Cập nhât thông tin phiếu bảo hành
+create proc sp_CapNhatThongTinChiTietPhieuBaoHanh @MaChiTietPhieuBaoHanh int, @MaPhieuBaoHanh int, @NgayBaoHanh date, @GhiChu nvarchar(max)
+as
+begin
+	if(@MaPhieuBaoHanh is null or @NgayBaoHanh is null or @GhiChu is null or @MaChiTietPhieuBaoHanh is null)
+	begin
+		Raiserror(N'Yêu cầu nhập thông tin đầy đủ',16,1)
+		return
+	end
+	if not exists (select * from ChiTietPhieuBaoHanh where MaChiTietPhieuBaoHanh = @MaChiTietPhieuBaoHanh)
+	begin
+		Raiserror(N'Không tìm thấy thông tin chi tiết phiếu bảo hành này',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin tran 
+	begin try 
+		update ChiTietPhieuBaoHanh set MaPhieuBaoHanh = @MaPhieuBaoHanh, NgayBaoHanh = @NgayBaoHanh, GhiChu = @GhiChu
+		where @MaChiTietPhieuBaoHanh = MaChiTietPhieuBaoHanh
+		commit
+	end try 
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch 
+end
+
+
+-- Xóa thông tin chi tiết phiếu bảo hành
+go
+create proc sp_XoaChiTietPhieuBaoHanh @MaChiTietPhieuBaoHanh int
+as
+begin 
+	if(@MaChiTietPhieuBaoHanh is null)
+	begin
+		Raiserror(N'Yêu cầu nhập thông tin đầy đủ',16,1)
+		return
+	end
+	if not exists (select * from ChiTietPhieuBaoHanh where MaChiTietPhieuBaoHanh = @MaChiTietPhieuBaoHanh)
+	begin
+		Raiserror(N'Không tìm thấy thông tin chi tiết phiếu bảo hành này',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin tran 
+	begin try
+		delete ChiTietPhieuBaoHanh where MaChiTietPhieuBaoHanh = @MaChiTietPhieuBaoHanh
+		commit
+	end try
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch 
+end 
+
+-----------------------------------------------------------------------------------------
+---------------------------KẾT THÚC CHI TIẾT PHIẾU BẢO HÀNH------------------------------
 -----------------------------------------------------------------------------------------
 
 
@@ -1027,51 +1568,259 @@ end
 -----------------------------------------------------------------------------------------
 -- TẠO THÊM PHIẾU XUẤT MỚI
 GO
-create proc sp_TaoPhieuXuat @MaNhanVien int, @MaKhachHanh int,  @MaChiNhanh int, @MaXe int, @ThanhTienXuat int
+create proc sp_TaoPhieuXuat @MaNhanVien int, @MaKhachHanh int,  @MaChiNhanh int, @MaXe int, @MauXe nvarchar(100), @ThanhTienXuat int, @GhiChu nvarchar(max)
 as 
 begin
-	if(@MaXe = null or @MaKhachHanh = null or @MaNhanVien = null or @MaChiNhanh = null)
-	begin 
-		rollback 
+	if(@MaXe is null or @MaKhachHanh is null or @MaNhanVien is null or @MaChiNhanh is null or @MauXe is null)
+	begin 		
 		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)
+		return
 	end 
-	declare @temps int
-	set @temps = 1
-	while exists (select * from PhieuXuat where MaPhieuXuat = @temps)
-		set @temps = @temps + 1
-	insert into PhieuXuat(MaPhieuXuat,MaNhanVien, MaKhachHang, MaChiNhanh,MaXe,NgayXuat,ThanhTienXuat)
-	values (@temps, @MaNhanVien, @MaKhachHanh, @MaChiNhanh, @MaXe,GETDATE(),@ThanhTienXuat)
+	SET XACT_ABORT ON
+	begin transaction 
+	begin try	
+		declare @temps int
+		set @temps = 1
+		while exists (select * from PhieuXuat where MaPhieuXuat = @temps)
+			set @temps = @temps + 1
+		insert into PhieuXuat(MaPhieuXuat,MaNhanVien, MaKhachHang, MaChiNhanh,MaXe,MauXe,NgayXuat,ThanhTienXuat,GhiChu)
+		values (@temps, @MaNhanVien, @MaKhachHanh, @MaChiNhanh, @MaXe,@MauXe,GETDATE(),@ThanhTienXuat,@GhiChu)	
+		commit		
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
 end
 
 
+-- Cập nhật thông tin phiếu xuất
+go
+create proc sp_CapNhatThongTinPhieuXuat @MaPhieuXuat int, @MaNhanVien int, @MaKhachHanh int,  @MaChiNhanh int, @MaXe int, @MauXe nvarchar(100),@NgayXuat date, @ThanhTienXuat int, @GhiChu nvarchar(max)
+as
+begin 
+	if not exists(select * from PhieuXuat where MaPhieuXuat = @MaPhieuXuat)
+	begin 		
+		Raiserror(N'Không tìn thầy thông tin phiếu xuất này',16,1)
+		return
+	end 
+	if(@MaXe is null or @MaKhachHanh is null or @MaNhanVien is null or @MaChiNhanh is null or @MauXe is null)
+	begin 		
+		Raiserror(N'Vui lòng nhập thông tin đầy đủ và chính xác',16,1)
+		return
+	end 
+	SET XACT_ABORT ON
+	begin transaction 
+	begin try
+		update PhieuXuat set MaNhanVien = @MaNhanVien, MaKhachHang = @MaKhachHanh, MaChiNhanh = @MaChiNhanh, MaXe = @MaXe,
+							MauXe = @MauXe, ThanhTienXuat = @ThanhTienXuat, GhiChu = @GhiChu, NgayXuat = @NgayXuat
+							where MaPhieuXuat = @MaPhieuXuat
+		if (select count(*) from PhieuXuat where MaKhachHang = @MaKhachHanh and MaXe = @MaXe and MauXe = @MauXe and NgayXuat = @NgayXuat and MaChiNhanh = @MaChiNhanh) >= 2
+		begin 
+			Raiserror (N'Xem lại thông tin',16,1)
+			rollback
+		end 
+		commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end 
 
+
+-- Xóa thông tin phiếu xuất
+go
+create proc sp_XoaThongTinPhieuXuat @MaPhieuXuat int
+as
+begin 
+	if not exists (select * from PhieuXuat where MaPhieuXuat = @MaPhieuXuat)
+	begin
+		Raiserror(N'Không tìn thầy thông tin phiếu xuất này',16,1)
+		return
+	end
+	if exists (select * from PhieuBaoHanh where MaPhieuXuat = @MaPhieuXuat)
+	begin
+		Raiserror(N'Hiện tại phiếu xuất này chưa thể xóa được',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin tran
+	begin try
+		delete PhieuXuat where MaPhieuXuat = @MaPhieuXuat
+		commit
+	end try
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end 
+
+
+-- TRGGER giảm số lương xe khi tạo phiếu xuất --
+go
+create trigger tg_GiamSoLuongXeKhiMuaXe
+on PhieuXuat
+after insert
+as
+begin 
+	SET XACT_ABORT ON
+	BEGIN TRAN
+	BEGIN TRY
+	declare @maxe int
+	select @maxe = MaXe from inserted 
+	update Xe set SoLuongHienCo = SoLuongHienCo -1 
+	where MaXe = @maxe
+	COMMIT 
+	end try 
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end
 -----------------------------------------------------------------------------------------
 --------------------------------KẾT THÚC PHẦN PHIẾU XUẤT---------------------------------
 -----------------------------------------------------------------------------------------
 
-
 -----------------------------------------------------------------------------------------
---------------------------------PHIẾU ĐẶT XE-----------------------------------------
+------------------------------------PHIẾU ĐẶT XE-----------------------------------------
 -----------------------------------------------------------------------------------------
 go
-create proc sp_TaoPhieuDatXe @MaXe int, @TenNguoiDat nvarchar(100), @SDT nvarchar(20)
+create proc sp_TaoPhieuDatXe @MaXe int,@MauXe nvarchar(100), @TenNguoiDat nvarchar(100), @SDT nvarchar(20)
 as
 begin
-	if(@TenNguoiDat = null and @SDT = null )
+
+	if(@TenNguoiDat is null or @SDT is null )
 	begin
 		raiserror (N'Vui lòng nhập đầy đủ thông tin',16,1)
 		return
 	end
-	declare @temp int
-	set @temp=1
-	while exists(select * from PhieuDatXe where MaPhieuDatXe=@temp)
-	set @temp=@temp+1
-
-	insert into PhieuDatXe 
-	values (@temp, @MaXe, @TenNguoiDat, @SDT, N'Đang chờ xác nhận',GETDATE())
+	SET XACT_ABORT ON
+	begin tran
+	begin try
+		declare @temp int
+		set @temp=1
+		while exists(select * from PhieuDatXe where MaPhieuDatXe=@temp)
+		set @temp=@temp+1
+		insert into PhieuDatXe (MaPhieuDatXe,MaXe,MauXe,TenNguoiDat,SDT,TinhTrang,NgayDat)
+		values (@temp, @MaXe,@MauXe, @TenNguoiDat, @SDT, N'Đang chờ xác nhận',GETDATE())
+		commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
 end
 
 
+-- Cập nhật thông tin phiếu đặt xe
+go
+create proc sp_CapNhatThongTinPhieuDatXe @MaPhieuDatXe int, @MaXe int,@MauXe nvarchar(100), @TenNguoiDat nvarchar(100), @SDT nvarchar(20), 
+											@TinhTrang nvarchar(100), @NgayDat date
+as
+begin
+	if(@TenNguoiDat is null or @SDT is null or @MaPhieuDatXe is null or @MaXe is null or @MauXe is null)
+	begin
+		raiserror (N'Vui lòng nhập đầy đủ thông tin',16,1)
+		return
+	end
+	if not exists( select * from PhieuDatXe where MaPhieuDatXe = @MaPhieuDatXe)
+	begin
+		raiserror (N'Không tìm thấy thông tin phiếu đặt xe này',16,1)
+		return
+	end
+	
+	SET XACT_ABORT ON
+	begin tran
+	begin try
+		update PhieuDatXe 
+			set MaXe = @maxe, MauXe = @MauXe, TenNguoiDat = @TenNguoiDat, SDT = @SDT, TinhTrang = @TinhTrang, NgayDat = @NgayDat
+			where MaPhieuDatXe = @MaPhieuDatXe
+			if not exists (select * from Xe where MauXe = @MauXe and MaXe = @MaXe ) 
+			begin
+				raiserror ('Thông tin xe không phù hợp',16,1)
+				rollback
+			end
+		commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end
+
+
+
+-- Xóa thông tin phiếu đặt xe
+go 
+create proc sp_XoaPhieuDatXe @MaPhieuDatXe int
+as
+begin 
+	if not exists (select * from PhieuDatXe where MaPhieuDatXe = @MaPhieuDatXe)
+	begin
+		raiserror (N'Không tìm thấy thông tin phiếu đặt xe này',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin tran
+	begin try
+		delete PhieuDatXe where MaPhieuDatXe = @MaPhieuDatXe
+		commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end
+
+
+-- Tìm kiếm phiếu đặt xe theo số điện thoại khách hàng
+go
+create proc sp_TimKiemPhieuDatXe @SoDienThoai nvarchar(100)
+as
+begin 	
+	select * from PhieuDatXe where SDT = @SoDienThoai
+end
+
+
+
+-- Xóa phiếu đặt xe ở bên khách hàng
+go
+create proc sp_XoaPhieuDatXeKhachHang @MaPhieuDatXe int
+as
+begin 
+	if(@MaPhieuDatXe is null)
+	begin
+		raiserror (N'Vui lòng nhập mã phiếu đặt xe',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin tran
+	begin try
+		delete PhieuDatXe where MaPhieuDatXe = @MaPhieuDatXe
+		commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
+end 
 -----------------------------------------------------------------------------------------
 --------------------------------KẾT THÚC PHẦN PHIẾU ĐẶT XE-------------------------------
 -----------------------------------------------------------------------------------------
@@ -1079,73 +1828,118 @@ end
 -----------------------------------------------------------------------------------------
 -----------------------------------------PHẦN XE-----------------------------------------
 -----------------------------------------------------------------------------------------
-
--- Procedure them xe -- 
--- chưa đúng
-select * from xe
+-- Thêm thông tin một chiếc xe mới 
 GO
-create proc sp_ThemXe @maloaixe int, @madongxe int, @tenxe nvarchar(100),@motaxe nvarchar(100),
+create proc sp_ThemXe @madongxe int, @tenxe nvarchar(100),@MauXe nvarchar(100), @machinhanh int, @SoLuongHienCo int, @TrongLuong int,
 						@thongtinbaohanh nvarchar(100), @dongiaxe float,@namsanxuat int, @HinhAnh varbinary(max)
 as
 begin
-	if not exists (select * from LoaiXe where MaLoaiXe = @maloaixe) return
-	if not exists (select * from DongXe where MaDongXe = @madongxe) return
-	if exists (select* from Xe where MaLoaiXe=@maloaixe and MaDongXe=@madongxe and Tenxe=@tenxe and MoTaXe = @motaxe 
-								and ThongTinBaoHanh = @thongtinbaohanh and DonGiaXe = @dongiaxe)
+	if(@madongxe is null or @tenxe is null or @MauXe is null or @machinhanh is null)
 	begin
-		declare @soluonghienco int
-		select @soluonghienco=SoLuongHienCo  from Xe where MaLoaiXe=@maloaixe and MaDongXe=@madongxe and Tenxe=@tenxe and MoTaXe = @motaxe 
-										and ThongTinBaoHanh = @thongtinbaohanh and DonGiaXe = @dongiaxe
-		set @soluonghienco+=1
-		update Xe set SoLuongHienCo=@soluonghienco where MaLoaiXe=@maloaixe and MaDongXe=@madongxe and Tenxe=@tenxe and MoTaXe = @motaxe 
-								and ThongTinBaoHanh = @thongtinbaohanh and DonGiaXe = @dongiaxe
+		raiserror (N'Vui lòng nhập đầy đủ thông tin',16,1)
+		return
 	end
-	else
+	if not exists (select * from DongXe where MaDongXe = @madongxe) 
+	begin
+		raiserror (N'Vui lòng kiểm tra lại thông tin',16,1)
+		return
+	end
+	if exists (select * from Xe where Tenxe=@tenxe and MauXe = @MauXe and NamSanXuat = @namsanxuat)
 	begin 
+		raiserror (N'Thông tin chiếc xe này đã tồn tại',16,1)
+		return
+	end
+	if exists (select * from Xe where MaDongXe=@madongxe and Tenxe=@tenxe and MauXe = @MauXe and MaChiNhanh = @machinhanh
+								and ThongTinBaoHanh = @thongtinbaohanh and GiaXe = @dongiaxe)
+	begin
+		raiserror (N'Đã có thông tin chiếc xe này',16,1)
+		return
+	end
+	SET XACT_ABORT ON
+	begin tran
+	begin try
 		declare @temp int
 		set @temp =1
 		while exists (select * from Xe where MaXe=@temp)
 		set @temp+=1
-		insert  Xe (MaXe,MaLoaiXe,MaDongXe, MaChiNhanh, TenXe, MauXe, GiaXe, TrongLuong, ThongTinBaoHanh,SoLuongHienCo,NamSanXuat,HinhAnh)
-		values(@temp,@maloaixe,@madongxe,@tenxe,@motaxe,@thongtinbaohanh,@dongiaxe,1,@namsanxuat,@HinhAnh)
-	end		
-	
-	-- cập nhật số lượng của dòng xe
-	declare @temp1 int 
-	select @temp1 = SoLuongHienCo + 1 from DongXe where MaDongXe = @madongxe	
-	update DongXe set SoLuongHienCo = @temp1
-	--cập nhập số lượng của loại xe 
-	select @temp1 = SoLuongHienCo + 1 from LoaiXe where MaLoaiXe = @maloaixe	
-	update LoaiXe set SoLuongHienCo = @temp1
+		insert into Xe(MaXe,MauXe,MaDongXe,MaChiNhanh,TenXe,GiaXe,TrongLuong,NamSanXuat,ThongTinBaoHanh,SoLuongHienCo,HinhAnh)
+		values(@temp,@MauXe,@madongxe,@machinhanh,@tenxe,@dongiaxe,@TrongLuong,@namsanxuat,@thongtinbaohanh,@SoLuongHienCo,@HinhAnh)	
+		commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch	
+end
+select * from Xe
+
+
+-- tự đông cập nhật số lượng dòng xe 
+go
+create trigger tg_CapNhatSoLuongDongXe 
+on Xe
+after insert, update , delete
+as
+begin
+SET XACT_ABORT ON
+	begin tran
+	begin try
+		declare @MaDongXe int
+		declare @SoLuongHienCo int
+		select @MaDongXe = MaDongXe, @SoLuongHienCo = SoLuongHienCo from deleted
+		if(@MaDongXe is not null and @SoLuongHienCo is not null)
+		begin
+			update DongXe set SoLuongHienCo = SoLuongHienCo - @SoLuongHienCo where MaDongXe = @MaDongXe
+		end
+		declare @MaDongXe1 int
+		declare @SoLuongHienCo1 int
+		select @MaDongXe1 = MaDongXe, @SoLuongHienCo1 = SoLuongHienCo from inserted
+		if(@MaDongXe is not null and @SoLuongHienCo is not null)
+		begin
+			update DongXe set SoLuongHienCo = SoLuongHienCo + @SoLuongHienCo1 where MaDongXe = @MaDongXe1
+		end
+	commit 
+	end try
+	begin catch 
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
 end
 
 
 -- Xoa Xe
 go
-create proc sp_XoaXe @maxe int 
+create proc sp_XoaXe @maxe int
 as
 begin
 	if not exists (select * from Xe where MaXe=@maxe ) 
-	begin	return	 end	
-	declare @soluonghienco int
-	select @soluonghienco SoLuongHienCo from Xe where  MaXe=@maxe 
-		
-	if(@soluonghienco = 1)
-		delete Xe where MaXe=@maxe
-	else
 	begin
-		update Xe set SoLuongHienCo = @soluonghienco - 1  where  MaXe=@maxe
-	end
-
-	declare @temp int
-	--cập nhật số lượng dòng xe
-	select @temp = DongXe. SoLuongHienCo from DongXe inner join Xe on DongXe.MaDongXe = Xe.MaDongXe where maxe = @maxe
-	set @temp = @temp - 1
-	update DongXe set SoLuongHienCo = @temp
-	--cập nhật số lượng loại xe
-	select @temp = LoaiXe. SoLuongHienCo from LoaiXe inner join Xe on LoaiXe.MaLoaiXe = Xe.MaLoaiXe where maxe = @maxe
-	set @temp = @temp - 1
-	update DongXe set SoLuongHienCo = @temp
+		raiserror (N'Không tìm thấy thông tin chiếc xe này',16,1)
+		return
+	end	
+	if exists (select * from PhieuXuat where MauXe = MaXe)
+	begin
+		raiserror (N'Không thể xóa thông tin xe này vì còn phiếu xuất phụ thuộc vào chiếc xe này',16,1)
+		return
+	end	
+	SET XACT_ABORT ON
+	begin tran
+	begin try
+		delete ChiTietPhieuNhap where MaXe = @maxe 
+		delete PhieuDatXe where MaXe = @maxe 
+		delete xe where MaXe = @maxe 
+		commit
+	end try
+	begin catch
+		declare @ErrMsg varchar(max) 
+		rollback 
+		select @ErrMsg = 'Lỗi ' + ERROR_MESSAGE()
+		raiserror (@ErrMSG, 16,1)
+	end catch
 end
 
 
@@ -1153,13 +1947,13 @@ go
 create proc sp_TimKiemXe @value nvarchar(20), @ma int
 as
 begin
-	if(@value = null and @ma = null )
+	if(@value is null or @ma is null )
 		raiserror (N'Yêu cầu nhập đầy đủ thông tin để tìm kiếm',16,1)
-	if(@ma != null and @value = null)
+	if(@ma is not null and @value is null)
 	begin 
 		select * from Xe where MaXe = @ma
 	end
-	else if(@ma = null and @value != null)
+	else if(@ma is null and @value is not null)
 	begin
 		select * from Xe where TenXe = '%'+@value+'%'
 	end
@@ -1170,6 +1964,56 @@ end
 --------------------------------KẾT THÚC PHẦN XE-----------------------------------------
 -----------------------------------------------------------------------------------------
 
+-----------------------------------------------------------------------------------------
+--------------------------------PHẦN TRANG CHỦ HOME--------------------------------------
+-----------------------------------------------------------------------------------------
+-- lẤY RA 8 SẢN PHẨM BÁN CHẠY NHẤT TRONG MỘT THÁNG
+go
+CREATE proc sp_8SanPhamBanChayTrongMotThang
+as
+begin 
+	declare @XeBanNhieuNhat table (Maxe int, mauxe nvarchar(100), soLuongXe int)
+	
+	declare xecursor cursor for select MaXe, MauXe from PhieuXuat 
+
+	open xecursor 
+		declare @maxe int
+		declare @mauxe nvarchar(100)
+		fetch next from xecursor into @maxe, @mauxe
+
+		while @@FETCH_STATUS = 0
+		begin 
+			if not exists (select * from @XeBanNhieuNhat where Maxe = @maxe and mauxe = @mauxe)
+			begin
+				insert into @XeBanNhieuNhat 
+				values (@maxe, @mauxe,1)
+			end
+			else
+			begin	
+				update @XeBanNhieuNhat set soLuongXe = soLuongXe +1 where Maxe = @maxe and mauxe = @mauxe
+			end 
+			fetch next from xecursor into @maxe, @mauxe
+		end 
+	close xecursor
+	deallocate xecursor
+	
+	select * from Xe where MaXe in (select top(8)MaXe from @XeBanNhieuNhat order by soLuongXe desc)	
+end
+
+
+-- Lấy 8 chiếc xe mới nhất
+go
+create proc sp_8ChiecXeMoiNhat
+as
+begin 
+	select top(8)* from Xe order by NamSanXuat desc
+end 
+
+-----------------------------------------------------------------------------------------
+-------------------------------KẾT THÚC PHẦN TRANG CHỦ-----------------------------------
+-----------------------------------------------------------------------------------------
+
+
 
 declare @hinhanh varbinary(max)
 select @hinhanh = HinhAnh from Xe where MaXe = 1
@@ -1179,7 +2023,8 @@ select * from Xe
 select * from NhanVien
 
 select * from DongXe
-select * from PhieuDatXe
+select * from PhieuBaoHanh
+select * from ChiTietPhieuBaoHanh
 
 
 
