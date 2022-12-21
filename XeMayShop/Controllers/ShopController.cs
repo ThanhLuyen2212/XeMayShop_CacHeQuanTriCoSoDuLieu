@@ -11,33 +11,26 @@ namespace XeMayShop.Controllers
     {
         QuanLyXeMayEntities data = new QuanLyXeMayEntities();
         // GET: Shop
-        public ActionResult Index(string MaXe, string TenDongXe, string TenXe, int page = 1, int pagelist = 6)
+        public ActionResult Index(string MaXe, string TenXe, string TenDongXe,  int page = 1, int pagelist = 6)
         {
             ViewBag.XeTayCon = data.DongXes.Where(x => x.MaLoaiXe == 3).ToList();
             ViewBag.XeTayGa = data.DongXes.Where(x => x.MaLoaiXe == 2).ToList();
-            ViewBag.XeSo = data.DongXes.Where(x => x.MaLoaiXe == 1).ToList();            
+            ViewBag.XeSo = data.DongXes.Where(x => x.MaLoaiXe == 1).ToList();
 
-
-            if (MaXe != null)
+            if (TenDongXe != null)
             {
-                int a = int.Parse(MaXe.ToString());
-                ViewBag.MatHangTheoTheLoai = data.Xes.Where(c => c.MaXe == a).ToList();
-                return View(data.Xes.Where(c => c.MaXe == a).ToList().OrderByDescending(c => c.TenXe).ToPagedList(page, pagelist));
+                return View(data.Xes.OrderByDescending(x => x.TenXe).Where(s => s.DongXe.TenDongXe == TenDongXe).ToPagedList(page, pagelist));
             }
+
+            if (MaXe == null && TenXe == null)
+            {
+                return View(data.Xes.OrderByDescending(x => x.TenXe).ToPagedList(page, pagelist));
+            }
+            int a;
+            if (int.TryParse(MaXe, out a) == false) 
+                return View(data.sp_TimKiemXe(TenXe,null).OrderByDescending(x => x.TenXe).ToPagedList(page, pagelist));
             else
-           if (TenXe != null)
-            {
-                return View(data.Xes.Where(c => c.TenXe.ToLower().Contains(TenXe.ToLower())).OrderByDescending(c => c.TenXe).ToPagedList(page, pagelist));
-            }
-            else 
-            if(TenDongXe != null)
-            {
-                return View(data.Xes.OrderByDescending(x => x.TenXe).Where(s => s.DongXe.TenDongXe == TenDongXe).ToPagedList(page, pagelist));                
-            }
-
-            return View(data.Xes.OrderByDescending(x => x.TenXe).ToPagedList(page, pagelist));
-
-            
+                return View(data.sp_TimKiemXe(TenXe, a).OrderByDescending(x => x.TenXe).ToPagedList(page, pagelist));
         }
     }
 }
