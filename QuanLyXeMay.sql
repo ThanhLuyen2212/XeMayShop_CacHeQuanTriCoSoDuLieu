@@ -2067,13 +2067,17 @@ end
 -----------------------------------------------------------------------------------------
 --------------------------------PHẦN TRANG CHỦ HOME--------------------------------------
 -----------------------------------------------------------------------------------------
+
+select getdate() - 
+select GETDATE() - 30
+
 -- lẤY RA 8 SẢN PHẨM BÁN CHẠY NHẤT TRONG MỘT THÁNG
 go
-create function sp_8SanPhamBanChayTrongMotThang()
+alter function sp_8SanPhamBanChayTrongMotThang()
 returns @XeBanNhieuNhat table (Maxe int, soLuongXe int)
 as
 begin 
-	declare xecursor cursor for select MaXe from PhieuXuat 
+	declare xecursor cursor for select MaXe from PhieuXuat where NgayXuat between GETDATE() - 30 and GETDATE()
 	open xecursor 
 		declare @maxe int		
 		fetch next from xecursor into @maxe
@@ -2104,7 +2108,6 @@ as
 begin 
 	select * from Xe where MaXe in (select Maxe from sp_8SanPhamBanChayTrongMotThang())
 end
-
 
 -- Lấy 8 chiếc xe mới nhất
 go
