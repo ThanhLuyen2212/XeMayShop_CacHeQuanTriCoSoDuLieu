@@ -17,7 +17,11 @@ namespace XeMayShop.Areas.Admin.Controllers
         // GET: Admin/AdminPhieuBaoHanh
         public ActionResult Index()
         {
-
+            if (Session["Admin"] == null)
+            {
+                return RedirectToAction("Index", "AdminLogin");
+            }
+            
             var phieuBaoHanhs = db.PhieuBaoHanhs.Include(p => p.PhieuXuat);
             return View(phieuBaoHanhs.ToList());
         }

@@ -71,19 +71,20 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
 
             return View(khachHang);*/
-            try
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
                     db.sp_ThemKhachHang(khachHang.TenKhachHang, khachHang.DienThoai);
                     return RedirectToAction("Index");
                 }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorInfo = ex.InnerException.Message;
+                }            
             }
-            catch(Exception ex)
-            {
-                ViewBag.ErrorInfo = ex.InnerException.Message;
-
-            }return View(khachHang);
+            return View(khachHang);
         }
 
         // GET: Admin/AdminKhachHang/Edit/5

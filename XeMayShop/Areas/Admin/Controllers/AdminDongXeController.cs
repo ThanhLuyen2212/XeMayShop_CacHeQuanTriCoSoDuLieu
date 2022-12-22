@@ -62,18 +62,21 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
 
             return View(dongXe);*/
-            try
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
                     db.sp_ThemDongXeMoi(dongXe.MaLoaiXe, dongXe.TenDongXe);
                     return RedirectToAction("Index");
                 }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorInfo = ex.InnerException.Message;
+                }
             }
-            catch (Exception ex)
-            {
-                ViewBag.ErrorInfo = ex.Message;
-            }
+        
+            
             ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe");
             return View();
 
@@ -121,7 +124,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorInfo = ex.Message;
+                ViewBag.ErrorInfo = ex.InnerException.Message;
             }
             ViewBag.MaLoaiXe = new SelectList(db.LoaiXes, "MaLoaiXe", "TenLoaiXe");
             return View(dongXe);
@@ -155,7 +158,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorInfo = ex.Message;
+                ViewBag.ErrorInfo = ex.InnerException.Message;
             }
             return View(db.DongXes.Find(id));
 

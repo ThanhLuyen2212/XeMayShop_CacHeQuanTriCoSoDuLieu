@@ -6,6 +6,7 @@
     List<Xe> xetaycon = ViewBag.xetaycon;
     List<Xe> xetayga = ViewBag.xetayga;
     List<Xe> xeso = ViewBag.xeso;
+    List<Xe> SanPhamBanChayNhat = ViewBag.SanPhamBanChayNhat;
 }
 
 <!-- Banner Section Begin -->
@@ -58,6 +59,43 @@
                                 <img src='@imgSrc' width="262px" height="262px" alt="Alternate Text" />
 
 
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">@item.TenXe</a></h6>
+                                <div class="product__price money">@item.GiaXe VND</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="section-title" style="width:500px">
+                    <h4 style="color:red">8 sản phẩm bán chạy nhất</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row property__gallery">
+            @foreach (Xe item in SanPhamBanChayNhat)
+            {
+                <a href="~/ChiTietXe/Index/@item.MaXe">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="product__item">
+                            <div>
+                                @{
+                                    var base64 = Convert.ToBase64String(item.HinhAnh);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                }
+                                <img src='@imgSrc' width="262px" height="360px" alt="Alternate Text" />
+                                @*<img src="@Url.Content(item.HinhAnh)" width="262px" height="360px" alt="Alternate Text" />*@
                             </div>
                             <div class="product__item__text">
                                 <h6><a href="#">@item.TenXe</a></h6>
@@ -182,6 +220,43 @@
 
         <div class="row property__gallery">
             @foreach (Xe item in xetayga)
+            {
+                <a href="~/ChiTietXe/Index/@item.MaXe">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="product__item">
+                            <div>
+                                @{
+                                    var base64 = Convert.ToBase64String(item.HinhAnh);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                }
+                                <img src='@imgSrc' width="262px" height="360px" alt="Alternate Text" />
+                                @*<img src="@Url.Content(item.HinhAnh)" width="262px" height="360px" alt="Alternate Text" />*@
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">@item.TenXe</a></h6>
+                                <div class="product__price money">@item.GiaXe VND</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="section-title" style="width:500px">
+                    <h4 style="color:red">Xe số</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row property__gallery">
+            @foreach (Xe item in xeso)
             {
                 <a href="~/ChiTietXe/Index/@item.MaXe">
                     <div class="col-lg-3 col-md-4 col-sm-6">

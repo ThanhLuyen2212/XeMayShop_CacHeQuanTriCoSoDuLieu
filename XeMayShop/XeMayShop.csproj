@@ -215,6 +215,27 @@
     <Compile Include="Models\PhieuXuat.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_8SanPhamBanChayTrongMotThang_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_Lay4XeSo_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_Lay4XeTayCon_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_Lay4XeTayGa_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_Lay8XeSo_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_Lay8XeTayCon_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_Lay8XeTayGa_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Xe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -1351,6 +1372,11 @@
     <Content Include="Areas\Admin\Views\AdminPhieuDatXes\Details.cshtml" />
     <Content Include="Areas\Admin\Views\AdminPhieuDatXes\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\AdminPhieuDatXes\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiTietPhieuBaoHanhs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiTietPhieuBaoHanhs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiTietPhieuBaoHanhs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiTietPhieuBaoHanhs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminChiTietPhieuBaoHanhs\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -1358,11 +1384,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuBaoHanhs\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuBaoHanhs\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuBaoHanhs\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuBaoHanhs\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminChiTietPhieuBaoHanhs\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

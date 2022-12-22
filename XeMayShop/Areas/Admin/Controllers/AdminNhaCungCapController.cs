@@ -105,8 +105,7 @@ namespace XeMayShop.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(NhaCungCap nhaCungCap)
-        {            
-            
+        { 
             try
             {
                 if (ModelState.IsValid)

@@ -116,7 +116,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    db.sp_ChinhSuaThongTinPhieuNhap(phieuNhap.MaPhieuNhap, phieuNhap.MaNhanVien, phieuNhap.MaNhaCungCap, phieuNhap.MaChiNhanh);
+                    db.sp_ChinhSuaThongTinPhieuNhap(phieuNhap.MaPhieuNhap, phieuNhap.MaNhanVien, phieuNhap.MaNhaCungCap, phieuNhap.MaChiNhanh,phieuNhap.NgayNhap,phieuNhap.TongSoXeNhap,phieuNhap.ThanhTienNhap);
                     return RedirectToAction("Index");
                 }
             }

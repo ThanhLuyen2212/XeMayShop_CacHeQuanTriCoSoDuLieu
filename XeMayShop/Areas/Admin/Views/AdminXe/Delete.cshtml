@@ -74,6 +74,11 @@
                             <img src='@imgSrc1' style="width: 100px; height: 150px; border-radius:0%" />
                         </div>
                     </div>
+                    @if (ViewBag.ErrorInfo != null)
+                    {
+                        <p class="text-danger">@ViewBag.ErrorInfo</p>
+                    }
+
                 </form>
             </div>
         </div>

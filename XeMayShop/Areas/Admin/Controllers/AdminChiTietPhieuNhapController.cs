@@ -78,22 +78,23 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create( ChiTietPhieuNhap chiTietPhieuNhap)
         {
-            try
-            {
-                if (ModelState.IsValid)
+
+            if (ModelState.IsValid)
+            { 
+                try
                 {
                     /*db.ChiTietPhieuNhaps.Add(chiTietPhieuNhap);
                     db.SaveChanges();*/
-                    
-                    db.sp_ThemChiTietPhieuNhap(chiTietPhieuNhap.MaXe,chiTietPhieuNhap.MaPhieuNhap,chiTietPhieuNhap.SoLuongNhap,chiTietPhieuNhap.DonGiaNhap);
+
+                    db.sp_ThemChiTietPhieuNhap(chiTietPhieuNhap.MaXe, chiTietPhieuNhap.MaPhieuNhap, chiTietPhieuNhap.SoLuongNhap, chiTietPhieuNhap.DonGiaNhap);
                     return RedirectToAction("Index");
                 }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorInfo = ex.InnerException.Message;
+                }
             }
-            catch  (Exception ex)
-            {
-                ViewBag.ErrorInfo = ex.InnerException.Message;
-            }            
-
+            
             ViewBag.MaPhieuNhap = new SelectList(db.PhieuNhaps, "MaPhieuNhap", "MaPhieuNhap", chiTietPhieuNhap.MaPhieuNhap);
             ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe", chiTietPhieuNhap.MaXe);
             return View(chiTietPhieuNhap);
@@ -140,18 +141,20 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ChiTietPhieuNhap chiTietPhieuNhap)
         {
-            try
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    db.sp_CapNhatThongTinChiTietPhieuNhap(chiTietPhieuNhap.MaXe, chiTietPhieuNhap.MaPhieuNhap, chiTietPhieuNhap.SoLuongNhap, chiTietPhieuNhap.DonGiaNhap);                    
+                    db.sp_CapNhatThongTinChiTietPhieuNhap(chiTietPhieuNhap.MaXe, chiTietPhieuNhap.MaPhieuNhap, chiTietPhieuNhap.SoLuongNhap, chiTietPhieuNhap.DonGiaNhap);
                     return RedirectToAction("Index");
                 }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorInfo = ex.InnerException.Message;
+                }
             }
-            catch (Exception ex)
-            {
-                ViewBag.ErrorInfo = ex.InnerException.Message;
-            }
+
             ViewBag.MaPhieuNhap = new SelectList(db.PhieuNhaps, "MaPhieuNhap", "MaPhieuNhap", chiTietPhieuNhap.MaPhieuNhap);
             ViewBag.MaXe = new SelectList(db.Xes, "MaXe", "TenXe", chiTietPhieuNhap.MaXe);
             return View(chiTietPhieuNhap);

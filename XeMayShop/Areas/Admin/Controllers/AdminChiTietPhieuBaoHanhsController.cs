@@ -59,18 +59,20 @@ namespace XeMayShop.Areas.Admin.Controllers
 
             ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "SoKhung", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
             return View(chiTietPhieuBaoHanh);*/
-            try
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
                     db.sp_TaoChiTietPhieuBaoHanh(chiTietPhieuBaoHanh.MaPhieuBaoHanh, chiTietPhieuBaoHanh.NgayBaoHanh, chiTietPhieuBaoHanh.GhiChu);
                     return RedirectToAction("Index");
                 }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorInfo = ex.InnerException.Message;
+                }
             }
-            catch (Exception ex)
-            {
-                ViewBag.ErrorInfo = ex.InnerException.Message;
-            }
+
             ViewBag.MaPhieuBaoHanh = new SelectList(db.PhieuBaoHanhs, "MaPhieuBaoHanh", "MaPhieuBaoHanh", chiTietPhieuBaoHanh.MaPhieuBaoHanh);
             return View(chiTietPhieuBaoHanh);
         }

@@ -97,15 +97,30 @@ namespace XeMayShop.Areas.Admin.Controllers
                 using (var binaryReader = new BinaryReader(xe.UploadImage.InputStream))
                     xe.HinhAnh = binaryReader.ReadBytes(xe.UploadImage.ContentLength);
             }
-            if (ModelState.IsValid)
+            int trongluong;
+            if (!int.TryParse(xe.TrongLuong.ToString(), out trongluong))
             {
-                db.sp_ThemXe(xe.MaDongXe,xe.TenXe,xe.MauXe,xe.MaChiNhanh,xe.SoLuongHienCo,int.Parse(xe.TrongLuong.ToString()),xe.ThongTinBaoHanh,xe.GiaXe,xe.NamSanXuat,xe.HinhAnh);
-                return RedirectToAction("Index");
+                ViewBag.ErrorInfo = "Vui lòng nhập đầy đủ thông tin";
+
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        db.sp_ThemXe(xe.MaDongXe, xe.TenXe, xe.MauXe, xe.MaChiNhanh, xe.SoLuongHienCo, int.Parse(xe.TrongLuong.ToString()), xe.ThongTinBaoHanh, xe.GiaXe, xe.NamSanXuat, xe.HinhAnh);
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.ErrorInfo = ex.InnerException.Message;
+                    }
+                }
             }
 
             ViewBag.MaDongXe = new SelectList(db.DongXes, "MaDongXe", "TenDongXe", xe.MaDongXe);
             ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh", xe.MaChiNhanh);
-
             return View(xe);
         }
 
@@ -141,10 +156,15 @@ namespace XeMayShop.Areas.Admin.Controllers
                     using (var binaryReader = new BinaryReader(xe.UploadImage.InputStream))
                         xe.HinhAnh = binaryReader.ReadBytes(xe.UploadImage.ContentLength);
                 }
-
-                db.Entry(xe).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.sp_CapNhatThongTinXe(xe.MaXe, xe.MaDongXe, xe.TenXe, xe.MauXe, xe.MaChiNhanh, xe.SoLuongHienCo, xe.TrongLuong, xe.ThongTinBaoHanh, xe.GiaXe, xe.NamSanXuat, xe.HinhAnh);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorInfo = ex.InnerException.Message;
+                }
             }
             ViewBag.MaDongXe = new SelectList(db.DongXes, "MaDongXe", "TenDongXe", xe.MaDongXe);
             ViewBag.MaChiNhanh = new SelectList(db.ChiNhanhs, "MaChiNhanh", "TenChiNhanh", xe.MaChiNhanh);
@@ -181,9 +201,19 @@ namespace XeMayShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            try
+            {                 
+                 db.sp_XoaXe(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorInfo = ex.InnerException.Message;
+            }            
             Xe xe = db.Xes.Find(id);
-            db.sp_XoaXe(id);
-            return RedirectToAction("Index");
+            return View(xe);
+
+
         }
 
         protected override void Dispose(bool disposing)

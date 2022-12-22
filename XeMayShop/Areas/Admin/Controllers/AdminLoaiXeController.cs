@@ -62,18 +62,20 @@ namespace XeMayShop.Areas.Admin.Controllers
 
             return View(loaiXe);*/
 
-            try
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                try
                 {
                     db.sp_ThemLoaiXeMoi(loaiXe.TenLoaiXe);
                     return RedirectToAction("Index");
                 }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorInfo = ex.InnerException.Message; 
+                }
             }
-            catch (Exception ex)
-            {
-                ViewBag.ErrorInfo = ex.Message;
-            }
+
             return View(loaiXe);
         }
 
@@ -114,7 +116,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorInfo = ex.Message;
+                ViewBag.ErrorInfo = ex.InnerException.Message; 
             }
             return View(loaiXe);
 
@@ -153,7 +155,7 @@ namespace XeMayShop.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorInfo = ex.Message;
+                ViewBag.ErrorInfo = ex.InnerException.Message; 
             }
             LoaiXe loaiXe = db.LoaiXes.Find(id);
             return View(loaiXe);

@@ -87,7 +87,10 @@
                             @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
+                    @if (ViewBag.ErrorInfo != null)
+                    {
+                        <p class="text-danger">@ViewBag.ErrorInfo</p>
+                    }
 
                     <button style="width:100px; type="submit" value="Create" class="btn btn-primary mr-2">Create</button>
                     <a href="~/Admin/AdminXe/Index">

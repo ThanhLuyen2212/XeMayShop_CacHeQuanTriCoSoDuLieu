@@ -65,10 +65,17 @@ namespace XeMayShop.Areas.Admin.Controllers
                 /*db.PhieuXuats.Add(phieuXuat);
                 db.SaveChanges();
                 return RedirectToAction("Index");*/
+                try
+                {
+                    db.sp_TaoPhieuXuat(phieuXuat.MaNhanVien, phieuXuat.MaKhachHang, phieuXuat.MaChiNhanh, phieuXuat.MaXe, phieuXuat.MauXe, phieuXuat.ThanhTienXuat, phieuXuat.GhiChu);
+                    return RedirectToAction("Index");
+                }
 
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorInfo = ex.InnerException.Message;
+                }
 
-                db.sp_TaoPhieuXuat(phieuXuat.MaNhanVien, phieuXuat.MaKhachHang, phieuXuat.MaChiNhanh, phieuXuat.MaXe, phieuXuat.MauXe, phieuXuat.ThanhTienXuat,phieuXuat.GhiChu);
-                return RedirectToAction("Index");
             }
 
             ViewBag.MaKhachHang = new SelectList(db.KhachHangs, "MaKhachHang", "TenKhachHang", phieuXuat.MaKhachHang);

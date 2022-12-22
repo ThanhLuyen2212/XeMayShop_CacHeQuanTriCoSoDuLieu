@@ -38,7 +38,10 @@
                             @Html.DisplayFor(model => model.DonGiaNhap)
                         </div>
                     </div>
-                    
+                    @if (ViewBag.ErrorInfo != null)
+                    {
+                        <p class="text-danger">@ViewBag.ErrorInfo</p>
+                    }
                 </form>
             </div>
         </div>
